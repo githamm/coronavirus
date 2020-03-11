@@ -5,32 +5,76 @@
     <meta charset="utf-8">
     <meta name="robots" content="noindex,follow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colorado U.S. Senate Tracker | The Denver Post</title>
+    <title>Colorado Coronavirus Tracker | The Denver Post</title>
     <link rel="shortcut icon" href="https://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.css" />
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css">
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.js"></script>
     <script src="https://extras.denverpost.com/foundation/js/vendor/modernizr.js"></script>
     <script src="https://extras.denverpost.com/app/homicide-report/js/d3.v3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        background-color: #fafafa;
+        font-family: 'Roboto', sans-serif;
+        margin-top: 1%;
+    }
+
+    #map {
+        height: 600px;
+        width: 100%;
+        /*width: 893px;
+        height: 600px;
+        margin: 0 auto;*/
+        border: 2px solid silver;
+    }
+
+    .leaflet-popup-content-wrapper {
+        border-radius: 0;
+        background-color: #fafafa;
+        /*max-width: 200px;*/
+        line-height: 100%;
+    }
+
+    .leaflet-container {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+    }
+
+    /*.leaflet-popup-content {
+        font-size: 1.2em;
+        letter-spacing: .2px;
+    }*/
+
+    .popup-header {
+        font-size: 1.75rem;
+        font-weight: bold;
+        color: #525252;
+        margin-bottom: -16px;
+    }
+    </style>
 </head>
 
 <body>
-    <div id="quarterly-money-chart"></div>
+    <div id="cases-chart"></div>
+    <div id="map"></div>
     <script>
-    var quarterlyRaisedSheet = 'https://docs.google.com/spreadsheets/d/1le-2tlErhBUQe3ya-H-c3YqCjdmwwSNWEvAHnshrP3E/edit#gid=0';
-    // SHEET FOR TESTING PURPOSES
-    // var quarterlyRaisedSheet = 'https://docs.google.com/spreadsheets/d/1tX1LfWkWM2-D4pfG6GpWk7f7JUvyiKOuf6UebNIt_wc/edit#gid=0';
+    var spreadsheetUrl = 'https://docs.google.com/spreadsheets/d/1le-2tlErhBUQe3ya-H-c3YqCjdmwwSNWEvAHnshrP3E/1';
 
-    function init() {
+    function chart() {
         Tabletop.init({
-            key: quarterlyRaisedSheet,
+            key: spreadsheetUrl,
             callback: function(data, tabletop) {
-                console.log(data);
                 // var lastRow = (data.slice(-1)[0]);
                 // var baerRaised = (lastRow.baer_raised).toLocaleString();
                 // var brayRaised = (lastRow.bray_raised).toLocaleString();
@@ -47,7 +91,7 @@
                 // var zornioRaised = (lastRow.zornio_raised).toLocaleString();
 
                 var quarterlyMoneyChart = c3.generate({
-                    bindto: '#quarterly-money-chart',
+                    bindto: '#cases-chart',
                     size: {
                         height: 425
                         //width: 800
@@ -57,19 +101,25 @@
                         keys: {
                             // x: [ 'date0', 'date1', 'date2' ],
                             x: 'date',
-                            value: ['daily_cases','cumulative_cases']
+                            value: ['daily_cases', 'cumulative_cases' /*,'daily_deaths','cumulative_deaths'*/ ]
                         },
                         names: {
                             daily_cases: 'Daily cases',
-                            cumulative_cases: 'Cumulative cases'
+                            cumulative_cases: 'Total cases',
+                            /*daily_deaths: 'Daily deaths',
+                            cumulative_deaths: 'Total deaths'*/
                         },
-                        type: 'bar',
                         types: {
-                            cumulative_cases: 'line'
+                            daily_cases: 'bar',
+                            cumulative_cases: 'line',
+                            /*daily_deaths: 'bar',
+                            cumulative_deaths: 'line'*/
                         },
                         colors: {
-                            'daily_cases': '#6baed6',
-                            'cumulative_cases': '#08519c',
+                            'daily_cases': 'rgba(8,81,156,.5)',
+                            'cumulative_cases': 'rgba(8,81,156,1)',
+                            /*'daily_deaths': 'rgba(165,15,21,.5)',
+                            'cumulative_deaths': 'rgba(165,15,21,1)'*/
                         },
                     },
                     padding: {
@@ -86,8 +136,7 @@
                             //count: 8
                         },
                         y: {
-                            tick: {
-                            },
+                            tick: {},
                             // label: {
                             //     text: 'Money raised',
                             //     position: 'outer-middle'
@@ -95,8 +144,7 @@
                         }
                     },
                     tooltip: {
-                        format: {
-                        }
+                        format: {}
                     },
                     grid: {
                         x: {
@@ -116,6 +164,69 @@
         });
     };
 
-    window.addEventListener('DOMContentLoaded', init);
+    function map() {
+        var map = L.map('map', {
+            center: [39.0501, -105.3821],
+            zoom: 7,
+            minZoom: 7,
+            maxZoom: 10,
+            preferCanvas: true,
+            scrollWheelZoom: false
+        });
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        Tabletop.init({
+            key: spreadsheetUrl,
+            callback: function(data, tabletop) {
+                for (var i in data) {
+                    if (data[i].location != '') {
+                        var row = data[i];
+
+                        var currentRows = [];
+                        if(row.cumulative_cases !== null) {
+                            currentRows.push(row.cumulative_cases)
+                        };
+                        console.log(currentRows);
+
+
+
+                        var circleRadius;
+                        var circleColor;
+                        if (row.location != '') {
+                            if (row.location_cases < 5) {
+                                circleRadius = 7.5
+                            } else circleRadius = (Math.sqrt(row.location_cases) * 4);
+                            if (row.location_deaths > 0) {
+                                borderColor = '#636363'
+                            } else borderColor = ''
+                        }
+
+                        var casesCircle = {
+                            radius: circleRadius,
+                            fillColor: 'rgba(8,81,156,.75)',
+                            color: borderColor,
+                            weight: 3,
+                            opacity: 1,
+                            fillOpacity: .8
+                        }
+                    };
+
+                    L.circleMarker([row.latitude, row.longitude], casesCircle)
+                        .addTo(map)
+                        .bindPopup('<h3 class="popup-header">' + row.location + '</h3><hr><div>Reported cases: <strong>' + row.location_cases + '</strong><br>Last reported case: <strong>' + row.last_reported_case + '</strong><br><br>Latest story: <a href="' + row.story_link + '" target="_blank">' + row.latest_headline + '</a></div>')
+                }
+            },
+            simpleSheet: true,
+            parseNumbers: true
+        });
+    };
+
+    window.addEventListener('DOMContentLoaded', chart);
+    window.addEventListener('DOMContentLoaded', map);
     </script>
 </body>
