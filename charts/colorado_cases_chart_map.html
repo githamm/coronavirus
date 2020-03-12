@@ -15,7 +15,6 @@
     <script src="https://extras.denverpost.com/foundation/js/vendor/modernizr.js"></script>
     <script src="https://extras.denverpost.com/app/homicide-report/js/d3.v3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.5.1/tabletop.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
     <style>
     @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -141,13 +140,12 @@
     });
 
     /// MAP /////
-
     var mapSpreadsheetID = "1V6rB1-PTfoMCLHKqTQrv6m5AJwWcbRP269t0cvD3Ios/1";
     var mapUrl = "https://spreadsheets.google.com/feeds/list/" + mapSpreadsheetID + "/public/full?alt=json";
 
     $.getJSON(mapUrl, function(data) {
         var output = data.feed.entry;
-        console.log(output);
+        //console.log(output);
         var geojsonCounties = {
             "type": "FeatureCollection",
             "features": []
@@ -163,11 +161,17 @@
                     "coordinates": coords
                 },
                 "properties": {
-                    "name": output[i].gsx$county.$t
+                    "name": output[i].gsx$county.$t,
+                    "number_of_cases": output[i].gsx$numberofcases.$t,
+                    "last_reported_case": output[i].gsx$lastreportedcase.$t,
+                    "latest_headline": output[i].gsx$latestheadline.$t,
+                    "story_link": output[i].gsx$storylink.$t
                 }
             });
         }
-        var map = L.map("map").setView([40, -100], 4);
+        console.log(geojsonCounties);
+
+        var map = L.map("map").setView([39.5501, -105.7821], 7);
 
         // This is the Carto Positron basemap
         var basemap = L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png", {
@@ -176,7 +180,23 @@
             maxZoom: 19
         });
         basemap.addTo(map);
-        L.geoJSON(geojsonCounties).addTo(map);
+        L.geoJSON(geojsonCounties, {
+            style: function(feature) {
+                var cases = feature.properties.number_of_cases;
+                var fillColor;
+                var borderColor;
+
+                if (cases > 0) fillColor = '#08519c';
+                else fillColor = 'rgba(0,0,0,0)';
+                return {
+                    color: '#000000',
+                    opacity: .25,
+                    weight: 3,
+                    fillColor: fillColor,
+                    fillOpacity: .4
+                }
+            }
+        }).addTo(map);
     });
     </script>
 </body>
