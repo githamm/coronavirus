@@ -55,8 +55,12 @@
         letter-spacing: .2px;
     }*/
 
+    .popup-container {
+        margin-top: -6px;
+    }
+
     .popup-header {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
         font-weight: bold;
         color: #525252;
         margin-bottom: -16px;
@@ -119,7 +123,7 @@
                     },
                 },
                 y: {
-                    max: 45
+                    max: 150
                 }
             },
             legend: {
@@ -171,9 +175,15 @@
         }
         console.log(geojsonCounties);
 
-        var map = L.map("map").setView([39.5501, -105.7821], 7);
+        var map = L.map('map', {
+            center: [39.001, -105.7821],
+            zoom: 7,
+            minZoom: 7,
+            maxZoom: 10,
+            scrollWheelZoom: false,
+            preferCanvas: true
+        });
 
-        // This is the Carto Positron basemap
         var basemap = L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png", {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
             subdomains: "abcd",
@@ -195,6 +205,12 @@
                     fillColor: fillColor,
                     fillOpacity: .4
                 }
+            },
+            onEachFeature: function(feature, layer) {
+                var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Latest story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
+                layer.bindPopup(
+                    popupText
+                )
             }
         }).addTo(map);
     });
