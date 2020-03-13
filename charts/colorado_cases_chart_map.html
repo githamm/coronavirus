@@ -41,7 +41,7 @@
     .leaflet-popup-content-wrapper {
         border-radius: 0;
         background-color: #fafafa;
-        /*max-width: 200px;*/
+        max-width: 300px;
         line-height: 100%;
     }
 
@@ -65,13 +65,76 @@
         color: #525252;
         margin-bottom: -16px;
     }
+
+    .credit {
+    	font-size: .9rem;
+    	font-style: italic;
+    	text-align: right;
+    	margin: 6px 10px 0 0;
+    }
+
+    .legend {
+        width: 60px;
+        /*height: 30px;*/
+        opacity: .6;
+        float: left;
+    }
+
+    .legend-text {
+        font-size: .9rem;
+        text-align: center;
+    }
+    
+    .legend-chatter {
+        text-transform: uppercase;
+        font-size: .8rem;
+        margin-bottom: 0;
+    }
+
+    .legend-container {
+        width: auto;
+        float: right;
+        padding-bottom: 15px;
+    }
+
+    .legend-box {
+        width: 70px;
+        height: 25px;
+        border: 1px solid #aaa;
+        float: left;
+    }
     </style>
 </head>
 
 <body>
     <div id="cases-chart"></div>
     <hr>
+    <div class="row">
+            <div class="large-12 columns">
+                <div class="legend-container">
+                    <div class="legend-container">
+                        <p class="legend-chatter">Confirmed coronavirus cases</p>
+                        <div class="legend-box" style="background-color:#c6dbef">
+                            <p class="legend-text">1-10</p>
+                        </div>
+                        <div class="legend-box" style="background-color:#6baed6">
+                            <p class="legend-text">11-25</p>
+                        </div>
+                        <div class="legend-box" style="background-color:#2171b5">
+                            <p class="legend-text">26-50</p>
+                        </div>
+                        <!-- <div class="legend-box" style="background-color:#31a354">
+                            <p class="legend-text">101-200</p>
+                        </div>
+                        <div class="legend-box" style="background-color:#006d2c">
+                            <p class="legend-text">201+</p>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
     <div id="map"></div>
+    <p class="credit">Source: <a href="https://www.colorado.gov/pacific/cdphe/2019-novel-coronavirus" target="_blank">Colorado Department of Public Health and Environment</a> &bull; By Kevin Hamm, The Denver Post</p>
     <script>
     var chartSpreadsheetID = "1V6rB1-PTfoMCLHKqTQrv6m5AJwWcbRP269t0cvD3Ios/2";
     var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
@@ -144,32 +207,32 @@
     });
 
     /// MAP /////
-    var mapSpreadsheetID = "1V6rB1-PTfoMCLHKqTQrv6m5AJwWcbRP269t0cvD3Ios/1";
-    var mapUrl = "https://spreadsheets.google.com/feeds/list/" + mapSpreadsheetID + "/public/full?alt=json";
+    var mapSpreadsheetID = '1V6rB1-PTfoMCLHKqTQrv6m5AJwWcbRP269t0cvD3Ios/1';
+    var mapUrl = 'https://spreadsheets.google.com/feeds/list/' + mapSpreadsheetID + '/public/full?alt=json';
 
     $.getJSON(mapUrl, function(data) {
         var output = data.feed.entry;
         //console.log(output);
         var geojsonCounties = {
-            "type": "FeatureCollection",
-            "features": []
+            'type': 'FeatureCollection',
+            'features': []
         };
 
         for (i = 0; i < output.length; i++) {
             var coords = JSON.parse(output[i].gsx$geometry.$t);
 
             geojsonCounties.features.push({
-                "type": "Feature",
-                "geometry": {
-                    "type": "MultiPolygon",
-                    "coordinates": coords
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'MultiPolygon',
+                    'coordinates': coords
                 },
-                "properties": {
-                    "name": output[i].gsx$county.$t,
-                    "number_of_cases": output[i].gsx$numberofcases.$t,
-                    "last_reported_case": output[i].gsx$lastreportedcase.$t,
-                    "latest_headline": output[i].gsx$latestheadline.$t,
-                    "story_link": output[i].gsx$storylink.$t
+                'properties': {
+                    'name': output[i].gsx$county.$t,
+                    'number_of_cases': output[i].gsx$numberofcases.$t,
+                    'last_reported_case': output[i].gsx$lastreportedcase.$t,
+                    'latest_headline': output[i].gsx$latestheadline.$t,
+                    'story_link': output[i].gsx$storylink.$t
                 }
             });
         }
@@ -178,7 +241,7 @@
         var map = L.map('map', {
             center: [39.001, -105.7821],
             zoom: 7,
-            minZoom: 7,
+            minZoom: 5,
             maxZoom: 10,
             scrollWheelZoom: false,
             preferCanvas: true
@@ -196,18 +259,21 @@
                 var fillColor;
                 var borderColor;
 
-                if (cases > 0) fillColor = '#08519c';
+                // Blue color ramp (light to dark): ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']
+                if (cases > 25) fillColor = '#2171b5';
+                else if (cases > 10) fillColor = '#6baed6';
+                else if (cases > 0) fillColor = '#c6dbef';
                 else fillColor = 'rgba(0,0,0,0)';
                 return {
                     color: '#000000',
                     opacity: .25,
                     weight: 3,
                     fillColor: fillColor,
-                    fillOpacity: .4
+                    fillOpacity: .5
                 }
             },
             onEachFeature: function(feature, layer) {
-                var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Latest story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
+                var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
                 layer.bindPopup(
                     popupText
                 )
