@@ -136,7 +136,8 @@
     <div id="map"></div>
     <p class="credit">Source: <a href="https://www.colorado.gov/pacific/cdphe/2019-novel-coronavirus" target="_blank">Colorado Department of Public Health and Environment</a> &bull; By Kevin Hamm, The Denver Post</p>
     <script>
-    var chartSpreadsheetID = "1V6rB1-PTfoMCLHKqTQrv6m5AJwWcbRP269t0cvD3Ios/2";
+    //var chartSpreadsheetID = "1V6rB1-PTfoMCLHKqTQrv6m5AJwWcbRP269t0cvD3Ios/2";
+    var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/2';
     var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
 
     $.getJSON(url, function(data) {
@@ -152,25 +153,25 @@
                 json: sheetJson,
                 keys: {
                     x: 'gsx$date.$t',
-                    value: ['gsx$dailycases.$t', 'gsx$cumulativecases.$t' /*,'gsx$dailydeaths.$t','gsx$cumulativedeaths.$t'*/ ]
+                    value: ['gsx$dailycases.$t', 'gsx$cumulativecases.$t','gsx$dailydeaths.$t','gsx$cumulativedeaths.$t']
                 },
                 names: {
                     'gsx$dailycases.$t': 'Daily cases',
                     'gsx$cumulativecases.$t': 'Total cases',
-                    //'gsx$dailydeaths.$t': 'Daily deaths',
-                    //'gsx$cumulativedeaths.$t': 'Total deaths'
+                    'gsx$dailydeaths.$t': 'Daily deaths',
+                    'gsx$cumulativedeaths.$t': 'Total deaths'
                 },
                 types: {
                     'gsx$dailycases.$t': 'bar',
                     'gsx$cumulativecases.$t': 'line',
-                    //'gsx$dailydeaths.$t': 'bar',
-                    //'gsx$cumulativedeaths.$t': 'line'
+                    'gsx$dailydeaths.$t': 'bar',
+                    'gsx$cumulativedeaths.$t': 'line'
                 },
                 colors: {
                     'gsx$dailycases.$t': 'rgba(8,81,156,.5)',
                     'gsx$cumulativecases.$t': 'rgba(8,81,156,1)',
-                    //'gsx$dailydeaths.$t': 'rgba(165,15,21,.5)',
-                    //'gsx$cumulativedeaths.$t': 'rgba(165,15,21,1)'
+                    'gsx$dailydeaths.$t': 'rgba(165,15,21,.5)',
+                    'gsx$cumulativedeaths.$t': 'rgba(165,15,21,1)'
                 },
             },
             // padding: {
@@ -207,8 +208,9 @@
     });
 
     /// MAP /////
-    var mapSpreadsheetID = '1V6rB1-PTfoMCLHKqTQrv6m5AJwWcbRP269t0cvD3Ios/1';
+    var mapSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/1'
     var mapUrl = 'https://spreadsheets.google.com/feeds/list/' + mapSpreadsheetID + '/public/full?alt=json';
+    //var mapUrl = 'data.json';
 
     $.getJSON(mapUrl, function(data) {
         var output = data.feed.entry;
@@ -230,6 +232,7 @@
                 'properties': {
                     'name': output[i].gsx$county.$t,
                     'number_of_cases': output[i].gsx$numberofcases.$t,
+                    'number_of_deaths': output[i].gsx$numberofdeaths.$t,
                     'last_reported_case': output[i].gsx$lastreportedcase.$t,
                     'latest_headline': output[i].gsx$latestheadline.$t,
                     'story_link': output[i].gsx$storylink.$t
@@ -269,11 +272,11 @@
                     opacity: .25,
                     weight: 3,
                     fillColor: fillColor,
-                    fillOpacity: .5
+                    fillOpacity: .8
                 }
             },
             onEachFeature: function(feature, layer) {
-                var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
+                var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
                 layer.bindPopup(
                     popupText
                 )
