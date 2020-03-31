@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorado Coronavirus Tracker | The Denver Post</title>
+    <link rel="shortcut icon" href="https://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.css" />
+    <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.js"></script>
+    <script src="https://extras.denverpost.com/foundation/js/vendor/modernizr.js"></script>
+    <script src="https://extras.denverpost.com/app/homicide-report/js/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.js"></script>
+    <!-- <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.js"></script>
+    <script src="leaflet.min.ajax.js"></script>
+    <script src="choropleth.js"></script>
+</head>
+
+<body>
+    <div style="height: 600px" id="map"></div>
+    <script>
+    // Add GeoJSON
+    // $.getJSON('https://raw.githubusercontent.com/timwis/leaflet-choropleth/gh-pages/examples/basic/crimes_by_district.geojson', function(geojson) {
+    //     L.choropleth(geojson, {
+    //         valueProperty: 'incidents',
+    //         scale: ['white', 'red'],
+    //         steps: 5,
+    //         mode: 'q',
+    //         style: {
+    //             color: '#fff',
+    //             weight: 2,
+    //             fillOpacity: 0.8
+    //         },
+    //         onEachFeature: function(feature, layer) {
+    //           console.log(feature);
+    //             layer.bindPopup('District ' + feature.properties.dist_num + '<br>' +
+    //                 feature.properties.incidents.toLocaleString() + ' incidents')
+    //         }
+    //     }).addTo(map)
+    // })
+
+    /// MAP /////
+    var map = L.map('map', {
+        center: [39.001, -105.7821],
+        zoom: 7,
+        minZoom: 5,
+        maxZoom: 10,
+        scrollWheelZoom: false,
+        preferCanvas: true
+    });
+
+    var basemap = L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
+        subdomains: "abcd",
+        maxZoom: 19
+    });
+    basemap.addTo(map);
+
+    var mapSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/1'
+    var mapUrl = 'https://spreadsheets.google.com/feeds/list/' + mapSpreadsheetID + '/public/full?alt=json';
+    //var mapUrl = 'data.json';
+
+    $.getJSON(mapUrl, function(data) {
+        var output = data.feed.entry;
+        //console.log(output);
+        var geojsonCounties = {
+            'type': 'FeatureCollection',
+            'features': []
+        };
+
+        for (i = 0; i < output.length; i++) {
+            var coords = JSON.parse(output[i].gsx$geometry.$t);
+
+            geojsonCounties.features.push({
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'MultiPolygon',
+                    'coordinates': coords
+                },
+                'properties': {
+                    'name': output[i].gsx$county.$t,
+                    'number_of_cases': output[i].gsx$numberofcases.$t,
+                    'number_of_deaths': output[i].gsx$numberofdeaths.$t,
+                    'last_reported_case': output[i].gsx$lastreportedcase.$t,
+                    'latest_headline': output[i].gsx$latestheadline.$t,
+                    'story_link': output[i].gsx$storylink.$t,
+                    'population': output[i].gsx$population.$t
+                }
+            })
+        }
+
+        //L.geoJSON(geojsonCounties, {
+        L.choropleth(geojsonCounties, {
+            valueProperty: function(feature) {
+                var cases = feature.properties.number_of_cases;
+                var population = feature.properties.population;
+                var rate = (cases / population);
+                if (cases > 5) {
+                    return rate
+                }
+            },
+            scale: ['white', 'blue'],
+            steps: 20,
+            mode: 'q',
+            style: {
+                color: '#fff',
+                weight: 2,
+                fillColor: '#ddd',
+                fillOpacity: 0.66
+            },
+            onEachFeature: function(feature, layer) {
+                var cases = feature.properties.number_of_cases;
+                var population = feature.properties.population;
+                var rate = ((cases / population) * 100000).toFixed(2);
+                console.log(rate);
+                var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Case rate: ' + rate + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
+                layer.bindPopup(
+                    popupText
+                )
+            }
+        }).addTo(map);
+    });
+    </script>
+</body>
+
+</html>
