@@ -231,7 +231,7 @@
             onEachFeature: function(feature, layer) {
                 var cases = feature.properties.number_of_cases;
                 var population = feature.properties.population;
-                var rate = ((cases / population) * 10000).toFixed(2);
+                var rate = ((cases / population) * 100000).toFixed(2);
                 var rateText;
 
                 if (cases <= 5) {

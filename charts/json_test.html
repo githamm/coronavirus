@@ -1,0 +1,3129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" type="text/javascript"></script>
+<script>
+
+    var data = [
+        {
+            "description": "State Data",
+            "attribute": "Statewide",
+            "metric": "Cases",
+            "value": 3342
+        },
+        {
+            "description": "State Data",
+            "attribute": "Statewide",
+            "metric": "Hospitalizations",
+            "value": 620
+        },
+        {
+            "description": "State Data",
+            "attribute": "Statewide",
+            "metric": "Counties",
+            "value": 50
+        },
+        {
+            "description": "State Data",
+            "attribute": "Statewide",
+            "metric": "People Tested",
+            "value": 18645
+        },
+        {
+            "description": "State Data",
+            "attribute": "Statewide",
+            "metric": "Deaths",
+            "value": 80
+        },
+        {
+            "description": "State Data",
+            "attribute": "Statewide",
+            "metric": "Outbreaks",
+            "value": 17
+        },
+        {
+            "description": "State Data",
+            "attribute": "Statewide",
+            "metric": "Rate Per 100000",
+            "value": 58.69
+        },
+        {
+            "description": "State Data",
+            "attribute": "Note",
+            "metric": "Data is updated daily by about 4 p.m. and includes cases reported through the previous day.",
+            "value": "NA"
+        },
+        {
+            "description": "State Data",
+            "attribute": "Note",
+            "metric": "Outbreaks are investigated at residential and non-hospital heathcare facilities.",
+            "value": "NA"
+        },
+        {
+            "description": "State Data",
+            "attribute": "Note",
+            "metric": "The state rate per 100,000 includes all cases (including cases who have not yet been assigned to a county).",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Adams County",
+            "metric": "Cases",
+            "value": 212
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Adams County",
+            "metric": "Rate Per 100000",
+            "value": 41.44891323686685
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Alamosa County",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Alamosa County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Arapahoe County",
+            "metric": "Cases",
+            "value": 381
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Arapahoe County",
+            "metric": "Rate Per 100000",
+            "value": 58.49461573182752
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Archuleta County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Archuleta County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Baca County",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Baca County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Bent County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Bent County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Boulder County",
+            "metric": "Cases",
+            "value": 114
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Boulder County",
+            "metric": "Rate Per 100000",
+            "value": 35.02562400914353
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Broomfield County",
+            "metric": "Cases",
+            "value": 21
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Broomfield County",
+            "metric": "Rate Per 100000",
+            "value": 30.236274890933437
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Chaffee County",
+            "metric": "Cases",
+            "value": 17
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Chaffee County",
+            "metric": "Rate Per 100000",
+            "value": 84.88116636708608
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Cheyenne County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Cheyenne County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Clear Creek County",
+            "metric": "Cases",
+            "value": 6
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Clear Creek County",
+            "metric": "Rate Per 100000",
+            "value": 62.09251785159888
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Conejos County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Conejos County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Costilla County",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Costilla County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Crowley County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Crowley County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Custer County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Custer County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Delta County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Delta County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Denver County",
+            "metric": "Cases",
+            "value": 586
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Denver County",
+            "metric": "Rate Per 100000",
+            "value": 81.63868057403417
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Dolores County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Dolores County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Douglas County",
+            "metric": "Cases",
+            "value": 158
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Douglas County",
+            "metric": "Rate Per 100000",
+            "value": 46.08536877045403
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Eagle County",
+            "metric": "Cases",
+            "value": 295
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Eagle County",
+            "metric": "Rate Per 100000",
+            "value": 537.7030056686656
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "El Paso County",
+            "metric": "Cases",
+            "value": 314
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "El Paso County",
+            "metric": "Rate Per 100000",
+            "value": 43.953275148902215
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Elbert County",
+            "metric": "Cases",
+            "value": 5
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Elbert County",
+            "metric": "Rate Per 100000",
+            "value": 19.070867343046764
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Fremont County",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Fremont County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Garfield County",
+            "metric": "Cases",
+            "value": 34
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Garfield County",
+            "metric": "Rate Per 100000",
+            "value": 56.8495326634006
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Gilpin County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Gilpin County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Grand County",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Grand County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Grand Total County",
+            "metric": "Cases",
+            "value": 3342
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Grand Total County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Gunnison County",
+            "metric": "Cases",
+            "value": 84
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Gunnison County",
+            "metric": "Rate Per 100000",
+            "value": 489.1399289582484
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Hinsdale County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Hinsdale County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Huerfano County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Huerfano County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Jackson County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Jackson County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Jefferson County",
+            "metric": "Cases",
+            "value": 356
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Jefferson County",
+            "metric": "Rate Per 100000",
+            "value": 61.4332232942358
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Kiowa County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Kiowa County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Kit Carson County",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Kit Carson County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "La Plata County",
+            "metric": "Cases",
+            "value": 23
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "La Plata County",
+            "metric": "Rate Per 100000",
+            "value": 40.777972802865094
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Lake County",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Lake County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Larimer County",
+            "metric": "Cases",
+            "value": 107
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Larimer County",
+            "metric": "Rate Per 100000",
+            "value": 30.53984164949395
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Las Animas County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Las Animas County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Lincoln County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Lincoln County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Logan County",
+            "metric": "Cases",
+            "value": 6
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Logan County",
+            "metric": "Rate Per 100000",
+            "value": 27.454928159604645
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Mesa County",
+            "metric": "Cases",
+            "value": 14
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Mesa County",
+            "metric": "Rate Per 100000",
+            "value": 9.112803488901907
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Mineral County",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Mineral County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Moffat County",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Moffat County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Montezuma County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Montezuma County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Montrose County",
+            "metric": "Cases",
+            "value": 13
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Montrose County",
+            "metric": "Rate Per 100000",
+            "value": 30.761949834358735
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Morgan County",
+            "metric": "Cases",
+            "value": 5
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Morgan County",
+            "metric": "Rate Per 100000",
+            "value": 17.542013121425814
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Otero County",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Otero County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Ouray County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Ouray County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Park County",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Park County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Phillips County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Phillips County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Pitkin County",
+            "metric": "Cases",
+            "value": 33
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Pitkin County",
+            "metric": "Rate Per 100000",
+            "value": 184.57408132445886
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Prowers County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Prowers County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Pueblo County",
+            "metric": "Cases",
+            "value": 22
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Pueblo County",
+            "metric": "Rate Per 100000",
+            "value": 13.164508485124106
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Rio Blanco County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Rio Blanco County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Rio Grande County",
+            "metric": "Cases",
+            "value": 5
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Rio Grande County",
+            "metric": "Rate Per 100000",
+            "value": 44.53946196329948
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Routt County",
+            "metric": "Cases",
+            "value": 19
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Routt County",
+            "metric": "Rate Per 100000",
+            "value": 73.97889654635361
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Saguache County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Saguache County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "San Juan County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "San Juan County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "San Miguel County",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "San Miguel County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Sedgwick County",
+            "metric": "Cases",
+            "value": 0
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Sedgwick County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Summit County",
+            "metric": "Cases",
+            "value": 23
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Summit County",
+            "metric": "Rate Per 100000",
+            "value": 74.25822490556291
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Teller County",
+            "metric": "Cases",
+            "value": 7
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Teller County",
+            "metric": "Rate Per 100000",
+            "value": 27.932960893854748
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Unknown Or Pending County",
+            "metric": "Cases",
+            "value": 139
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Unknown Or Pending County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Washington County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Washington County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Weld County",
+            "metric": "Cases",
+            "value": 293
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Weld County",
+            "metric": "Rate Per 100000",
+            "value": 93.23757124082343
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Yuma County",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Yuma County",
+            "metric": "Rate Per 100000",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Note",
+            "metric": "Cases include people who had a positive lab test positive and cases that public health identified and determined were likely to have COVID-19 because of their symptoms and close contact with someone who tested positive. The number of untested cases included in the total case count is a very small portion of the total cases reported.",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Note",
+            "metric": "People who tested positive for COVID-19 in Colorado while visiting are included in the county where they were identified.",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Note",
+            "metric": "County rates per 100,000 are calculated using 2018 population estimates from the Demography Section, Colorado Division of Local Government.",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Note",
+            "metric": "Rates are not shown for counties with fewer than 5 cases.",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Note",
+            "metric": "Caution should be used when interpreting rates in counties with small populations.",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by County",
+            "attribute": "Note",
+            "metric": "Some cases may still be under investigation and county not assigned yet.",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "0-9",
+            "metric": "Cases",
+            "value": 33
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "0-9",
+            "metric": "Percent",
+            "value": 0.99
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "10-19",
+            "metric": "Cases",
+            "value": 60
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "10-19",
+            "metric": "Percent",
+            "value": 1.8
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "20-29",
+            "metric": "Cases",
+            "value": 471
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "20-29",
+            "metric": "Percent",
+            "value": 14.09
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "30-39",
+            "metric": "Cases",
+            "value": 543
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "30-39",
+            "metric": "Percent",
+            "value": 16.25
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "40-49",
+            "metric": "Cases",
+            "value": 520
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "40-49",
+            "metric": "Percent",
+            "value": 15.56
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "50-59",
+            "metric": "Cases",
+            "value": 603
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "50-59",
+            "metric": "Percent",
+            "value": 18.04
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "60-69",
+            "metric": "Cases",
+            "value": 494
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "60-69",
+            "metric": "Percent",
+            "value": 14.78
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "70-79",
+            "metric": "Cases",
+            "value": 363
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "70-79",
+            "metric": "Percent",
+            "value": 10.86
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "80+",
+            "metric": "Cases",
+            "value": 240
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "80+",
+            "metric": "Percent",
+            "value": 7.18
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "Unknown",
+            "metric": "Cases",
+            "value": 15
+        },
+        {
+            "description": "Case Counts by Age Group",
+            "attribute": "Unknown",
+            "metric": "Percent",
+            "value": 0.45
+        },
+        {
+            "description": "Case Counts by Sex",
+            "attribute": "Female",
+            "metric": "Cases",
+            "value": 1729
+        },
+        {
+            "description": "Case Counts by Sex",
+            "attribute": "Female",
+            "metric": "Percent",
+            "value": 51.74
+        },
+        {
+            "description": "Case Counts by Sex",
+            "attribute": "Male",
+            "metric": "Cases",
+            "value": 1600
+        },
+        {
+            "description": "Case Counts by Sex",
+            "attribute": "Male",
+            "metric": "Percent",
+            "value": 47.88
+        },
+        {
+            "description": "Case Counts by Sex",
+            "attribute": "Unknown",
+            "metric": "Cases",
+            "value": 13
+        },
+        {
+            "description": "Case Counts by Sex",
+            "attribute": "Unknown",
+            "metric": "Percent",
+            "value": 0.39
+        },
+        {
+            "description": "Fatal cases by sex",
+            "attribute": "Female",
+            "metric": "Cases",
+            "value": 32
+        },
+        {
+            "description": "Fatal cases by sex",
+            "attribute": "Female",
+            "metric": "Percent",
+            "value": 40
+        },
+        {
+            "description": "Fatal cases by sex",
+            "attribute": "Male",
+            "metric": "Cases",
+            "value": 48
+        },
+        {
+            "description": "Fatal cases by sex",
+            "attribute": "Male",
+            "metric": "Percent",
+            "value": 60
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-14",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-15",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-18",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-19",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-20",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-23",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-24",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-25",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-26",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-27",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-28",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-02-29",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-01",
+            "metric": "Cases",
+            "value": 20
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-02",
+            "metric": "Cases",
+            "value": 13
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-03",
+            "metric": "Cases",
+            "value": 20
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-04",
+            "metric": "Cases",
+            "value": 24
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-05",
+            "metric": "Cases",
+            "value": 17
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-06",
+            "metric": "Cases",
+            "value": 34
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-07",
+            "metric": "Cases",
+            "value": 29
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-08",
+            "metric": "Cases",
+            "value": 52
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-09",
+            "metric": "Cases",
+            "value": 86
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-10",
+            "metric": "Cases",
+            "value": 95
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-11",
+            "metric": "Cases",
+            "value": 88
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-12",
+            "metric": "Cases",
+            "value": 112
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-13",
+            "metric": "Cases",
+            "value": 115
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-14",
+            "metric": "Cases",
+            "value": 100
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-15",
+            "metric": "Cases",
+            "value": 103
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-16",
+            "metric": "Cases",
+            "value": 163
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-17",
+            "metric": "Cases",
+            "value": 194
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-18",
+            "metric": "Cases",
+            "value": 216
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-19",
+            "metric": "Cases",
+            "value": 147
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-20",
+            "metric": "Cases",
+            "value": 151
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-21",
+            "metric": "Cases",
+            "value": 83
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-22",
+            "metric": "Cases",
+            "value": 82
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-23",
+            "metric": "Cases",
+            "value": 237
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-24",
+            "metric": "Cases",
+            "value": 192
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-25",
+            "metric": "Cases",
+            "value": 235
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-26",
+            "metric": "Cases",
+            "value": 205
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-27",
+            "metric": "Cases",
+            "value": 186
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-28",
+            "metric": "Cases",
+            "value": 121
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-29",
+            "metric": "Cases",
+            "value": 94
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-30",
+            "metric": "Cases",
+            "value": 85
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "2020-03-31",
+            "metric": "Cases",
+            "value": 20
+        },
+        {
+            "description": "Case Counts by Onset Date",
+            "attribute": "Note",
+            "metric": "Onset date may be unavailable for some cases and inferred.",
+            "value": "NA"
+        },
+        {
+            "description": "Deaths",
+            "attribute": "El Paso County",
+            "metric": "Cases",
+            "value": 14
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Weld County",
+            "metric": "Cases",
+            "value": 13
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Denver County",
+            "metric": "Cases",
+            "value": 8
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Arapahoe County",
+            "metric": "Cases",
+            "value": 7
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Jefferson County",
+            "metric": "Cases",
+            "value": 7
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Larimer County",
+            "metric": "Cases",
+            "value": 7
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Adams County",
+            "metric": "Cases",
+            "value": 6
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Eagle County",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Boulder County",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Broomfield County",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Pitkin County",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Pueblo County",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Chaffee County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Crowley County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Garfield County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Gunnison County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Out Of State County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Deaths",
+            "attribute": "Teller County",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "0-9, Hospitalized",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "0-9, Not Hospitalized",
+            "metric": "Cases",
+            "value": 30
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "10-19, Hospitalized",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "10-19, Not Hospitalized",
+            "metric": "Cases",
+            "value": 58
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "20-29, Hospitalized",
+            "metric": "Cases",
+            "value": 15
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "20-29, Not Hospitalized",
+            "metric": "Cases",
+            "value": 456
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "30-39, Hospitalized",
+            "metric": "Cases",
+            "value": 45
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "30-39, Not Hospitalized",
+            "metric": "Cases",
+            "value": 498
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "40-49, Deaths",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "40-49, Hospitalized",
+            "metric": "Cases",
+            "value": 66
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "40-49, Not Hospitalized",
+            "metric": "Cases",
+            "value": 452
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "50-59, Deaths",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "50-59, Hospitalized",
+            "metric": "Cases",
+            "value": 122
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "50-59, Not Hospitalized",
+            "metric": "Cases",
+            "value": 477
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "60-69, Deaths",
+            "metric": "Cases",
+            "value": 7
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "60-69, Hospitalized",
+            "metric": "Cases",
+            "value": 127
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "60-69, Not Hospitalized",
+            "metric": "Cases",
+            "value": 360
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "70-79, Deaths",
+            "metric": "Cases",
+            "value": 23
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "70-79, Hospitalized",
+            "metric": "Cases",
+            "value": 118
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "70-79, Not Hospitalized",
+            "metric": "Cases",
+            "value": 222
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "80+, Deaths",
+            "metric": "Cases",
+            "value": 44
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "80+, Hospitalized",
+            "metric": "Cases",
+            "value": 70
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "80+, Not Hospitalized",
+            "metric": "Cases",
+            "value": 126
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "Unknown, Not Hospitalized",
+            "metric": "Cases",
+            "value": 15
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "Note",
+            "metric": "Data on cases recovered is unavailable.",
+            "value": "NA"
+        },
+        {
+            "description": "Case Counts by Age Group, Hospitalizations, and Deaths",
+            "attribute": "Note",
+            "metric": "Patients who were hospitalized and subsequently died are only counted once as a death.",
+            "value": "NA"
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-02-29",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 4
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-02-29",
+            "metric": "Percent Positivity",
+            "value": "NA"
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-01",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 2
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-01",
+            "metric": "Percent Positivity",
+            "value": "NA"
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-03",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 2
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-03",
+            "metric": "Percent Positivity",
+            "value": "NA"
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-04",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 11
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-04",
+            "metric": "Percent Positivity",
+            "value": "NA"
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-06",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 31
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-06",
+            "metric": "Percent Positivity",
+            "value": 0
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-07",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 20
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-07",
+            "metric": "Percent Positivity",
+            "value": 0
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-08",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 4
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-08",
+            "metric": "Percent Positivity",
+            "value": 0
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-10",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 58
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-10",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 2
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-10",
+            "metric": "Percent Positivity",
+            "value": 10
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-11",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 116
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-11",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 3
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-11",
+            "metric": "Percent Positivity",
+            "value": 15.966386554621847
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-12",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 121
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-12",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 1
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-12",
+            "metric": "Percent Positivity",
+            "value": 8.19672131147541
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-13",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 134
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-13",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 42
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-13",
+            "metric": "Percent Positivity",
+            "value": 15.909090909090908
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-14",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 124
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-14",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 30
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-14",
+            "metric": "Percent Positivity",
+            "value": 20.77922077922078
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-15",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 216
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-15",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 35
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-15",
+            "metric": "Percent Positivity",
+            "value": 13.545816733067728
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-16",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 301
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-16",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 110
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-16",
+            "metric": "Percent Positivity",
+            "value": 9.002433090024331
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-17",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 602
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-17",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 85
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-17",
+            "metric": "Percent Positivity",
+            "value": 4.2212518195050945
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-18",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 204
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-18",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 148
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-18",
+            "metric": "Percent Positivity",
+            "value": 19.03409090909091
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-19",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 484
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-19",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 145
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-19",
+            "metric": "Percent Positivity",
+            "value": 13.672496025437203
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-20",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 377
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-20",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 424
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-20",
+            "metric": "Percent Positivity",
+            "value": 14.232209737827715
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-21",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 840
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-21",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 572
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-21",
+            "metric": "Percent Positivity",
+            "value": 8.144475920679886
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-22",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 314
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-22",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 541
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-22",
+            "metric": "Percent Positivity",
+            "value": 14.736842105263156
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-23",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 535
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-23",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 444
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-23",
+            "metric": "Percent Positivity",
+            "value": 19.5097037793667
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-24",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 591
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-24",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 445
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-24",
+            "metric": "Percent Positivity",
+            "value": 16.988416988416986
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-25",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 306
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-25",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 1337
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-25",
+            "metric": "Percent Positivity",
+            "value": 20.998174071819843
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-26",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 332
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-26",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 1134
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-26",
+            "metric": "Percent Positivity",
+            "value": 20.190995907230562
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-27",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 514
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-27",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 1118
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-27",
+            "metric": "Percent Positivity",
+            "value": 20.22058823529412
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-28",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 215
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-28",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 1134
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-28",
+            "metric": "Percent Positivity",
+            "value": 17.865085248332097
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-29",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 241
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-29",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 992
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-29",
+            "metric": "Percent Positivity",
+            "value": 27.00729927007299
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-30",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 294
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-30",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 1209
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-30",
+            "metric": "Percent Positivity",
+            "value": 22.08915502328676
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-31",
+            "metric": "Count of people tested by CDPHE lab",
+            "value": 274
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-31",
+            "metric": "Count of people tested by non-CDPHE (commercial) lab",
+            "value": 1427
+        },
+        {
+            "description": "Positivity Data from Clinical Laboratories",
+            "attribute": "2020-03-31",
+            "metric": "Percent Positivity",
+            "value": 22.457378012933567
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-14",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-15",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-18",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-19",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-20",
+            "metric": "Cases",
+            "value": 8
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-23",
+            "metric": "Cases",
+            "value": 10
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-24",
+            "metric": "Cases",
+            "value": 12
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-25",
+            "metric": "Cases",
+            "value": 13
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-26",
+            "metric": "Cases",
+            "value": 14
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-27",
+            "metric": "Cases",
+            "value": 17
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-28",
+            "metric": "Cases",
+            "value": 20
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-02-29",
+            "metric": "Cases",
+            "value": 23
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-01",
+            "metric": "Cases",
+            "value": 43
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-02",
+            "metric": "Cases",
+            "value": 56
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-03",
+            "metric": "Cases",
+            "value": 76
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-04",
+            "metric": "Cases",
+            "value": 100
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-05",
+            "metric": "Cases",
+            "value": 117
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-06",
+            "metric": "Cases",
+            "value": 151
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-07",
+            "metric": "Cases",
+            "value": 180
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-08",
+            "metric": "Cases",
+            "value": 232
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-09",
+            "metric": "Cases",
+            "value": 318
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-10",
+            "metric": "Cases",
+            "value": 413
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-11",
+            "metric": "Cases",
+            "value": 501
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-12",
+            "metric": "Cases",
+            "value": 613
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-13",
+            "metric": "Cases",
+            "value": 728
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-14",
+            "metric": "Cases",
+            "value": 828
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-15",
+            "metric": "Cases",
+            "value": 931
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-16",
+            "metric": "Cases",
+            "value": 1094
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-17",
+            "metric": "Cases",
+            "value": 1288
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-18",
+            "metric": "Cases",
+            "value": 1504
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-19",
+            "metric": "Cases",
+            "value": 1651
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-20",
+            "metric": "Cases",
+            "value": 1802
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-21",
+            "metric": "Cases",
+            "value": 1885
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-22",
+            "metric": "Cases",
+            "value": 1967
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-23",
+            "metric": "Cases",
+            "value": 2204
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-24",
+            "metric": "Cases",
+            "value": 2396
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-25",
+            "metric": "Cases",
+            "value": 2631
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-26",
+            "metric": "Cases",
+            "value": 2836
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-27",
+            "metric": "Cases",
+            "value": 3022
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-28",
+            "metric": "Cases",
+            "value": 3143
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-29",
+            "metric": "Cases",
+            "value": 3237
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-30",
+            "metric": "Cases",
+            "value": 3322
+        },
+        {
+            "description": "Cumulative Number of Cases by Onset Date",
+            "attribute": "2020-03-31",
+            "metric": "Cases",
+            "value": 3342
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-02-20",
+            "metric": "Cases",
+            "value": 1
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-02-26",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-02-27",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-02-28",
+            "metric": "Cases",
+            "value": 5
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-01",
+            "metric": "Cases",
+            "value": 10
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-02",
+            "metric": "Cases",
+            "value": 14
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-03",
+            "metric": "Cases",
+            "value": 15
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-04",
+            "metric": "Cases",
+            "value": 22
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-05",
+            "metric": "Cases",
+            "value": 30
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-06",
+            "metric": "Cases",
+            "value": 41
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-07",
+            "metric": "Cases",
+            "value": 46
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-08",
+            "metric": "Cases",
+            "value": 60
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-09",
+            "metric": "Cases",
+            "value": 78
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-10",
+            "metric": "Cases",
+            "value": 94
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-11",
+            "metric": "Cases",
+            "value": 118
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-12",
+            "metric": "Cases",
+            "value": 138
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-13",
+            "metric": "Cases",
+            "value": 166
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-14",
+            "metric": "Cases",
+            "value": 187
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-15",
+            "metric": "Cases",
+            "value": 213
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-16",
+            "metric": "Cases",
+            "value": 241
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-17",
+            "metric": "Cases",
+            "value": 271
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-18",
+            "metric": "Cases",
+            "value": 302
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-19",
+            "metric": "Cases",
+            "value": 331
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-20",
+            "metric": "Cases",
+            "value": 348
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-21",
+            "metric": "Cases",
+            "value": 366
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-22",
+            "metric": "Cases",
+            "value": 387
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-23",
+            "metric": "Cases",
+            "value": 424
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-24",
+            "metric": "Cases",
+            "value": 450
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-25",
+            "metric": "Cases",
+            "value": 492
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-26",
+            "metric": "Cases",
+            "value": 524
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-27",
+            "metric": "Cases",
+            "value": 558
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-28",
+            "metric": "Cases",
+            "value": 586
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-29",
+            "metric": "Cases",
+            "value": 599
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-30",
+            "metric": "Cases",
+            "value": 617
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Onset Date",
+            "attribute": "2020-03-31",
+            "metric": "Cases",
+            "value": 620
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-01",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-02",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-04",
+            "metric": "Cases",
+            "value": 6
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-05",
+            "metric": "Cases",
+            "value": 8
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-06",
+            "metric": "Cases",
+            "value": 9
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-07",
+            "metric": "Cases",
+            "value": 11
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-08",
+            "metric": "Cases",
+            "value": 17
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-09",
+            "metric": "Cases",
+            "value": 20
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-10",
+            "metric": "Cases",
+            "value": 21
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-11",
+            "metric": "Cases",
+            "value": 24
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-13",
+            "metric": "Cases",
+            "value": 26
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-14",
+            "metric": "Cases",
+            "value": 31
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-15",
+            "metric": "Cases",
+            "value": 35
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-16",
+            "metric": "Cases",
+            "value": 41
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-17",
+            "metric": "Cases",
+            "value": 43
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-18",
+            "metric": "Cases",
+            "value": 44
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-19",
+            "metric": "Cases",
+            "value": 48
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-20",
+            "metric": "Cases",
+            "value": 50
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-21",
+            "metric": "Cases",
+            "value": 53
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-22",
+            "metric": "Cases",
+            "value": 57
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-23",
+            "metric": "Cases",
+            "value": 64
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-24",
+            "metric": "Cases",
+            "value": 70
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-25",
+            "metric": "Cases",
+            "value": 74
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-26",
+            "metric": "Cases",
+            "value": 78
+        },
+        {
+            "description": "Cumulative Number of Deaths by Onset Date",
+            "attribute": "2020-03-29",
+            "metric": "Cases",
+            "value": 80
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-05",
+            "metric": "Cases",
+            "value": 8
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-09",
+            "metric": "Cases",
+            "value": 13
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-10",
+            "metric": "Cases",
+            "value": 19
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-11",
+            "metric": "Cases",
+            "value": 38
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-12",
+            "metric": "Cases",
+            "value": 48
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-13",
+            "metric": "Cases",
+            "value": 76
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-14",
+            "metric": "Cases",
+            "value": 108
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-15",
+            "metric": "Cases",
+            "value": 142
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-16",
+            "metric": "Cases",
+            "value": 179
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-17",
+            "metric": "Cases",
+            "value": 208
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-18",
+            "metric": "Cases",
+            "value": 275
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-19",
+            "metric": "Cases",
+            "value": 361
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-20",
+            "metric": "Cases",
+            "value": 475
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-21",
+            "metric": "Cases",
+            "value": 590
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-22",
+            "metric": "Cases",
+            "value": 716
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-23",
+            "metric": "Cases",
+            "value": 907
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-24",
+            "metric": "Cases",
+            "value": 1083
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-25",
+            "metric": "Cases",
+            "value": 1428
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-26",
+            "metric": "Cases",
+            "value": 1724
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-27",
+            "metric": "Cases",
+            "value": 2054
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-28",
+            "metric": "Cases",
+            "value": 2295
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-29",
+            "metric": "Cases",
+            "value": 2628
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-30",
+            "metric": "Cases",
+            "value": 2960
+        },
+        {
+            "description": "Cumulative Number of Cases by Reported Date",
+            "attribute": "2020-03-31",
+            "metric": "Cases",
+            "value": 3342
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-09",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-10",
+            "metric": "Cases",
+            "value": 5
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-11",
+            "metric": "Cases",
+            "value": 7
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-12",
+            "metric": "Cases",
+            "value": 9
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-13",
+            "metric": "Cases",
+            "value": 13
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-14",
+            "metric": "Cases",
+            "value": 18
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-15",
+            "metric": "Cases",
+            "value": 20
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-16",
+            "metric": "Cases",
+            "value": 26
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-17",
+            "metric": "Cases",
+            "value": 32
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-18",
+            "metric": "Cases",
+            "value": 41
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-19",
+            "metric": "Cases",
+            "value": 53
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-20",
+            "metric": "Cases",
+            "value": 71
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-21",
+            "metric": "Cases",
+            "value": 96
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-22",
+            "metric": "Cases",
+            "value": 124
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-23",
+            "metric": "Cases",
+            "value": 167
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-24",
+            "metric": "Cases",
+            "value": 201
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-25",
+            "metric": "Cases",
+            "value": 254
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-26",
+            "metric": "Cases",
+            "value": 310
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-27",
+            "metric": "Cases",
+            "value": 360
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-28",
+            "metric": "Cases",
+            "value": 417
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-29",
+            "metric": "Cases",
+            "value": 496
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-30",
+            "metric": "Cases",
+            "value": 571
+        },
+        {
+            "description": "Cumulative Number of Hospitalizations by Reported Date",
+            "attribute": "2020-03-31",
+            "metric": "Cases",
+            "value": 620
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-13",
+            "metric": "Cases",
+            "value": 2
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-14",
+            "metric": "Cases",
+            "value": 3
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-15",
+            "metric": "Cases",
+            "value": 4
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-18",
+            "metric": "Cases",
+            "value": 7
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-19",
+            "metric": "Cases",
+            "value": 9
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-20",
+            "metric": "Cases",
+            "value": 10
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-21",
+            "metric": "Cases",
+            "value": 15
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-22",
+            "metric": "Cases",
+            "value": 19
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-23",
+            "metric": "Cases",
+            "value": 24
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-24",
+            "metric": "Cases",
+            "value": 29
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-25",
+            "metric": "Cases",
+            "value": 37
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-26",
+            "metric": "Cases",
+            "value": 52
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-27",
+            "metric": "Cases",
+            "value": 59
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-28",
+            "metric": "Cases",
+            "value": 68
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-29",
+            "metric": "Cases",
+            "value": 69
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-30",
+            "metric": "Cases",
+            "value": 75
+        },
+        {
+            "description": "Cumulative Number of Deaths by Reported Date",
+            "attribute": "2020-03-31",
+            "metric": "Cases",
+            "value": 80
+        }
+    ];
+    var coronavirusData = [];
+    for (i = 0; i < data.length; i++) {
+        //get the date value
+        var casesDate = moment(data[i].attribute).format("MMM D");
+        //check if this date exists in the array of objects (findIndex loops through the array objects for us)
+        var arrayCheck = coronavirusData.findIndex(x => x.date === casesDate);
+        if (arrayCheck === -1){
+            //it was NOT in the array so we create our first element in this part of the IF
+            //we have to bave both "cases" and "deaths" because if their data structure changes we dont want this to break
+            if (data[i].description == 'Cumulative Number of Cases by Reported Date') {
+                coronavirusData.push({
+                    'date': moment(data[i].attribute).format("MMM D"),
+                    'totalCases': data[i].value
+                })
+            }
+            if (data[i].description == 'Cumulative Number of Deaths by Reported Date') {
+                coronavirusData.push({
+                    'date': moment(data[i].attribute).format("MMM D"),
+                    'totalDeaths': data[i].value
+                })
+            }
+        }else{
+            //this only runs if the object already exists so all we have to do is get the location ie index of the array and push the new element into it.
+            //I've got both death and cases here incase the data was flip flopped for some reason
+            var totalDeaths = !data[i].value ? "0" : data[i].value;
+            var totalCases = !data[i].value ? "0" : data[i].value;
+            if (data[i].description == 'Cumulative Number of Deaths by Reported Date') {
+                coronavirusData[arrayCheck].totalDeaths = totalDeaths;
+            }
+            if (data[i].description == 'Cumulative Number of Cases by Reported Date') {
+                coronavirusData[arrayCheck].totalCases = totalCases;
+            }
+        }
+
+    };
+    console.log(coronavirusData);
+</script>
+</body>
+</html>
