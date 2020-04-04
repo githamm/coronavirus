@@ -167,6 +167,10 @@
     $.getJSON('test.json', function(data) {
         /// CREATE DATA ARRAY
         var coronavirusData = [];
+        var firstCases = [];
+        var secondCases = [];
+        var differenceCases = [];
+
         for (i = 0; i < data.length; i++) {
             //get the date value
             var casesDate = moment(new Date(data[i].attribute)).format("MMM D");
@@ -201,18 +205,58 @@
             }
         };
 
-        var differences = [];
-        for (var i = 0; i < coronavirusData.length - 1; i++) {
-            var diff = (coronavirusData[i + 1].totalCases) - (data[i].totalCases);
-            differences.push(diff);
+        // var differenceCases = [];
+        // for (var i = 0; i < coronavirusData.length - 1; i++) {
+        //     var diff = (coronavirusData[i + 1].totalCases) - (data[i].totalCases);
+        //     differenceCases.push(diff);
+        // }
+
+        var firstCases = [];
+        var secondCases = [];
+        var differenceCases = [];
+        var firstDeaths = [];
+        var secondDeaths = [];
+        var differenceDeaths = [];
+
+        for (var i = 0; i < coronavirusData.length; i++) {
+            firstCases.push(coronavirusData[i].totalCases),
+                firstDeaths.push(coronavirusData[i].totalDeaths)
+        }
+        for (var i = 1; i < coronavirusData.length; i++) {
+            secondCases.push(coronavirusData[i].totalCases),
+                secondDeaths.push(coronavirusData[i].totalDeaths)
+        }
+        for (var i = 0; i < firstCases.length; i++) {
+            differenceCases.push(secondCases[i] - firstCases[i]),
+                differenceDeaths.push(secondDeaths[i] - firstDeaths[i])
         }
 
-        console.log(differences); 
+        var caseDifferenceArray = firstCases.map(function(i, j) {
+            return Math.abs(i - secondCases[j]);
+        });
+        var deathDifferenceArray = firstDeaths.map(function(i, j) {
+            return Math.abs(i - secondDeaths[j]);
+        });
+
+        var dateArray = [];
+        for (var i = 1; i < coronavirusData.length; i++) {
+            dateArray.push(coronavirusData[i].date)
+        }
+        
+        var dailyCasesAndDeathsArray = [];
+        for (var i = 0; i < dateArray.length; i++) {
+            dailyCasesAndDeathsArray.push({
+                'date': dateArray[i],
+                'dailyCases': caseDifferenceArray[i],
+                'dailyDeaths': deathDifferenceArray[i]
+            })
+        }
+        console.log(dailyCasesAndDeathsArray);
 
 
-        /// DAILY CASES CHART
+        /// CUMULATIVE CASES CHART
         var dailyCasesChart = c3.generate({
-            bindto: '#daily-chart',
+            bindto: '#cumulative-chart',
             size: {
                 height: 300
                 //width: 800
@@ -271,30 +315,30 @@
             }
         });
 
-        /// CUMULATIVE CASES CHART
+        /// DAILY CASES CHART
         var cumulativeCasesChart = c3.generate({
-            bindto: '#cumulative-chart',
+            bindto: '#daily-chart',
             size: {
                 height: 300
                 //width: 800
             },
             data: {
-                json: sheetJson,
+                json: dailyCasesAndDeathsArray,
                 keys: {
-                    x: 'gsx$date.$t',
-                    value: ['gsx$cumulativecases.$t', 'gsx$cumulativedeaths.$t']
+                    x: 'date',
+                    value: ['dailyCases', 'dailyDeaths']
                 },
                 names: {
-                    'gsx$cumulativecases.$t': 'Total cases',
-                    'gsx$cumulativedeaths.$t': 'Total deaths'
+                    'dailyCases': 'Daily cases',
+                    'dailyDeaths': 'Daily deaths'
                 },
                 types: {
-                    'gsx$cumulativecases.$t': 'line',
-                    'gsx$cumulativedeaths.$t': 'line'
+                    'dailyCases': 'bar',
+                    'dailyDeaths': 'bar'
                 },
                 colors: {
-                    'gsx$cumulativecases.$t': 'rgba(8,81,156,.9)',
-                    'gsx$cumulativedeaths.$t': 'rgba(165,15,21,.9)'
+                    'dailyCases': 'rgba(8,81,156,.9)',
+                    'dailyDeaths': 'rgba(165,15,21,.9)'
                 },
             },
             // padding: {
@@ -310,7 +354,7 @@
                     },
                 },
                 y: {
-                    max: 5000,
+                    //max: 500,
                     tick: {
                         format: d3.format(',')
                     }
