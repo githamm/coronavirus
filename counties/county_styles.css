@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    background-color: #fafafa;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 1%;
+}
+
+#map,
+#rate-map {
+    height: 500px;
+    width: 100%;
+    /*width: 893px;
+        height: 600px;
+        margin: 0 auto;*/
+    border: 2px solid silver;
+}
+
+.leaflet-popup-content-wrapper {
+    border-radius: 0;
+    background-color: #fafafa;
+    max-width: 300px;
+    line-height: 100%;
+}
+
+.leaflet-container {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+}
+
+/*.leaflet-popup-content {
+        font-size: 1.2em;
+        letter-spacing: .2px;
+    }*/
+
+.popup-container {
+    margin-top: -6px;
+}
+
+.popup-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #525252;
+    margin-bottom: -16px;
+}
+
+.graphic-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.credit {
+    font-size: .9rem;
+    font-style: italic;
+    text-align: right;
+    margin: 6px 10px 0 0;
+}
+
+.legend {
+    width: 60px;
+    /*height: 30px;*/
+    opacity: .6;
+    float: left;
+}
+
+.legend-chatter {
+    text-transform: uppercase;
+    font-size: .8rem;
+    margin-bottom: 0;
+}
+
+.legend-container {
+    width: auto;
+    float: right;
+    margin-bottom: 5px;
+}
+
+.legend-box {
+    width: 70px;
+    height: 25px;
+    border: 1px solid #aaa;
+    float: left;
+}
+
+.legend-circle {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
+}
+
+#cases-legend-circle {
+    background-color: rgba(0, 0, 255, .5);
+}
+
+#deaths-legend-circle {
+    background-color: rgba(255, 0, 0, .5);
+}
+
+.legend-text-bubble {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.legend-text-choropleth {
+    font-size: .9rem;
+    text-align: center;
+}
+
+.graphic-divider {
+    border-top: 3px solid #d9d9d9;
+    margin: 20px 0 7px 0;
+}
+
+.subtitle-text {
+    color: #525252;
+    background-color: #d9d9d9;
+    padding: 6px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.updated {
+    color: #525252;
+    font-size: .9rem;
+    font-style: italic;
+}
+
+.instructions {
+    color: rgba(165, 15, 21, 1);
+    font-size: .9rem;
+    font-style: italic;
+    text-align: center;
+    margin-top: 20px;
+}
