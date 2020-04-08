@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Paso County Colorado Coronavirus Tracker | The Denver Post</title>
+    <link rel="shortcut icon" href="https://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.js"></script>
+    <script src="https://extras.denverpost.com/foundation/js/vendor/modernizr.js"></script>
+    <script src="https://extras.denverpost.com/app/homicide-report/js/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <script src="../maps/leaflet.min.ajax.js"></script>
+    <script src="../maps/choropleth.js"></script>
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        background-color: #fafafa;
+        font-family: 'Roboto', sans-serif;
+        margin-top: 1%;
+    }
+
+    #map,
+    #rate-map {
+        height: 500px;
+        width: 100%;
+        /*width: 893px;
+        height: 600px;
+        margin: 0 auto;*/
+        border: 2px solid silver;
+    }
+
+    .leaflet-popup-content-wrapper {
+        border-radius: 0;
+        background-color: #fafafa;
+        max-width: 300px;
+        line-height: 100%;
+    }
+
+    .leaflet-container {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1rem;
+    }
+
+    /*.leaflet-popup-content {
+        font-size: 1.2em;
+        letter-spacing: .2px;
+    }*/
+
+    .popup-container {
+        margin-top: -6px;
+    }
+
+    .popup-header {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #525252;
+        margin-bottom: -16px;
+    }
+
+    .graphic-title {
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .credit {
+        font-size: .9rem;
+        font-style: italic;
+        text-align: right;
+        margin: 6px 10px 0 0;
+    }
+
+    .legend {
+        width: 60px;
+        /*height: 30px;*/
+        opacity: .6;
+        float: left;
+    }
+
+    .legend-chatter {
+        text-transform: uppercase;
+        font-size: .8rem;
+        margin-bottom: 0;
+    }
+
+    .legend-container {
+        width: auto;
+        float: right;
+        margin-bottom: 5px;
+    }
+
+    .legend-box {
+        width: 70px;
+        height: 25px;
+        border: 1px solid #aaa;
+        float: left;
+    }
+
+    .legend-circle {
+        display: inline-block;
+        vertical-align: middle;
+        border-radius: 50%;
+        height: 15px;
+        width: 15px;
+    }
+
+    #cases-legend-circle {
+        background-color: rgba(0, 0, 255, .5);
+    }
+
+    #deaths-legend-circle {
+        background-color: rgba(255, 0, 0, .5);
+    }
+
+    .legend-text-bubble {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .legend-text-choropleth {
+        font-size: .9rem;
+        text-align: center;
+    }
+
+    .graphic-divider {
+        border-top: 3px solid #d9d9d9;
+        margin: 20px 0 7px 0;
+    }
+
+    .subtitle-text {
+        color: #525252;
+        background-color: #d9d9d9;
+        padding: 6px;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .updated {
+        color: #525252;
+        font-size: .9rem;
+        font-style: italic;
+    }
+
+    .instructions {
+        color: rgba(165, 15, 21, 1);
+        font-size: .9rem;
+        font-style: italic;
+        text-align: center;
+        margin-top: 20px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="graphic-divider"><span class="subtitle-text">El Paso County coronavirus cases and deaths</span></div>
+    <div class="updated">Data updated at <span id="updated-time"></span></div>
+    <p><em>The charts may include cases and deaths reported after the daily update by the Colorado Department of Public Health and Environment. Not all cumulative cases are active &mdash; the state has not released recovery data. <strong><em><a href="https://www.denverpost.com/2020/03/06/coronavirus-map-colorado/?utm_source=trendingbarmenu&utm_medium=link&utm_campaign=trendingbar" target="_blank">Click here to see the full data dashboard.</a></em></strong> Source for all data is the <a href="https://www.colorado.gov/pacific/cdphe/2019-novel-coronavirus" target="_blank">CDPHE</a>.</em></p>
+    <p class="instructions">Click legend item to add/remove; hover over bars for details</p>
+    <div id="county-case-chart"></div>
+    <div id="county-cumulative-chart"></div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="row">
+                <div class="large-6 small-12 columns" id="county-rate-comparison-cases"></div>
+                <div class="large-6 small-12 columns" id="county-rate-comparison-deaths"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="row">
+                <div class="large-6 small-12 columns" id="county-comparison-cases"></div>
+                <div class="large-6 small-12 columns" id="county-comparison-deaths"></div>
+            </div>
+        </div>
+    </div>
+    <!-- COLORADO CASE AND DEATH CHARTS -->
+    <div class="graphic-divider"><span class="subtitle-text">Colorado daily coronavirus cases and deaths</span></div>
+    <div id="daily-chart"></div>
+    <div class="graphic-divider"><span class="subtitle-text">Cumulative cases and deaths</span></div>
+    <div id="cumulative-chart"></div>
+    <!-- BUBBLE CASE MAP -->
+    <div class="graphic-divider"><span class="subtitle-text">Cases and deaths by county</span></div>
+    <p class="instructions">Circles are centered in counties and are not meant to indicate an actual location; click circles for details</p>
+    <div class="legend-container">
+        <div>
+            <div class="legend-circle" id="cases-legend-circle"></div>
+            <div class="legend-text-bubble">County confirmed cases</div>
+        </div>
+        <div style="margin-top:-5px">
+            <div class="legend-circle" id="deaths-legend-circle"></div>
+            <div class="legend-text-bubble">County confirmed deaths</div>
+        </div>
+    </div>
+    <div id="map"></div>
+    <script>
+    /// COUNTY CASES CHART
+    var chartSpreadsheetID = '1nq3vdVED4LQLd7dHHfUbxbFwzrcm8xfjUrFRn4X28nE/3';
+    var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+
+    $.getJSON(url, function(data) {
+        var sheetJson = data.feed.entry;
+        document.getElementById('updated-time').innerHTML = sheetJson[0].gsx$updated.$t;
+
+        var countyCasesChart = c3.generate({
+            bindto: '#county-case-chart',
+            size: {
+                height: 300
+                //width: 800
+            },
+            data: {
+                json: sheetJson,
+                keys: {
+                    x: 'gsx$date.$t',
+                    value: ['gsx$dailycases.$t', 'gsx$dailydeaths.$t']
+                },
+                names: {
+                    'gsx$dailycases.$t': 'Daily cases',
+                    'gsx$dailydeaths.$t': 'Daily deaths',
+                },
+                types: {
+                    'gsx$dailycases.$t': 'bar',
+                    'gsx$dailydeaths.$t': 'bar',
+                },
+                colors: {
+                    'gsx$dailycases.$t': 'rgba(8,81,156,.65)',
+                    'gsx$dailydeaths.$t': 'rgba(165,15,21,.65)',
+                },
+            },
+            // padding: {
+            //     bottom: 25
+            // },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        rotate: 0,
+                        multiline: false,
+                        culling: true
+                    },
+                },
+                y: {
+                    //max: 750,
+                    tick: {
+                        format: d3.format(',')
+                    }
+                }
+            },
+            bar: {
+                width: {
+                    ratio: .75
+                }
+            },
+            legend: {
+                position: 'inset'
+            },
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            },
+            point: {
+                r: 3.5
+            }
+        })
+
+        /// COUNTY CUMULATIVE CHART
+        var countyCumulativeCasesChart = c3.generate({
+            bindto: '#county-cumulative-chart',
+            size: {
+                height: 300
+                //width: 800
+            },
+            data: {
+                json: sheetJson,
+                keys: {
+                    x: 'gsx$date.$t',
+                    value: ['gsx$cumulativecases.$t', 'gsx$cumulativedeaths.$t']
+                },
+                names: {
+                    'gsx$cumulativecases.$t': 'Total cases',
+                    'gsx$cumulativedeaths.$t': 'Total deaths'
+                },
+                types: {
+                    'gsx$cumulativecases.$t': 'line',
+                    'gsx$cumulativedeaths.$t': 'line'
+                },
+                colors: {
+                    'gsx$cumulativecases.$t': 'rgba(8,81,156,.9)',
+                    'gsx$cumulativedeaths.$t': 'rgba(165,15,21,.9)'
+                },
+            },
+            // padding: {
+            //     bottom: 25
+            // },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        rotate: 0,
+                        multiline: false,
+                        culling: true
+                    },
+                },
+                y: {
+                    //max: 5000,
+                    tick: {
+                        format: d3.format(',')
+                    }
+                }
+            },
+            legend: {
+                position: 'inset'
+            },
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            },
+            point: {
+                r: 3
+            }
+        })
+    })
+
+    /// COUNTY CASE RATE COMPARISON CHART
+    var chartSpreadsheetID4 = '1nq3vdVED4LQLd7dHHfUbxbFwzrcm8xfjUrFRn4X28nE/4';
+    var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID4 + "/public/full?alt=json";
+
+    $.getJSON(url, function(data) {
+        var sheetJson = data.feed.entry;
+        var rateData = [];
+        for (var i = 0; i < sheetJson.length; i++) {
+            rateData.push({
+                'date': sheetJson[i].gsx$date.$t,
+                'adamsCaseRate': ((sheetJson[i].gsx$adamscases.$t / 511473) * 100000).toFixed(1),
+                'arapahoeCaseRate': ((sheetJson[i].gsx$arapahoecases.$t / 651342) * 100000).toFixed(1),
+                'boulderCaseRate': ((sheetJson[i].gsx$bouldercases.$t / 325476) * 100000).toFixed(1),
+                'denverCaseRate': ((sheetJson[i].gsx$denvercases.$t / 717797) * 100000).toFixed(1),
+                'douglasCaseRate': ((sheetJson[i].gsx$douglascases.$t / 342842) * 100000).toFixed(1),
+                'elpasoCaseRate': ((sheetJson[i].gsx$elpasocases.$t / 714395) * 100000).toFixed(1),
+                'jeffersonCaseRate': ((sheetJson[i].gsx$jeffersoncases.$t / 579491) * 100000).toFixed(1),
+                'larimerCaseRate': ((sheetJson[i].gsx$larimercases.$t / 350362) * 100000).toFixed(1),
+                'puebloCaseRate': ((sheetJson[i].gsx$pueblocases.$t / 167116) * 100000).toFixed(1),
+                'weldCaseRate': ((sheetJson[i].gsx$weldcases.$t / 314251) * 100000).toFixed(1),
+                'adamsDeathRate': ((sheetJson[i].gsx$adamsdeaths.$t / 511473) * 100000).toFixed(1),
+                'arapahoeDeathRate': ((sheetJson[i].gsx$arapahoedeaths.$t / 651342) * 100000).toFixed(1),
+                'boulderDeathRate': ((sheetJson[i].gsx$boulderdeaths.$t / 325476) * 100000).toFixed(1),
+                'denverDeathRate': ((sheetJson[i].gsx$denverdeaths.$t / 717797) * 100000).toFixed(1),
+                'douglasDeathRate': ((sheetJson[i].gsx$douglasdeaths.$t / 342842) * 100000).toFixed(1),
+                'elpasoDeathRate': ((sheetJson[i].gsx$elpasodeaths.$t / 714395) * 100000).toFixed(1),
+                'jeffersonDeathRate': ((sheetJson[i].gsx$jeffersondeaths.$t / 579491) * 100000).toFixed(1),
+                'larimerDeathRate': ((sheetJson[i].gsx$larimerdeaths.$t / 350362) * 100000).toFixed(1),
+                'puebloDeathRate': ((sheetJson[i].gsx$pueblodeaths.$t / 167116) * 100000).toFixed(1),
+                'weldDeathRate': ((sheetJson[i].gsx$welddeaths.$t / 314251) * 100000).toFixed(1),
+            })
+        }
+
+        var countyRateComparisonCases = c3.generate({
+            bindto: '#county-rate-comparison-cases',
+            size: {
+                height: 300
+                //width: 800
+            },
+            data: {
+                json: rateData,
+                keys: {
+                    x: 'date',
+                    value: ['adamsCaseRate', 'arapahoeCaseRate', 'boulderCaseRate', 'denverCaseRate', 'douglasCaseRate', 'elpasoCaseRate', 'jeffersonCaseRate', 'larimerCaseRate', 'puebloCaseRate', 'weldCaseRate']
+                },
+                names: {
+                    'adamsCaseRate': 'Adams',
+                    'arapahoeCaseRate': 'Arapahoe',
+                    'boulderCaseRate': 'Boulder',
+                    'denverCaseRate': 'Denver',
+                    'douglasCaseRate': 'Douglas',
+                    'elpasoCaseRate': 'El Paso',
+                    'jeffersonCaseRate': 'Jefferson',
+                    'larimerCaseRate': 'Larimer',
+                    'puebloCaseRate': 'Pueblo',
+                    'weldCaseRate': 'Weld'
+                },
+                types: {
+                    'elpasoCaseRate': 'line'
+                },
+                colors: {
+                    'adamsCaseRate': '#bbb',
+                    'arapahoeCaseRate': '#bbb',
+                    'boulderCaseRate': '#bbb',
+                    'denverCaseRate': '#bbb',
+                    'douglasCaseRate': '#bbb',
+                    'elpasoCaseRate': 'rgba(165,15,21,1)',
+                    'jeffersonCaseRate': '#bbb',
+                    'larimerCaseRate': '#bbb',
+                    'puebloCaseRate': '#bbb',
+                    'weldCaseRate': '#bbb'
+                },
+            },
+            // padding: {
+            //     bottom: 25
+            // },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        rotate: 0,
+                        multiline: false,
+                        culling: true
+                    },
+                },
+                y: {
+                    //max: 5000,
+                    tick: {
+                        format: d3.format(',')
+                    }
+                }
+            },
+            legend: {
+                position: 'inset'
+            },
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            },
+            point: {
+                r: 0
+            }
+        })
+
+        /// COUNTY DEATH RATE COMPARISON CHART
+        var countyRateComparisonDeaths = c3.generate({
+            bindto: '#county-rate-comparison-deaths',
+            size: {
+                height: 300
+                //width: 800
+            },
+            data: {
+                json: rateData,
+                keys: {
+                    x: 'date',
+                    value: ['adamsDeathRate', 'arapahoeDeathRate', 'boulderDeathRate', 'denverDeathRate', 'douglasDeathRate', 'elpasoDeathRate', 'jeffersonDeathRate', 'larimerDeathRate', 'puebloDeathRate', 'weldDeathRate']
+                },
+                names: {
+                    'adamsDeathRate': 'Adams',
+                    'arapahoeDeathRate': 'Arapahoe',
+                    'boulderDeathRate': 'Boulder',
+                    'denverDeathRate': 'Denver',
+                    'douglasDeathRate': 'Douglas',
+                    'elpasoDeathRate': 'El Paso',
+                    'jeffersonDeathRate': 'Jefferson',
+                    'larimerDeathRate': 'Larimer',
+                    'puebloDeathRate': 'Pueblo',
+                    'weldDeathRate': 'Weld'
+                },
+                types: {
+                    'elpasoDeathRate': 'line'
+                },
+                colors: {
+                    'adamsDeathRate': '#bbb',
+                    'arapahoeDeathRate': '#bbb',
+                    'boulderDeathRate': '#bbb',
+                    'denverDeathRate': '#bbb',
+                    'douglasDeathRate': '#bbb',
+                    'elpasoDeathRate': 'rgba(165,15,21,1)',
+                    'jeffersonDeathRate': '#bbb',
+                    'larimerDeathRate': '#bbb',
+                    'puebloDeathRate': '#bbb',
+                    'weldDeathRate': '#bbb'
+                },
+            },
+            // padding: {
+            //     bottom: 25
+            // },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        rotate: 0,
+                        multiline: false,
+                        culling: true
+                    },
+                },
+                y: {
+                    //max: 5000,
+                    tick: {
+                        format: d3.format(',')
+                    }
+                }
+            },
+            legend: {
+                position: 'inset'
+            },
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            },
+            point: {
+                r: 0
+            }
+        })
+    });
+
+    /* County comparison chart */
+    var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/1';
+    var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+    $.getJSON(url, function(data) {
+        var sheetJson = data.feed.entry;
+        var newData = [];
+        for (var i = 0; i < sheetJson.length; i++) {
+            if (sheetJson[i].gsx$population.$t > 160000) {
+                newData.push({
+                    'county': sheetJson[i].gsx$county.$t,
+                    'numberofcases': sheetJson[i].gsx$numberofcases.$t,
+                    'numberofdeaths': sheetJson[i].gsx$numberofdeaths.$t
+                })
+            }
+        }
+
+        /* County comparison charts */
+        var dailyCasesChart = c3.generate({
+            bindto: '#county-comparison-cases',
+            size: {
+                height: 300
+                //width: 800
+            },
+            data: {
+                json: newData,
+                keys: {
+                    x: 'county',
+                    value: ['numberofcases']
+                },
+                names: {
+                    'numberofcases': 'Cases'
+                },
+                type: 'bar',
+                // groups: [
+                //     ['numberofdeaths', 'numberofcases']
+                // ],
+                order: 'asc',
+                colors: {
+                    'numberofcases': 'rgba(8,81,156,.65)'
+                    //'numberofdeaths': 'rgba(165,15,21,.65)',
+                }
+            },
+            // padding: {
+            //     top: 50
+            // },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        rotate: 0,
+                        multiline: false,
+                        culling: false
+                    }
+                },
+                y: {
+                    //max: 750,
+                    tick: {
+                        format: d3.format(',')
+                    }
+                },
+                rotated: true
+            },
+            bar: {
+                width: {
+                    ratio: .75
+                }
+            },
+            legend: {
+                position: 'inset'
+            },
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            },
+            point: {
+                r: 3.5
+            }
+        })
+
+        /* County comparison deaths */
+        var dailyCasesChart = c3.generate({
+            bindto: '#county-comparison-deaths',
+            size: {
+                height: 300
+                //width: 800
+            },
+            data: {
+                json: newData,
+                keys: {
+                    x: 'county',
+                    value: ['numberofdeaths']
+                },
+                names: {
+                    'numberofdeaths': 'Deaths'
+                },
+                type: 'bar',
+                // groups: [
+                //     ['numberofdeaths', 'numberofcases']
+                // ],
+                order: 'asc',
+                colors: {
+                    //'numberofcases': 'rgba(8,81,156,.65)'
+                    'numberofdeaths': 'rgba(165,15,21,.65)',
+                }
+            },
+            // padding: {
+            //     top: 50
+            // },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        rotate: 0,
+                        multiline: false,
+                        culling: false
+                    }
+                },
+                y: {
+                    //max: 750,
+                    tick: {
+                        format: d3.format(',')
+                    }
+                },
+                rotated: true
+            },
+            bar: {
+                width: {
+                    ratio: .75
+                }
+            },
+            legend: {
+                position: 'inset'
+            },
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            },
+            point: {
+                r: 3.5
+            }
+        })
+    })
+
+    var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/2';
+    var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+
+    $.getJSON(url, function(data) {
+        var sheetJson = data.feed.entry;
+        /// DAILY CASES CHART
+        var dailyCasesChart = c3.generate({
+            bindto: '#daily-chart',
+            size: {
+                height: 300
+                //width: 800
+            },
+            data: {
+                json: sheetJson,
+                keys: {
+                    x: 'gsx$date.$t',
+                    value: ['gsx$dailycases.$t', 'gsx$dailydeaths.$t']
+                },
+                names: {
+                    'gsx$dailycases.$t': 'Daily cases',
+                    'gsx$dailydeaths.$t': 'Daily deaths',
+                },
+                types: {
+                    'gsx$dailycases.$t': 'bar',
+                    'gsx$dailydeaths.$t': 'bar',
+                },
+                colors: {
+                    'gsx$dailycases.$t': 'rgba(8,81,156,.65)',
+                    'gsx$dailydeaths.$t': 'rgba(165,15,21,.65)',
+                },
+            },
+            // padding: {
+            //     bottom: 25
+            // },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        rotate: 0,
+                        multiline: false,
+                        culling: true
+                    },
+                },
+                y: {
+                    //max: 750,
+                    tick: {
+                        format: d3.format(',')
+                    }
+                }
+            },
+            bar: {
+                width: {
+                    ratio: .75
+                }
+            },
+            legend: {
+                position: 'inset'
+            },
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            },
+            point: {
+                r: 3.5
+            }
+        });
+
+        /// CUMULATIVE CASES CHART
+        var cumulativeCasesChart = c3.generate({
+            bindto: '#cumulative-chart',
+            size: {
+                height: 300
+                //width: 800
+            },
+            data: {
+                json: sheetJson,
+                keys: {
+                    x: 'gsx$date.$t',
+                    value: ['gsx$cumulativecases.$t', 'gsx$cumulativedeaths.$t']
+                },
+                names: {
+                    'gsx$cumulativecases.$t': 'Total cases',
+                    'gsx$cumulativedeaths.$t': 'Total deaths'
+                },
+                types: {
+                    'gsx$cumulativecases.$t': 'line',
+                    'gsx$cumulativedeaths.$t': 'line'
+                },
+                colors: {
+                    'gsx$cumulativecases.$t': 'rgba(8,81,156,.9)',
+                    'gsx$cumulativedeaths.$t': 'rgba(165,15,21,.9)'
+                },
+            },
+            // padding: {
+            //     bottom: 25
+            // },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        rotate: 0,
+                        multiline: false,
+                        culling: true
+                    },
+                },
+                y: {
+                    //max: 5000,
+                    tick: {
+                        format: d3.format(',')
+                    }
+                }
+            },
+            legend: {
+                position: 'inset'
+            },
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            },
+            point: {
+                r: 3
+            }
+        })
+    });
+
+    ///// MAPS /////
+    var mapSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/1'
+    var mapUrl = 'https://spreadsheets.google.com/feeds/list/' + mapSpreadsheetID + '/public/full?alt=json';
+
+    /// BUBBLE CASE MAP
+    $.getJSON(mapUrl, function(data) {
+        var output = data.feed.entry;
+        var countyCoordinates = {
+            'type': 'FeatureCollection',
+            'features': []
+        };
+
+        for (i = 0; i < output.length; i++) {
+            var longitude = (output[i].gsx$longitude.$t);
+            var latitude = (output[i].gsx$latitude.$t);
+            var coordinates = JSON.parse('[' + longitude + ', ' + latitude + ']');
+
+            countyCoordinates.features.push({
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': coordinates
+                },
+                'properties': {
+                    'name': output[i].gsx$county.$t,
+                    'number_of_cases': output[i].gsx$numberofcases.$t,
+                    'number_of_deaths': output[i].gsx$numberofdeaths.$t,
+                    'last_reported_case': output[i].gsx$lastreportedcase.$t,
+                    'latest_headline': output[i].gsx$latestheadline.$t,
+                    'story_link': output[i].gsx$storylink.$t
+                }
+            });
+        }
+
+        var map = L.map('map', {
+            center: [39.001, -105.7821],
+            zoom: 7,
+            minZoom: 5,
+            maxZoom: 10,
+            scrollWheelZoom: false,
+            preferCanvas: true
+        });
+
+        var basemap = L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
+            subdomains: "abcd",
+            maxZoom: 19
+        });
+        basemap.addTo(map);
+
+        /// COUNTY LAYER
+        var countyStyle = {
+            "color": "#ccc",
+            "weight": .5,
+            "fillOpacity": 0
+        };
+
+        var countyJsonLayer = new L.GeoJSON.AJAX('../maps/colorado_county_boundaries.json', { style: countyStyle }).addTo(map);
+
+        /// CIRCLE LAYERS
+        var casesLayer = L.geoJSON(countyCoordinates, {
+            pointToLayer: function(feature, latlng) {
+                var circleRadius;
+                var circleBorder;
+
+                if (feature.properties.number_of_cases > 0) {
+                    casesCircleRadius = (Math.sqrt(feature.properties.number_of_cases) * 1)
+                } else {
+                    casesCircleRadius = 0
+                };
+
+                var casesCircle = {
+                    radius: casesCircleRadius,
+                    fillColor: "blue",
+                    color: "#000",
+                    weight: 0,
+                    opacity: .75,
+                    fillOpacity: .35
+                };
+
+                var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
+
+                if (feature.properties.number_of_cases != '') {
+                    return L.circleMarker(latlng, casesCircle).bindPopup(popupText)
+                }
+            }
+        }).addTo(map);
+
+        var deathsLayer = L.geoJSON(countyCoordinates, {
+            pointToLayer: function(feature, latlng) {
+                var circleRadius;
+                var circleBorder;
+
+                if (feature.properties.number_of_deaths > 0) {
+                    deathsCircleRadius = (Math.sqrt(feature.properties.number_of_deaths) * 1)
+                } else {
+                    deathsCircleRadius = 0
+                };
+
+                var deathsCircle = {
+                    radius: deathsCircleRadius,
+                    fillColor: "red",
+                    color: "#000",
+                    weight: 0,
+                    opacity: 0,
+                    fillOpacity: .75
+                };
+
+                var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
+
+                if (feature.properties.number_of_deaths != 0) {
+                    return L.circleMarker(latlng, deathsCircle).bindPopup(popupText)
+                }
+            }
+        }).addTo(map);
+
+        /// CHOROPLETH RATE MAP
+        var geojsonCounties = {
+            'type': 'FeatureCollection',
+            'features': []
+        };
+
+        for (i = 0; i < output.length; i++) {
+            var coords = JSON.parse(output[i].gsx$geometry.$t);
+
+            geojsonCounties.features.push({
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'MultiPolygon',
+                    'coordinates': coords
+                },
+                'properties': {
+                    'name': output[i].gsx$county.$t,
+                    'number_of_cases': output[i].gsx$numberofcases.$t,
+                    'number_of_deaths': output[i].gsx$numberofdeaths.$t,
+                    'last_reported_case': output[i].gsx$lastreportedcase.$t,
+                    'latest_headline': output[i].gsx$latestheadline.$t,
+                    'story_link': output[i].gsx$storylink.$t,
+                    'population': output[i].gsx$population.$t
+                }
+            });
+        }
+    });
+    </script>
+</body>
+
+</html>

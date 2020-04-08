@@ -172,35 +172,38 @@
         var differenceCases = [];
 
         for (i = 0; i < data.length; i++) {
-            //get the date value
-            var casesDate = moment(new Date(data[i].attribute)).format("MMM D");
-            //check if this date exists in the array of objects (findIndex loops through the array objects for us)
-            var arrayCheck = coronavirusData.findIndex(x => x.date === casesDate);
-            if (arrayCheck === -1) {
-                //it was NOT in the array so we create our first element in this part of the IF
-                //we have to bave both "cases" and "deaths" because if their data structure changes we dont want this to break
-                if (data[i].description == 'Cumulative Number of Cases by Reported Date') {
-                    coronavirusData.push({
-                        'date': moment(new Date(data[i].attribute)).format("MMM D"),
-                        'totalCases': data[i].value
-                    })
-                }
-                if (data[i].description == 'Cumulative Number of Deaths by Reported Date') {
-                    coronavirusData.push({
-                        'date': moment(new Date(data[i].attribute)).format("MMM D"),
-                        'totalDeaths': data[i].value
-                    })
-                }
-            } else {
-                //this only runs if the object already exists so all we have to do is get the location ie index of the array and push the new element into it.
-                //I've got both death and cases here incase the data was flip flopped for some reason
-                var totalDeaths = !data[i].value ? "0" : data[i].value;
-                var totalCases = !data[i].value ? "0" : data[i].value;
-                if (data[i].description == 'Cumulative Number of Deaths by Reported Date') {
-                    coronavirusData[arrayCheck].totalDeaths = totalDeaths;
-                }
-                if (data[i].description == 'Cumulative Number of Cases by Reported Date') {
-                    coronavirusData[arrayCheck].totalCases = totalCases;
+            if (data[i].attribute !== 'Note') {
+                //get the date value
+                var casesDate = moment(new Date(data[i].attribute)).format("MMM D");
+                //check if this date exists in the array of objects (findIndex loops through the array objects for us)
+                var arrayCheck = coronavirusData.findIndex(x => x.date === casesDate);
+                if (arrayCheck === -1) {
+                    //it was NOT in the array so we create our first element in this part of the IF
+                    //we have to bave both "cases" and "deaths" because if their data structure changes we dont want this to break
+                    if (data[i].description == 'Cumulative Number of Cases by Reported Date') {
+                        coronavirusData.push({
+                            'date': moment(new Date(data[i].attribute)).format("MMM D"),
+                            'totalCases': data[i].value
+                        })
+                        console.log(coronavirusData);
+                    }
+                    if (data[i].description == 'Cumulative Number of Deaths by Reported Date') {
+                        coronavirusData.push({
+                            'date': moment(new Date(data[i].attribute)).format("MMM D"),
+                            'totalDeaths': data[i].value
+                        })
+                    }
+                } else {
+                    //this only runs if the object already exists so all we have to do is get the location ie index of the array and push the new element into it.
+                    //I've got both death and cases here incase the data was flip flopped for some reason
+                    var totalDeaths = !data[i].value ? "0" : data[i].value;
+                    var totalCases = !data[i].value ? "0" : data[i].value;
+                    if (data[i].description == 'Cumulative Number of Deaths by Reported Date') {
+                        coronavirusData[arrayCheck].totalDeaths = totalDeaths;
+                    }
+                    if (data[i].description == 'Cumulative Number of Cases by Reported Date') {
+                        coronavirusData[arrayCheck].totalCases = totalCases;
+                    }
                 }
             }
         };
@@ -242,7 +245,7 @@
         for (var i = 1; i < coronavirusData.length; i++) {
             dateArray.push(coronavirusData[i].date)
         }
-        
+
         var dailyCasesAndDeathsArray = [];
         for (var i = 0; i < dateArray.length; i++) {
             dailyCasesAndDeathsArray.push({
@@ -251,7 +254,11 @@
                 'dailyDeaths': deathDifferenceArray[i]
             })
         }
-        console.log(dailyCasesAndDeathsArray);
+        // console.log(coronavirusData);
+        // console.log(dateArray);
+        // console.log(secondCases);
+        // console.log(differenceCases);
+        // console.log(dailyCasesAndDeathsArray);
 
 
         /// CUMULATIVE CASES CHART
@@ -359,6 +366,13 @@
                         format: d3.format(',')
                     }
                 }
+            },
+            bar: {
+                width: {
+                    ratio: .9 // this makes bar width 50% of length between ticks
+                }
+                // or
+                //width: 100 // this makes bar width 100px
             },
             legend: {
                 position: 'inset'

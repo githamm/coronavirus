@@ -134,7 +134,7 @@
     }
 
     .graphic-divider {
-        border-top: 2px solid #d9d9d9;
+        border-top: 3px solid #d9d9d9;
         margin: 20px 0 7px 0;
     }
 
@@ -151,6 +151,14 @@
         font-size: .9rem;
         font-style: italic;
     }
+
+    .instructions {
+        color: rgba(165,15,21,1);
+        font-size: .9rem;
+        font-style: italic;
+        text-align: center;
+        margin-top: 20px;
+    }
     </style>
 </head>
 
@@ -159,12 +167,13 @@
     <div class="graphic-divider"><span class="subtitle-text">Daily cases and deaths</span></div>
     <div class="updated">Data updated at <span id="updated-time"></span></div>
     <p><em>The charts may include cases and deaths reported after the daily update by the Colorado Department of Public Health and Environment. Not all cumulative cases are active &mdash; the state has not released recovery data. Source for all data is the <a href="https://www.colorado.gov/pacific/cdphe/2019-novel-coronavirus" target="_blank">CDPHE</a>.</em></p>
+    <p class="instructions">Click legend item to add/remove; hover over bars for details</p>
     <div id="daily-chart"></div>
     <div class="graphic-divider"><span class="subtitle-text">Cumulative cases and deaths</span></div>
     <div id="cumulative-chart"></div>
     <!-- BUBBLE CASE MAP -->
     <div class="graphic-divider"><span class="subtitle-text">Cases and deaths by county</span></div>
-    <p><em>Circles are centered in counties and are not meant to indicate an actual location; click circles for details.</em></p>
+    <p class="instructions">Circles are centered in counties and are not meant to indicate an actual location; click circles for details</p>
     <div class="legend-container">
         <div>
             <div class="legend-circle" id="cases-legend-circle"></div>
@@ -254,10 +263,15 @@
                     },
                 },
                 y: {
-                    max: 750,
+                    //max: 750,
                     tick: {
                         format: d3.format(',')
                     }
+                }
+            },
+            bar: {
+                width: {
+                    ratio: .75
                 }
             },
             legend: {
@@ -315,7 +329,7 @@
                     },
                 },
                 y: {
-                    max: 5000,
+                    //max: 5000,
                     tick: {
                         format: d3.format(',')
                     }
@@ -404,7 +418,7 @@
                 var circleBorder;
 
                 if (feature.properties.number_of_cases > 0) {
-                    casesCircleRadius = (Math.sqrt(feature.properties.number_of_cases) * 1.5)
+                    casesCircleRadius = (Math.sqrt(feature.properties.number_of_cases) * 1)
                 } else {
                     casesCircleRadius = 0
                 };
@@ -432,7 +446,7 @@
                 var circleBorder;
 
                 if (feature.properties.number_of_deaths > 0) {
-                    deathsCircleRadius = (Math.sqrt(feature.properties.number_of_deaths) * 1.5)
+                    deathsCircleRadius = (Math.sqrt(feature.properties.number_of_deaths) * 1)
                 } else {
                     deathsCircleRadius = 0
                 };
@@ -593,7 +607,7 @@
                     },
                 },
                 y: {
-                    max: 750,
+                    //max: 750,
                     tick: {
                         format: d3.format(',')
                     }
@@ -673,8 +687,8 @@
                 }
             },
             legend: {
-                //position: 'inset'
-                show: false
+                position: 'inset',
+                show: true
             },
             grid: {
                 x: {
