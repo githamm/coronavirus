@@ -115,6 +115,7 @@ body {
 .graphic-divider {
     border-top: 3px solid #d9d9d9;
     margin: 20px 0 7px 0;
+    clear: both;
 }
 
 .subtitle-text {
@@ -137,4 +138,21 @@ body {
     font-style: italic;
     text-align: center;
     margin-top: 20px;
+}
+
+.graphic-left {
+    width: 49%;
+    float: left;
+}
+
+.graphic-right {
+    width: 49%;
+    float: right;
+}
+
+@media only screen and (max-width: 699px) {
+    .graphic-left, .graphic-right {
+        width: 100% !important;
+        float: none !important;
+    }
 }
