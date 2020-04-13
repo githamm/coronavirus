@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pueblo County Colorado Coronavirus Tracker | The Denver Post</title>
+    <link rel="shortcut icon" href="https://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css">
+    <link rel="stylesheet" href="county_styles.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.js"></script>
+    <script src="https://extras.denverpost.com/foundation/js/vendor/modernizr.js"></script>
+    <script src="https://extras.denverpost.com/app/homicide-report/js/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <script src="leaflet.min.ajax.js"></script>
+    <script src="choropleth.js"></script>
+    <script src="county_graphics.js"></script>
+    <script src="pueblo.js"></script>
+</head>
+
+<body>
+    <div class="graphic-divider"><span class="subtitle-text">Pueblo County coronavirus cases and deaths</span></div>
+    <div class="updated">Data updated at <span id="updated-time"></span></div>
+    <p><em>Cases and deaths reflect the date they were reported to the Colorado Department of Public Health and Environment, and might have occurred on a different date. Reported data is through the previous day, which is reflected on the charts. Not all cases are active &mdash; the state has not released recovery data.<strong><em><a href="https://www.denverpost.com/2020/03/06/coronavirus-map-colorado/?utm_source=trendingbarmenu&utm_medium=link&utm_campaign=trendingbar" target="_blank">Click here to see the full data dashboard.</a></em></strong> Source for all data is the <a href="https://www.colorado.gov/pacific/cdphe/2019-novel-coronavirus" target="_blank">CDPHE</a>.</em></p>
+    <p class="instructions">Click legend item to add/remove; hover over bars for details</p>
+    <div id="daily-chart-pueblo"></div>
+    <hr>
+    <div id="cumulative-chart-pueblo"></div>
+    <div>
+    <div class="graphic-divider"><span class="subtitle-text">Colorado counties comparison</span></div>
+    <p><em>These charts compare the total case and death rates per 100,000 people for Colorado's 10 most-populous counties. Rates are useful for comparing areas with different populations.</em></p>
+    <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+    <div class="graphic-left">
+        <p><strong>Cases per 100,000 people</strong></p>
+        <div id="county-rate-comparison-cases-pueblo"></div>
+    </div>
+    <div class="graphic-right">
+        <p><strong>Deaths per 100,000 people</strong></p>
+        <div id="county-rate-comparison-deaths-pueblo"></div>
+    </div>
+    <hr>
+    <div class="graphic-left">
+        <p><strong>Total cases</strong><br><em>County (population rank)</em></p>
+        <div id="county-comparison-cases"></div>
+    </div>
+    <div class="graphic-right">
+        <p><strong>Total deaths</strong><br><em>County (population rank)</em></p>
+        <div id="county-comparison-deaths"></div>
+    </div>
+    </div>
+    <!-- BUBBLE CASE MAP -->
+    <div class="graphic-divider"><span class="subtitle-text">Cases and deaths by county</span></div>
+    <p class="instructions">Circles are centered in counties and are not meant to indicate an actual location; click circles for details</p>
+    <div class="legend-container">
+        <div>
+            <div class="legend-circle" id="cases-legend-circle"></div>
+            <div class="legend-text-bubble">County confirmed cases</div>
+        </div>
+        <div style="margin-top:-5px">
+            <div class="legend-circle" id="deaths-legend-circle"></div>
+            <div class="legend-text-bubble">County confirmed deaths</div>
+        </div>
+    </div>
+    <div id="map"></div>
+    <!-- CHOROPLETH RATE MAP -->
+    <div class="graphic-divider"><span class="subtitle-text">Cases per 100,000 people</span></div>
+    <div class="legend-container">
+        <div class="legend-container">
+            <p class="legend-chatter">Coronavirus case rate per 100,000 people</p>
+            <div class="legend-box" style="background-color:#ccc">
+                <p class="legend-text-choropleth">*</p>
+            </div>
+            <div class="legend-box" style="background-color:#c6dbef">
+                <p class="legend-text-choropleth">1-25</p>
+            </div>
+            <div class="legend-box" style="background-color:#6baed6">
+                <p class="legend-text-choropleth">26-50</p>
+            </div>
+            <div class="legend-box" style="background-color:#2171b5">
+                <p class="legend-text-choropleth" style="color:#fff">51-100</p>
+            </div>
+            <div class="legend-box" style="background-color:#08306b">
+                <p class="legend-text-choropleth" style="color:#fff">101+</p>
+            </div>
+            <p style="text-transform:none" class="legend-chatter"><em>*Fewer than 5 cases, no rate calculated</em></p>
+        </div>
+    </div>
+    <div id="rate-map"></div>
+    <div class="graphic-divider"><span class="subtitle-text">Colorado coronavirus cases and deaths</span></div>
+    <p class="instructions">Click legend item to add/remove; hover over bars for details</p>
+    <div id="daily-chart"></div>
+    <hr>
+    <div id="cumulative-chart"></div>
+</body>
+
+</html>
