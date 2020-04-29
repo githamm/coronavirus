@@ -67,9 +67,6 @@ $.getJSON(url, function(data) {
             y: {
                 show: true
             }
-        },
-        point: {
-            r: 3.5
         }
     })
 
@@ -135,7 +132,7 @@ $.getJSON(url, function(data) {
             }
         },
         point: {
-            r: 2.5
+            r: 1.75
         }
     })
 

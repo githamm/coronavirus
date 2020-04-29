@@ -143,11 +143,13 @@ body {
 .graphic-left {
     width: 49%;
     float: left;
+    margin-bottom: 20px;
 }
 
 .graphic-right {
     width: 49%;
     float: right;
+    margin-bottom: 20px;
 }
 
 @media only screen and (max-width: 699px) {

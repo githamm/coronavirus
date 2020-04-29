@@ -26,32 +26,35 @@
 <body>
     <div class="graphic-divider"><span class="subtitle-text">Arapahoe County coronavirus cases and deaths</span></div>
     <div class="updated">Data updated at <span id="updated-time"></span></div>
-    <p><em>The charts may include cases and deaths reported after the daily update by the Colorado Department of Public Health and Environment. Not all cases are active &mdash; the state has not released recovery data. <strong><em><a href="https://www.denverpost.com/2020/03/06/coronavirus-map-colorado/?utm_source=trendingbarmenu&utm_medium=link&utm_campaign=trendingbar" target="_blank">Click here to see the full data dashboard.</a></em></strong> Source for all data is the <a href="https://www.colorado.gov/pacific/cdphe/2019-novel-coronavirus" target="_blank">CDPHE</a>.</em></p>
+    <p>The charts show cases and deaths on the dates they were reported to the Colorado Department of Public Health and Environment &mdash; not necessarily the dates they occurred &mdash; which is the only county-level data the CDPHE releases. Not all cases are active &mdash; the state has not released recovery data. <strong><a href="https://www.denverpost.com/2020/03/06/coronavirus-map-colorado/?utm_source=trendingbarmenu&utm_medium=link&utm_campaign=trendingbar" target="_blank">Click here to see statewide data.</a></em></strong> Source for all data is the <a href="https://www.colorado.gov/pacific/cdphe/2019-novel-coronavirus" target="_blank">CDPHE</a>.</em></p>
     <p class="instructions">Click legend item to add/remove; hover over bars for details</p>
-    <div id="daily-chart-arapahoe"></div>
-    <hr>
-    <div id="cumulative-chart-arapahoe"></div>
+    <div class="graphic-left">
+        <div id="daily-chart-arapahoe"></div>
+    </div>
+    <div class="graphic-right">
+        <div id="cumulative-chart-arapahoe"></div>
+    </div>
     <div>
-    <div class="graphic-divider"><span class="subtitle-text">Colorado counties comparison</span></div>
-    <p><em>These charts compare the total case and death rates per 100,000 people for Colorado's 10 most-populous counties. Rates are useful for comparing areas with different populations.</em></p>
-    <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
-    <div class="graphic-left">
-        <p><strong>Cases per 100,000 people</strong></p>
-        <div id="county-rate-comparison-cases-arapahoe"></div>
-    </div>
-    <div class="graphic-right">
-        <p><strong>Deaths per 100,000 people</strong></p>
-        <div id="county-rate-comparison-deaths-arapahoe"></div>
-    </div>
-    <hr>
-    <div class="graphic-left">
-        <p><strong>Total cases</strong><br><em>County (population rank)</em></p>
-        <div id="county-comparison-cases"></div>
-    </div>
-    <div class="graphic-right">
-        <p><strong>Total deaths</strong><br><em>County (population rank)</em></p>
-        <div id="county-comparison-deaths"></div>
-    </div>
+        <div class="graphic-divider"><span class="subtitle-text">Colorado counties comparison</span></div>
+        <p><em>These charts compare the total case and death rates per 100,000 people for Colorado's 10 most-populous counties. Rates are useful for comparing areas with different populations.</em></p>
+        <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+        <div class="graphic-left">
+            <p><strong>Cases per 100,000 people</strong></p>
+            <div id="county-rate-comparison-cases-arapahoe"></div>
+        </div>
+        <div class="graphic-right">
+            <p><strong>Deaths per 100,000 people</strong></p>
+            <div id="county-rate-comparison-deaths-arapahoe"></div>
+        </div>
+        <hr>
+        <div class="graphic-left">
+            <p><strong>Total cases</strong><br><em>County (population rank)</em></p>
+            <div id="county-comparison-cases"></div>
+        </div>
+        <div class="graphic-right">
+            <p><strong>Total deaths</strong><br><em>County (population rank)</em></p>
+            <div id="county-comparison-deaths"></div>
+        </div>
     </div>
     <!-- BUBBLE CASE MAP -->
     <div class="graphic-divider"><span class="subtitle-text">Cases and deaths by county</span></div>
@@ -91,11 +94,6 @@
         </div>
     </div>
     <div id="rate-map"></div>
-    <div class="graphic-divider"><span class="subtitle-text">Colorado coronavirus cases and deaths</span></div>
-    <p class="instructions">Click legend item to add/remove; hover over bars for details</p>
-    <div id="daily-chart"></div>
-    <hr>
-    <div id="cumulative-chart"></div>
 </body>
 
 </html>
