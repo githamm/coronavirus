@@ -153,7 +153,7 @@
     }
 
     .instructions {
-        color: rgba(165,15,21,1);
+        color: rgba(165, 15, 21, 1);
         font-size: .9rem;
         font-style: italic;
         text-align: center;
@@ -166,7 +166,11 @@
     <!-- CASE AND DEATH CHARTS -->
     <div class="graphic-divider"><span class="subtitle-text">Daily cases, hospitalizations and deaths</span></div>
     <div class="updated">Data updated at <span id="updated-time"></span></div>
-    <p><em>Note: We are now using the Colorado Department of Public Health and Environment's "date of onset" data that attempts to show the actual date of cases, hospitalizations and deaths rather than the date they were reported. <strong>Data could lag a day or two, which is reflected on the charts, and data within the most recent week is likely to be revised.</strong> Not all cumulative cases are active &mdash; the state has not released recovery data. Source for all data is the <a href="https://www.colorado.gov/pacific/cdphe/2019-novel-coronavirus" target="_blank">CDPHE</a>.</em></p>
+    <p><em>On May 15, the Colorado Department of Public Health and Environment changed the way it is reporting COVID-19 deaths. Where the CDPHE previously reported all deaths related to COVID-19 as one category, it is now using two categories: "deaths among cases," which is those who died while infected with COVID-19, and "deaths due to COVID-19."</em></p>
+    <p><em>We will report both numbers here, but will continue to use the same framework we've been using for the graphics, "deaths among cases," since it is the only one the CDPHE breaks down by date. We continue to use the "date of onset" data rather than the "reported date" data.</em></p>
+    <p><em><strong>Data could lag a day or two, which is reflected on the charts, and data within the most recent week is likely to be revised.</strong> Not all cumulative cases are active &mdash; the state has not released recovery data. Source for all data is the <a href="https://www.colorado.gov/pacific/cdphe/2019-novel-coronavirus" target="_blank">CDPHE</a>.</em></p>
+    <hr>
+    <p style="text-align: center">Cases: <strong><span id="total-cases"></span></strong> &bull; Deaths related to COVID-19: <strong><span id="total-related-deaths"></span></strong> &bull; Deaths from COVID-19: <strong><span id="total-covid-deaths"></span></strong></p>
     <p class="instructions">Click legend item to add/remove; hover over bars for details</p>
     <div id="daily-chart"></div>
     <div id="daily-hospitalizations-chart"></div>
@@ -224,8 +228,14 @@
 
     $.getJSON(url, function(data) {
         var sheetJson = data.feed.entry;
-        console.log(sheetJson);
+        var displayTotalCases = Number(sheetJson[0].gsx$totalcases.$t);
+        var displayRelatedDeaths = Number(sheetJson[0].gsx$totalrelateddeaths.$t);
+        var displayCovidDeaths = Number(sheetJson[0].gsx$totalcoviddeaths.$t);
         document.getElementById('updated-time').innerHTML = sheetJson[0].gsx$updated.$t;
+        document.getElementById('total-cases').innerHTML = displayTotalCases.toLocaleString();
+        document.getElementById('total-related-deaths').innerHTML = displayRelatedDeaths.toLocaleString();
+        document.getElementById('total-covid-deaths').innerHTML = displayCovidDeaths.toLocaleString();
+
         /// DAILY CASES CHART
         var dailyCasesChart = c3.generate({
             bindto: '#daily-chart',
@@ -647,7 +657,7 @@
                     else if (rate > 250) fillColor = '#2171b5';
                     else if (rate > 100) fillColor = '#6baed6';
                     else if (rate > 0) fillColor = '#c6dbef';
-                } else if (cases == '') fillColor = 'rgba(0,0,0,0)';
+                } else if (cases == 0) fillColor = 'rgba(0,0,0,0)';
                 else fillColor = '#ccc';
                 return {
                     color: '#000000',

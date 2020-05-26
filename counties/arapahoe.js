@@ -191,18 +191,18 @@ $.getJSON(url, function(data) {
             types: {
                 'elpasoCaseRate': 'line'
             },
-            colors: {
-                'adamsCaseRate': '#bbb',
-                'arapahoeCaseRate': 'rgba(165,15,21,1)',
-                'boulderCaseRate': '#bbb',
-                'denverCaseRate': '#bbb',
-                'douglasCaseRate': '#bbb',
-                'elpasoCaseRate': '#bbb',
-                'jeffersonCaseRate': '#bbb',
-                'larimerCaseRate': '#bbb',
-                'puebloCaseRate': '#bbb',
-                'weldCaseRate': '#bbb'
-            },
+            // colors: {
+            //     'adamsCaseRate': '#bbb',
+            //     'arapahoeCaseRate': 'rgba(165,15,21,1)',
+            //     'boulderCaseRate': '#bbb',
+            //     'denverCaseRate': '#bbb',
+            //     'douglasCaseRate': '#bbb',
+            //     'elpasoCaseRate': '#bbb',
+            //     'jeffersonCaseRate': '#bbb',
+            //     'larimerCaseRate': '#bbb',
+            //     'puebloCaseRate': '#bbb',
+            //     'weldCaseRate': '#bbb'
+            // },
         },
         axis: {
             x: {
@@ -264,18 +264,18 @@ $.getJSON(url, function(data) {
             types: {
                 'elpasoDeathRate': 'line'
             },
-            colors: {
-                'adamsDeathRate': '#bbb',
-                'arapahoeDeathRate': 'rgba(165,15,21,1)',
-                'boulderDeathRate': '#bbb',
-                'denverDeathRate': '#bbb',
-                'douglasDeathRate': '#bbb',
-                'elpasoDeathRate': '#bbb',
-                'jeffersonDeathRate': '#bbb',
-                'larimerDeathRate': '#bbb',
-                'puebloDeathRate': '#bbb',
-                'weldDeathRate': '#bbb'
-            },
+            // colors: {
+            //     'adamsDeathRate': '#bbb',
+            //     'arapahoeDeathRate': 'rgba(165,15,21,1)',
+            //     'boulderDeathRate': '#bbb',
+            //     'denverDeathRate': '#bbb',
+            //     'douglasDeathRate': '#bbb',
+            //     'elpasoDeathRate': '#bbb',
+            //     'jeffersonDeathRate': '#bbb',
+            //     'larimerDeathRate': '#bbb',
+            //     'puebloDeathRate': '#bbb',
+            //     'weldDeathRate': '#bbb'
+            // },
         },
         axis: {
             x: {

@@ -133,14 +133,17 @@
     <div id="filters">
         <div class="row">
             <div class="large-12 columns">
-                <div class="large-4 medium-4 small-12 columns">
+                <div class="large-3 medium-3 small-12 columns">
                     <p id="filter-1"></p>
                 </div>
-                <div class="large-4 medium-4 small-12 columns">
+                <div class="large-3 medium-3 small-12 columns">
                     <p id="filter-2"></p>
                 </div>
-                <div class="large-4 medium-4 small-12 columns">
+                <div class="large-3 medium-3 small-12 columns">
                     <p id="filter-3"></p>
+                </div>
+                <div class="large-3 medium-3 small-12 columns">
+                    <p id="filter-4"></p>
                 </div>
             </div>
         </div>
@@ -156,7 +159,9 @@
                         <th>Facility type</th>
                         <th>Facility subtype</th>
                         <th>County</th>
-                        <th>Date illness confirmed</th>
+                        <th>Investigation status</th>
+                        <th>Date outbreak confirmed</th>
+                        <th>Date outbreak resolved</th>
                         <th>Resident confirmed cases</th>
                         <th>Resident probable cases</th>
                         <th>Resident confirmed deaths</th>
@@ -169,7 +174,6 @@
                         <th>Attendee probable cases</th>
                         <th>Attendee confirmed deaths</th>
                         <th>Attendee probable deaths</th>
-                        <th>Investigation status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -222,7 +226,9 @@
                 { data: 'type' },
                 { data: 'subtype' },
                 { data: 'county' },
-                { data: 'date' },
+                { data: 'investigation_status' },
+                { data: 'outbreak_date' },
+                { data: 'resolved_date' },
                 { data: 'resident_confirmed_cases' },
                 { data: 'resident_probable_cases' },
                 { data: 'resident_confirmed_deaths' },
@@ -234,8 +240,7 @@
                 { data: 'attendee_confirmed_cases' },
                 { data: 'attendee_probable_cases' },
                 { data: 'attendee_confirmed_deaths' },
-                { data: 'attendee_probable_deaths' },
-                { data: 'investigation_status' }
+                { data: 'attendee_probable_deaths' }
             ],
             initComplete: function() {
                 yadcf.init(outbreaksTable, [{
@@ -255,6 +260,12 @@
                     column_number: 5,
                     filter_container_id: 'filter-3',
                     filter_default_label: 'Filter by county'
+                },
+                {
+
+                    column_number: 6,
+                    filter_container_id: 'filter-4',
+                    filter_default_label: 'Filter by outbreak status'
                 }
                  ], {
                     cumulative_filtering: true,
