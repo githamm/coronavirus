@@ -159,6 +159,10 @@
         text-align: center;
         margin-top: 20px;
     }
+
+    .c3-line {
+        stroke-width: 3px;
+    }
     </style>
 </head>
 
@@ -247,16 +251,19 @@
                 json: sheetJson,
                 keys: {
                     x: 'gsx$date.$t',
-                    value: ['gsx$dailycases.$t']
+                    value: ['gsx$dailycases.$t', 'gsx$casesaverage.$t']
                 },
                 names: {
-                    'gsx$dailycases.$t': 'Daily cases'
+                    'gsx$dailycases.$t': 'Daily cases by date of illness onset',
+                    'gsx$casesaverage.$t': '7-day moving average'
                 },
                 types: {
-                    'gsx$dailycases.$t': 'bar'
+                    'gsx$dailycases.$t': 'bar',
+                    'gsx$casesaverage.$t': 'line'
                 },
                 colors: {
-                    'gsx$dailycases.$t': 'rgba(8,81,156,.65)'
+                    'gsx$dailycases.$t': 'rgba(8,81,156,.2)',
+                    'gsx$casesaverage.$t': 'rgba(8,81,156,1)'
                 },
             },
             // padding: {
@@ -294,6 +301,9 @@
                 y: {
                     show: true
                 }
+            },
+            point: {
+                r: 0
             }
         });
 
