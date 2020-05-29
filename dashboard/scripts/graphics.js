@@ -1,6 +1,6 @@
 /******************** STATE-LEVEL GRAPHICS ********************/
 
-var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/2';
+var chartSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/2';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
 
 $.getJSON(url, function(data) {
@@ -13,6 +13,17 @@ $.getJSON(url, function(data) {
     document.getElementById('total-related-deaths').innerHTML = displayRelatedDeaths.toLocaleString();
     // document.getElementById('total-covid-deaths').innerHTML = displayCovidDeaths.toLocaleString();
 
+    var casesAverageArray = [];
+    for (var i = 0; i < sheetJson.length; i++) {
+        casesAverageArray.push(
+            sheetJson[i].gsx$reporteddailycasesaverage.$t
+        )
+    };
+    casesAverageArray = casesAverageArray.map(function(each_element) {
+        return parseInt(each_element).toFixed(1);
+    });
+    console.log(sheetJson);
+
     /// DAILY CASES CHART
     var dailyCasesChart = c3.generate({
         bindto: '#daily-chart',
@@ -24,19 +35,19 @@ $.getJSON(url, function(data) {
             json: sheetJson,
             keys: {
                 x: 'gsx$date.$t',
-                value: ['gsx$dailycases.$t', 'gsx$casesaverage.$t']
+                value: ['gsx$onsetdailycases.$t', 'gsx$reporteddailycasesaverage.$t']
             },
             names: {
-                'gsx$dailycases.$t': 'Daily cases by date of illness onset',
-                'gsx$casesaverage.$t': '7-day moving average'
+                'gsx$onsetdailycases.$t': 'Daily cases by date of illness onset',
+                'gsx$reporteddailycasesaverage.$t': '7-day moving average of reported cases'
             },
             types: {
-                'gsx$dailycases.$t': 'bar',
-                'gsx$casesaverage.$t': 'line'
+                'gsx$onsetdailycases.$t': 'bar',
+                'gsx$reporteddailycasesaverage.$t': 'line'
             },
             colors: {
-                'gsx$dailycases.$t': 'rgba(8,81,156,.2)',
-                'gsx$casesaverage.$t': 'rgba(8,81,156,1)'
+                'gsx$onsetdailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$reporteddailycasesaverage.$t': 'rgba(8,81,156,1)'
             },
         },
         // padding: {
@@ -90,16 +101,19 @@ $.getJSON(url, function(data) {
             json: sheetJson,
             keys: {
                 x: 'gsx$date.$t',
-                value: ['gsx$dailyhospitalizations.$t']
+                value: ['gsx$onsetdailyhospitalizations.$t', 'gsx$reporteddailyhospitalizationsaverage.$t']
             },
             names: {
-                'gsx$dailyhospitalizations.$t': 'Daily hospitalizations'
+                'gsx$onsetdailyhospitalizations.$t': 'Daily hospitalizations by date of illness onset',
+                'gsx$reporteddailyhospitalizationsaverage.$t': '7-day moving average of reported hospitalizations'
             },
             types: {
-                'gsx$dailyhospitalizations.$t': 'bar'
+                'gsx$onsetdailyhospitalizations.$t': 'bar',
+                'gsx$reporteddailyhospitalizationsaverage.$t': 'line'
             },
             colors: {
-                'gsx$dailyhospitalizations.$t': 'rgba(254,178,76,.65)'
+                'gsx$onsetdailyhospitalizations.$t': 'rgba(254,178,76,.3)',
+                'gsx$reporteddailyhospitalizationsaverage.$t': 'rgba(254,178,76,1)'
             },
         },
         // padding: {
@@ -137,6 +151,9 @@ $.getJSON(url, function(data) {
             y: {
                 show: true
             }
+        },
+        point: {
+            r: 0
         }
     });
 
@@ -150,16 +167,19 @@ $.getJSON(url, function(data) {
             json: sheetJson,
             keys: {
                 x: 'gsx$date.$t',
-                value: ['gsx$dailydeaths.$t']
+                value: ['gsx$deathcertificatedailydeaths.$t', 'gsx$reporteddailydeathsaverage.$t']
             },
             names: {
-                'gsx$dailydeaths.$t': 'Daily deaths',
+                'gsx$deathcertificatedailydeaths.$t': 'Daily deaths by death certificate date',
+                'gsx$reporteddailydeathsaverage.$t': '7-day moving average of reported deaths'
             },
             types: {
-                'gsx$dailydeaths.$t': 'bar'
+                'gsx$deathcertificatedailydeaths.$t': 'bar',
+                'gsx$reporteddailydeathsaverage.$t': 'line'
             },
             colors: {
-                'gsx$dailydeaths.$t': 'rgba(165,15,21,.65)',
+                'gsx$deathcertificatedailydeaths.$t': 'rgba(165,15,21,.2)',
+                'gsx$reporteddailydeathsaverage.$t': 'rgba(165,15,21,1)'
             },
         },
         // padding: {
@@ -197,6 +217,9 @@ $.getJSON(url, function(data) {
             y: {
                 show: true
             }
+        },
+        point: {
+            r: 0
         }
     });
 
@@ -656,7 +679,7 @@ $.getJSON(url, function(data) {
 })
 
 ///// MAPS /////
-// var mapSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/1'
+// var mapSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/1'
 // var mapUrl = 'https://spreadsheets.google.com/feeds/list/' + mapSpreadsheetID + '/public/full?alt=json';
 
 // /// BUBBLE CASE MAP

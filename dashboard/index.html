@@ -26,6 +26,8 @@
 </head>
 
 <body>
+    <p><strong>Bars:</strong> Best for showing historical data older than two weeks. <em>All data can be revised daily and data for most recent two weeks will be signifcantly revised moving forward as health department investigations progress.</em></p>
+    <p><strong>Line:</strong> Best for showing trend. <em>The lag time between when cases, deaths and hospitalizations occurred and when they were reported to the state can be several days. Using a 7-day moving average smooths out artifical peaks and valleys in the data.</em></p>
     <table>
         <tr>
             <td style="border-right:2px solid silver"><span style="font-size:1.5rem;font-family:'Roboto Condensed',sans-serif;border-top:1px solid blue">CASES<br><span id="total-cases"></span></td>
@@ -37,6 +39,12 @@
             <td style="border-right:2px solid silver"><span style="font-size:1.5rem;font-family:'Roboto Condensed',sans-serif;">DEATHS<br><span id="total-related-deaths"></span></td>
             <td>
                 <div id="daily-deaths-chart"></div>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-right:2px solid silver"><span style="font-size:1.5rem;font-family:'Roboto Condensed',sans-serif;">HOSPITALIZATIONS<br><span id=""></span></td>
+            <td>
+                <div id="daily-hospitalizations-chart"></div>
             </td>
         </tr>
     </table>
