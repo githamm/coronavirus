@@ -22,32 +22,203 @@
     <script src="./scripts/graphics.js"></script>
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    .source {
+        font-size: .8rem;
+        font-style: italic;
+        color: #505050;
+        line-height: 1.2;
+    }
+    .number-title,
+    .number {
+        font-family: 'Roboto Condensed', sans-serif;
+        font-size: 1.7rem;
+        font-color: #1e1e1e;
+        letter-spacing: -1px;
+        text-align: center;
+        margin-bottom: -14px;
+    }
+
+    .number-title {
+        line-height: 28px;
+        margin-bottom: -6px;
+    }
+
+    .number {}
+
+    .number-subtitle {
+        font-family: 'Roboto', sans-serif;
+        font-size: .85rem;
+        font-style: italic;
+        color: #505050;
+        line-height: 17px;
+        text-align: center;
+        margin-top: 8px;
+    }
+
+    .c3-region.region1 {
+        fill: #000;
+    }
+
+    tr {
+        border: 2px solid silver;
+    }
+
+    #charts-container {}
+
+    @media all and (max-width: 700px) {
+
+        /*td.number-cell {
+            width: 20%;
+        }
+
+        td.chart-cell {
+            width: 80%;
+        }*/
+        #wide-table {
+            display: none;
+        }
+    }
     </style>
+    <!-- <script>
+    (function($) {
+        var $window = $(window),
+            $html = $('html');
+
+        $window.resize(function resize() {
+            if ($window.width() < 514) {
+                return $html.addId('mobile');
+            }
+
+            $html.removeId('mobile');
+        }).trigger('resize');
+    })(jQuery);
+    </script> -->
 </head>
 
 <body>
-    <p><strong>Bars:</strong> Best for showing historical data older than two weeks. <em>All data can be revised daily and data for most recent two weeks will be signifcantly revised moving forward as health department investigations progress.</em></p>
-    <p><strong>Line:</strong> Best for showing trend. <em>The lag time between when cases, deaths and hospitalizations occurred and when they were reported to the state can be several days. Using a 7-day moving average smooths out artifical peaks and valleys in the data.</em></p>
-    <table>
+    <div class="row" id="intro-wrapper">
+        <div class="large-12 columns">
+            <p style="font-family:'Roboto Condensed',sans-serif;font-size:1.1rem;margin-bottom:-1px;">HOW TO READ THE CHARTS</p>
+            <p><strong>Line:</strong> Best for showing trend. <em>The charts show when cases, deaths and hospitalizations were reported to the Colorado Department of Public Health and Environment. The lag time between when those occurred and when they were reported to the state can be several days. Using a 7-day moving average smooths out peaks and valleys in the data due to reporting lag times.</em></p>
+            <p><strong>Bars:</strong> Best for showing historical data. <em>The charts show when cases and hospitalizations occurred based on the onset date of symptoms, and when a death occurred based on the death certificate. <strong>Data for most recent two weeks (10 days for deaths) is not shown because it will be signifcantly revised</strong> with subsequent data releases as CDPHE investigations progress.</em></p>
+            <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+            <p class="chart-chatter">Gray vertical line indicates the end of the stay-at-home order</p>
+        </div>
+    </div>
+    <div id="charts-container">
+        <div class="row">
+            <div class="large-12 columns" style="border-left:2px solid silver;border-top:2px solid silver;border-right:2px solid silver;">
+                <div class="large-2 medium-2 small-12 columns" style="padding:5% 0 3% 0">
+                    <p class="number-title">CASES</p>
+                    <p class="number" id="total-cases"></p>
+                </div>
+                <div class="large-10 medium-10 small-12 columns" style="border-left: 2px solid silver">
+                        <div id="daily-chart"></div>
+                        <p class="source">CDPHE data sets used | Line chart: Cases of COVID-19 in Colorado by Date Reported to the State | Bar chart: Cases of COVID-19 in Colorado by Date of Illness Onset</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns" style="border:2px solid silver">
+                <div class="large-2 medium-2 small-12 columns" style="padding-top:2%">
+                    <p class="number-title">DEATHS</p>
+                    <p class="number" id="total-covid-deaths"></p>
+                    <p class="number-subtitle">Deaths due to COVID-19</p>
+                    <hr style="margin:-5px 45px 5px 45px">
+                    <p class="number" id="total-related-deaths"></p>
+                    <p class="number-subtitle">Deaths among people<br>with COVID-19</p>
+                </div>
+                <div class="large-10 medium-10 small-12 columns" style="border-left: 2px solid silver">
+                        <div id="daily-deaths-chart"></div>
+                        <p class="source">CDPHE data sets used | Line chart: Cumulative Number of Deaths From COVID-19 in Colorado by Date Reported to the State | Bar chart: Number of Deaths From COVID-19 in Colorado by Date of Death - By Day</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns" style="border-left:2px solid silver;border-bottom:2px solid silver;border-right:2px solid silver;">
+                <div class="large-2 medium-2 small-12 columns" style="padding:5% 0 3% 0">
+                    <p class="number-title">HOSPITAL<br>ADMISSIONS</p>
+                    <p class="number" id="total-hospitalizations"></p>
+                </div>
+                <div class="large-10 medium-10 small-12 columns" style="border-left: 2px solid silver">
+                        <div id="daily-hospitalizations-chart"></div>
+                        <p class="source">CDPHE data sets used | Line chart: Cumulative Number of Hospitalized Cases of COVID-19 in Colorado by Date Reported to the State | Bar chart: Cumulative Number of Hospitalized Cases of COVID-19 in Colorado by Date of Illness Onset</p>
+                </div>
+            </div>
+        </div>
+        <!-- <table id="wide-table">
         <tr>
-            <td style="border-right:2px solid silver"><span style="font-size:1.5rem;font-family:'Roboto Condensed',sans-serif;border-top:1px solid blue">CASES<br><span id="total-cases"></span></td>
-            <td>
+            <td class="number-cell" style="border-right:2px solid silver">
+                <p class="number-title">CASES</p>
+                <p class="number" id="total-cases"></p>
+            </td>
+            <td class="chart-cell">
                 <div id="daily-chart"></div>
             </td>
         </tr>
         <tr>
-            <td style="border-right:2px solid silver"><span style="font-size:1.5rem;font-family:'Roboto Condensed',sans-serif;">DEATHS<br><span id="total-related-deaths"></span></td>
-            <td>
+            <td  class="number-cell" style="border-right:2px solid silver">
+                <p class="number-title">DEATHS</p>
+                <p class="number" id="total-covid-deaths"></p>
+                    <p class="number-subtitle">Deaths due to COVID-19</p>
+                    <hr style="margin:-5px 45px 5px 45px">
+                    <p class="number" id="total-related-deaths"></p>
+                    <p class="number-subtitle">Deaths among people<br>with COVID-19</p>
+            </td>
+            <td class="chart-cell">
                 <div id="daily-deaths-chart"></div>
             </td>
         </tr>
         <tr>
-            <td style="border-right:2px solid silver"><span style="font-size:1.5rem;font-family:'Roboto Condensed',sans-serif;">HOSPITALIZATIONS<br><span id=""></span></td>
-            <td>
+            <td  class="number-cell" style="border-right:2px solid silver">
+                <p class="number-title">HOSPITAL<br>ADMISSIONS</p>
+                <p class="number" id="total-hospitalizations"></p>
+            </td>
+            <td  class="chart-cell">
                 <div id="daily-hospitalizations-chart"></div>
             </td>
         </tr>
-    </table>
+    </table> -->
+        <!-- <table id="phone-table">
+        <tr>
+            <td class="number-cell" style="border-right:2px solid silver">
+                <p class="number-title">CASES</p>
+                <p class="number" id="total-cases"></p>
+            </td>
+        </tr>
+        <tr>
+            <td class="chart-cell">
+                <div id="daily-chart"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="number-cell" style="border-right:2px solid silver">
+                <p class="number-title">DEATHS</p>
+                <p class="number" id="total-covid-deaths"></p>
+                <p class="number-subtitle">Deaths due to COVID-19</p>
+                <hr style="margin:-5px 45px 5px 45px">
+                <p class="number" id="total-related-deaths"></p>
+                <p class="number-subtitle">Deaths among people<br>with COVID-19</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="chart-cell">
+                <div id="daily-deaths-chart"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="number-cell" style="border-right:2px solid silver">
+                <p class="number-title">HOSPITAL<br>ADMISSIONS</p>
+                <p class="number" id="total-hospitalizations"></p>
+            </td>
+        </tr>
+        <td class="chart-cell">
+            <div id="daily-hospitalizations-chart"></div>
+        </td>
+        </tr>
+    </table> -->
 </body>
 
 </html>

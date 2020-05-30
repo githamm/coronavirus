@@ -8,10 +8,12 @@ $.getJSON(url, function(data) {
     var displayTotalCases = Number(sheetJson[0].gsx$totalcases.$t);
     var displayRelatedDeaths = Number(sheetJson[0].gsx$totalrelateddeaths.$t);
     var displayCovidDeaths = Number(sheetJson[0].gsx$totalcoviddeaths.$t);
-    // document.getElementById('updated-time').innerHTML = sheetJson[0].gsx$updated.$t;
+    var displayTotalHospitalizations = Number(sheetJson[0].gsx$totalhospitalizations.$t);
+    //document.getElementById('updated-time').innerHTML = sheetJson[0].gsx$updated.$t;
     document.getElementById('total-cases').innerHTML = displayTotalCases.toLocaleString();
     document.getElementById('total-related-deaths').innerHTML = displayRelatedDeaths.toLocaleString();
-    // document.getElementById('total-covid-deaths').innerHTML = displayCovidDeaths.toLocaleString();
+    document.getElementById('total-covid-deaths').innerHTML = displayCovidDeaths.toLocaleString();
+    document.getElementById('total-hospitalizations').innerHTML = displayTotalHospitalizations.toLocaleString();
 
     var casesAverageArray = [];
     for (var i = 0; i < sheetJson.length; i++) {
@@ -28,7 +30,7 @@ $.getJSON(url, function(data) {
     var dailyCasesChart = c3.generate({
         bindto: '#daily-chart',
         size: {
-            height: 150
+            height: 175
             //width: 800
         },
         data: {
@@ -66,7 +68,7 @@ $.getJSON(url, function(data) {
                 //max: 750,
                 tick: {
                     format: d3.format(','),
-                    values: [0, 100, 200, 300, 400]
+                    //values: [0, 100, 200, 300, 400]
                 }
             }
         },
@@ -75,6 +77,9 @@ $.getJSON(url, function(data) {
                 ratio: .65
             }
         },
+        regions: [
+                { axis: 'x', start: 85, end: 86, class: 'region1' }
+            ],
         legend: {
             position: 'inset'
         },
@@ -94,7 +99,7 @@ $.getJSON(url, function(data) {
     var dailyHospitalizationsChart = c3.generate({
         bindto: '#daily-hospitalizations-chart',
         size: {
-            height: 150
+            height: 175
             //width: 800
         },
         data: {
@@ -132,7 +137,7 @@ $.getJSON(url, function(data) {
                 //max: 750,
                 tick: {
                     format: d3.format(','),
-                    values: [0, 25, 50, 75, 100]
+                    //values: [0, 25, 50, 75, 100]
                 }
             }
         },
@@ -141,6 +146,9 @@ $.getJSON(url, function(data) {
                 ratio: .65
             }
         },
+        regions: [
+                { axis: 'x', start: 85, end: 86, class: 'region1' }
+            ],
         legend: {
             position: 'inset'
         },
@@ -160,7 +168,7 @@ $.getJSON(url, function(data) {
     var dailyDeathsChart = c3.generate({
         bindto: '#daily-deaths-chart',
         size: {
-            height: 150
+            height: 175
             //width: 800
         },
         data: {
@@ -198,7 +206,7 @@ $.getJSON(url, function(data) {
                 //max: 750,
                 tick: {
                     format: d3.format(','),
-                    values: [0, 10, 20, 30]
+                    //values: [0, 10, 20, 30]
                 }
             }
         },
@@ -207,6 +215,9 @@ $.getJSON(url, function(data) {
                 ratio: .65
             }
         },
+        regions: [
+                { axis: 'x', start: 85, end: 86, class: 'region1' }
+            ],
         legend: {
             position: 'inset'
         },
