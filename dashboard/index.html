@@ -35,6 +35,7 @@
         font-style: italic;
         color: #505050;
         line-height: 1.2;
+        margin-top: 10px;
     }
 
     .number-title,
@@ -62,6 +63,12 @@
         line-height: 17px;
         text-align: center;
         margin-top: 8px;
+    }
+
+    .how-chart {
+        font-family:'Roboto Condensed',sans-serif;
+        font-size:1.1rem;
+        margin-bottom:-1px;
     }
 
     .c3-region.region1 {
@@ -95,17 +102,31 @@
 <body>
     <div class="row">
         <div class="large-12 columns">
+            <p class="how-chart" style="margin-bottom:-2px">ON THIS PAGE:</p>
+            <ul>
+            <li>Statewide cases, deaths and hospitalizations charts</li>
+            <li>County cases and deaths charts and maps</li>
+            <li>Cases, hospitalizations and deaths by race and ethnicity charts</li>
+            <li>Cases, hospitalizations and deaths by age group charts</li>
+            <li>Testing rate and results chart</li>
+        </ul>
+        </div>
+    </div>
+    <div id="cases"></div>
+    <div class="row">
+        <div class="large-12 columns">
             <h2 class="section-heading">Cases, deaths and hospitalizations</h2>
         </div>
     </div>
     <div class="row">
         <div class="large-12 columns">
-            <p style="font-family:'Roboto Condensed',sans-serif;font-size:1.1rem;margin-bottom:-1px;">HOW TO READ THE CHARTS</p>
-            <p><strong>Line:</strong> Best for showing trend. <em>The charts show when cases, deaths and hospitalizations were reported to the Colorado Department of Public Health and Environment. The lag time between when those occurred and when they were reported to the state can be several days. Using a 7-day moving average smooths out peaks and valleys in the data due to reporting lag times.</em></p>
-            <p><strong>Bars:</strong> Best for showing historical data. <em>The charts show when cases and hospitalizations occurred based on the onset date of symptoms, and when a death occurred based on the death certificate. <strong>Data for most recent two weeks (10 days for deaths) is not shown because it will be signifcantly revised</strong> with subsequent data releases as CDPHE investigations progress.</em></p>
+            <p class="how-chart">HOW TO READ THE CHARTS</p>
+            <p><strong>Line:</strong> <em>Best for showing trend.</em> The charts show when cases, deaths and hospitalizations were reported to the Colorado Department of Public Health and Environment. The lag time between when those occurred and when they were reported to the state can be several days. Using a 7-day moving average smooths out peaks and valleys in the data due to reporting lag times.</p>
+            <p><strong>Bars:</strong> <em>Best for showing historical data.</em> The charts show when cases and hospitalizations occurred based on the onset date of symptoms, and when a death occurred based on the date on the death certificate. <strong>Data for most recent two weeks is not shown because it will be signifcantly revised</strong> with subsequent data releases as CDPHE investigations progress, and does not show an accurate representation of recent cases, deaths and hospitalizations.</p>
+            <p><strong>Totals:</strong> The total number of cases, deaths and hospitalizations that have been reported to the CDPHE.</p>
             <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
             <p class="chart-chatter">Gray vertical line indicates the end of the stay-at-home order</p>
-            <p class="updated"><em>Charts updated at <span id="updated-time"></span></em></p>
+            <p class="updated"><em>Charts updated <span id="updated-time"></span></em></p>
         </div>
     </div>
     <div class="row">
@@ -148,6 +169,7 @@
             </div>
         </div>
     </div>
+    <div id="county-charts"></div>
     <div class="row">
         <div class="large-12 columns">
             <h2 class="section-heading">Case and death rates for counties</h2>
@@ -155,7 +177,7 @@
     </div>
     <div class="row">
         <div class="large-12 columns">
-            <p>These charts compare the total case and death rates per 100,000 people for Colorado's 10 most-populous counties. Rates are useful for comparing areas with different populations.</p>
+            <p>These charts compare the total case and death rates per 100,000 people for Colorado's 10 most-populous counties using a 7-day moving average of cases and deaths as they are reported to CDPHE. Rates are useful for comparing areas with different populations.</p>
             <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
             <p class="chart-chatter">Gray vertical line indicates the end of the stay-at-home order</p>
         </div>
@@ -178,8 +200,11 @@
         <p><strong>Total deaths</strong><br><em>County (population rank)</em></p>
         <div id="county-comparison-deaths"></div>
     </div>
+    <p class="source">CDPHE data sets used | Colorado Case Counts by County, Number of Deaths by County</p>
     <hr>
+    <div id="county-maps"></div>
     <!-- BUBBLE CASE MAP -->
+    <p>The first map shows the total number of cases and deaths by county and the second shows the case rate per 100,000 by county.</p>
     <p class="instructions">Circles are centered in counties and are not meant to indicate an actual location; click circles for details</p>
     <div class="legend-container">
         <div>
@@ -192,7 +217,8 @@
         </div>
     </div>
     <div id="map"></div>
-    <!-- <p class="credit">Source: <a href="https://www.colorado.gov/pacific/cdphe/2019-novel-coronavirus" target="_blank">Colorado Department of Public Health and Environment</a> &bull; By Kevin Hamm, The Denver Post</p> -->
+    <p class="source">CDPHE data sets used | Colorado Case Counts by County, Number of Deaths by County</p>
+
     <!-- CHOROPLETH RATE MAP -->
     <div class="legend-container">
         <div class="legend-container">
@@ -216,6 +242,41 @@
         </div>
     </div>
     <div id="rate-map"></div>
+    <p class="source">CDPHE data set used | Number of Deaths by County</p>
+    <div id="race"></div>
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="section-heading">Cases and deaths by race</h2>
+            <p>These charts show the percentage of statewide cases, deaths and population broken down by race and ethnicity. The dark gray bar shows the percentage of the state's population that race makes up; a cases or deaths bar shorter than the population bar indicates that race is underrepresented, a bar longer than the population bar indicates a race is overrepresented.</p>
+            <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+            <div id="race-chart"></div>
+            <p class="source">CDPHE data set used | COVID-19 in Colorado by Race & Ethnicity</p>
+        </div>
+    </div>
+    <div id="age"></div>
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="section-heading">Cases, hospitalizations and deaths by age</h2>
+            <p>These charts show the total number of cases by age group and breaks them down by the number of people who have been hospitalized, the number who haven't been hospitalized and the number who have died. The second chart shows the same information as percentages of total cases by age group.</p>
+            <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+            <div id="age-chart"></div>
+            <div id="age-pct-chart"></div>
+            <p class="source">CDPHE data set used | Cases of COVID-19 Reported in Colorado by Age Group, Hospitalization, and Outcome</p>
+        </div>
+    </div>
+    <div id="testing"></div>
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="section-heading">Testing rate and results</h2>
+            <p class="how-chart">HOW TO READ THE CHARTS</p>
+            <p><strong>Bar:</strong> The bar chart shows the number of daily tests per 100,000 people, as reported to the CDPHE. Health officials say a testing rate of 152 per 100,000 <a href="https://www.nytimes.com/interactive/2020/04/17/us/coronavirus-testing-states.html" target="_blank">is necessary to identify the majority of people who are infected</a>.</p>
+            <p><strong>Line:</strong> The line chart shows a 3-day moving average of the percentage of daily tests for COVID-19 that were positive.</p>
+            <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+            <div id="daily-tests-chart"></div>
+            <p class="source">CDPHE data set used | Bar: Total Tests per 100k People | Line: Three-day Moving Average of Percent Positivity</p>
+
+        </div>
+    </div>
 </body>
 
 </html>

@@ -301,6 +301,327 @@ $.getJSON(url, function(data) {
     });
 });
 
+var chartSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/5';
+var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+
+$.getJSON(url, function(data) {
+    var sheetJson = data.feed.entry;
+    var dailyTestsChart = c3.generate({
+        bindto: '#daily-tests-chart',
+        size: {
+            height: 250
+            //width: 800
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$testingrate.$t', 'gsx$percentpositive.$t']
+            },
+            names: {
+                'gsx$testingrate.$t': 'Tests per 100,000 people',
+                'gsx$percentpositive.$t': '3-day moving average of positive tests'
+            },
+            types: {
+                'gsx$testingrate.$t': 'bar',
+                'gsx$percentpositive.$t': 'line'
+            },
+            colors: {
+                'gsx$testingrate.$t': 'rgba(0,0,0,.2)',
+                'gsx$percentpositive.$t': 'rgba(0,0,0,1)'
+            },
+            axes: {
+                'gsx$testingrate.$t': 'y',
+                'gsx$percentpositive.$t': 'y2'
+            }
+        },
+        // padding: {
+        //     bottom: 25
+        // },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    rotate: 0,
+                    multiline: false,
+                    culling: true
+                },
+            },
+            y: {
+                max: 175,
+                tick: {
+                    format: d3.format(','),
+                    //values: [0, 10, 20, 30]
+                },
+                label: {
+                    text: 'Bars: Tests per 100,000',
+                    position: 'outer-middle'
+                }
+            },
+            y2: {
+                show: true,
+                tick: {
+                    format: function(value) {
+                        return d3.format('.1%')(value / 100)
+                    }
+                },
+                label: {
+                    text: 'Line: Positive tests',
+                    position: 'outer-middle'
+                }
+            }
+        },
+        bar: {
+            width: {
+                ratio: .65
+            }
+        },
+        // regions: [
+        //     { axis: 'y', start: 152, class: 'region1' }
+        // ],
+        // legend: {
+        //     position: 'inset'
+        // },
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        },
+        point: {
+            r: 0
+        }
+    })
+});
+
+/// RACE CHARTS
+var chartSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/6';
+var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+
+$.getJSON(url, function(data) {
+    var sheetJson = data.feed.entry;
+
+    var ageChart = c3.generate({
+        bindto: '#race-chart',
+        size: {
+            height: 650
+            //width: 800
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$race.$t',
+                value: ['gsx$cases.$t', 'gsx$population.$t', 'gsx$deaths.$t']
+            },
+            type: 'bar',
+            // groups: [
+            //     ['gsx$nothospitalized.$t', 'gsx$hospitalized.$t', 'gsx$deaths.$t']
+            // ],
+            names: {
+                'gsx$cases.$t': 'Cases',
+                'gsx$deaths.$t': 'Deaths',
+                'gsx$population.$t': 'Population',
+            },
+            // types: {
+            //     'gsx$cumulativecases.$t': 'line',
+            //     'gsx$cumulativedeaths.$t': 'line'
+            // },
+            colors: {
+                // ['rgb(239,138,98)','rgb(247,247,247)','rgb(103,169,207)']
+                'gsx$cases.$t': 'rgba(8,81,156,.5)',
+                'gsx$deaths.$t': 'rgba(165,15,21,.5)',
+                'gsx$population.$t': 'rgba(0,0,0,.5)'
+            },
+        },
+        // padding: {
+        //     bottom: 25
+        // },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    rotate: 0,
+                    multiline: true,
+                    //culling: true
+                }
+            },
+            y: {
+                //max: 750,
+                tick: {
+                    format: function(value) {
+                        return d3.format('.1%')(value / 100)
+                    }
+                }
+            },
+            rotated: true
+        },
+        // legend: {
+        //     position: 'inset'
+        // },
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        }
+    })
+});
+
+/// AGE CHARTS
+var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/3';
+var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+
+$.getJSON(url, function(data) {
+    var sheetJson = data.feed.entry;
+
+    var ageChart = c3.generate({
+        bindto: '#age-chart',
+        size: {
+            height: 200
+            //width: 800
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$age.$t',
+                value: ['gsx$nothospitalized.$t', 'gsx$hospitalized.$t', 'gsx$deaths.$t']
+            },
+            type: 'bar',
+            // groups: [
+            //     ['gsx$nothospitalized.$t', 'gsx$hospitalized.$t', 'gsx$deaths.$t']
+            // ],
+            names: {
+                'gsx$nothospitalized.$t': 'Not hospitalized',
+                'gsx$hospitalized.$t': 'Hospitalized',
+                'gsx$deaths.$t': 'Deaths',
+            },
+            // types: {
+            //     'gsx$cumulativecases.$t': 'line',
+            //     'gsx$cumulativedeaths.$t': 'line'
+            // },
+            colors: {
+                // ['rgb(239,138,98)','rgb(247,247,247)','rgb(103,169,207)']
+                'gsx$nothospitalized.$t': 'rgba(204,204,204,.5)',
+                //'gsx$hospitalized.$t': 'rgba(150,150,150,1)',
+                //'gsx$deaths.$t': 'rgba(82,82,82,1)'
+                'gsx$hospitalized.$t': 'rgba(254,178,76,.5)',
+                'gsx$deaths.$t': 'rgba(165,15,21,.5)'
+            },
+        },
+        // padding: {
+        //     bottom: 25
+        // },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    rotate: 0,
+                    multiline: false,
+                    //culling: true
+                },
+            },
+            y: {
+                //max: 750,
+                tick: {
+                    format: d3.format(',')
+                }
+            }
+        },
+        // legend: {
+        //     position: 'inset'
+        // },
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        },
+        point: {
+            r: 3
+        }
+    });
+
+    //Age percent chart
+    var ageChart = c3.generate({
+        bindto: '#age-pct-chart',
+        size: {
+            height: 200
+            //width: 800
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$age.$t',
+                value: ['gsx$nothospitalizedpct.$t', 'gsx$hospitalizedpct.$t', 'gsx$deathspct.$t']
+            },
+            type: 'bar',
+            groups: [
+                ['gsx$nothospitalizedpct.$t', 'gsx$hospitalizedpct.$t', 'gsx$deathspct.$t']
+            ],
+            names: {
+                'gsx$nothospitalizedpct.$t': 'Not hospitalized',
+                'gsx$hospitalizedpct.$t': 'Hospitalized',
+                'gsx$deathspct.$t': 'Deaths',
+            },
+            // types: {
+            //     'gsx$cumulativecases.$t': 'line',
+            //     'gsx$cumulativedeaths.$t': 'line'
+            // },
+            colors: {
+                // ['rgb(239,138,98)','rgb(247,247,247)','rgb(103,169,207)']
+                'gsx$nothospitalizedpct.$t': 'rgba(204,204,204,.5)',
+                'gsx$hospitalizedpct.$t': 'rgba(254,178,76,.5)',
+                'gsx$deathspct.$t': 'rgba(165,15,21,.5)'
+            },
+        },
+        // padding: {
+        //     bottom: 25
+        // },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    rotate: 0,
+                    multiline: false,
+                    //culling: true
+                },
+            },
+            y: {
+                //max: 100,
+                tick: {
+                    format: d3.format(".1%")
+                },
+                show: true,
+                // label: {
+                //     text: 'Percent of cases',
+                //     position: 'outer-middle'
+                // }
+            }
+        },
+        // legend: {
+        //     position: 'inset',
+        //     show: true
+        // },
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        },
+        point: {
+            r: 3
+        }
+    })
+});
+
 /******************** COUNTY-LEVEL GRAPHICS ********************/
 
 var countyDataSpreadsheetID = '1nq3vdVED4LQLd7dHHfUbxbFwzrcm8xfjUrFRn4X28nE/4';
@@ -317,26 +638,26 @@ $.getJSON(url, function(data) {
     for (var i = 0; i < sheetJson.length; i++) {
         rateData.push({
             'date': sheetJson[i].gsx$date.$t,
-            'adamsCaseRate': ((sheetJson[i].gsx$adamscases.$t / 511473) * 100000).toFixed(1),
-            'arapahoeCaseRate': ((sheetJson[i].gsx$arapahoecases.$t / 651342) * 100000).toFixed(1),
-            'boulderCaseRate': ((sheetJson[i].gsx$bouldercases.$t / 325476) * 100000).toFixed(1),
-            'denverCaseRate': ((sheetJson[i].gsx$denvercases.$t / 717797) * 100000).toFixed(1),
-            'douglasCaseRate': ((sheetJson[i].gsx$douglascases.$t / 342842) * 100000).toFixed(1),
-            'elpasoCaseRate': ((sheetJson[i].gsx$elpasocases.$t / 714395) * 100000).toFixed(1),
-            'jeffersonCaseRate': ((sheetJson[i].gsx$jeffersoncases.$t / 579491) * 100000).toFixed(1),
-            'larimerCaseRate': ((sheetJson[i].gsx$larimercases.$t / 350362) * 100000).toFixed(1),
-            'puebloCaseRate': ((sheetJson[i].gsx$pueblocases.$t / 167116) * 100000).toFixed(1),
-            'weldCaseRate': ((sheetJson[i].gsx$weldcases.$t / 314251) * 100000).toFixed(1),
-            'adamsDeathRate': ((sheetJson[i].gsx$adamsdeaths.$t / 511473) * 100000).toFixed(1),
-            'arapahoeDeathRate': ((sheetJson[i].gsx$arapahoedeaths.$t / 651342) * 100000).toFixed(1),
-            'boulderDeathRate': ((sheetJson[i].gsx$boulderdeaths.$t / 325476) * 100000).toFixed(1),
-            'denverDeathRate': ((sheetJson[i].gsx$denverdeaths.$t / 717797) * 100000).toFixed(1),
-            'douglasDeathRate': ((sheetJson[i].gsx$douglasdeaths.$t / 342842) * 100000).toFixed(1),
-            'elpasoDeathRate': ((sheetJson[i].gsx$elpasodeaths.$t / 714395) * 100000).toFixed(1),
-            'jeffersonDeathRate': ((sheetJson[i].gsx$jeffersondeaths.$t / 579491) * 100000).toFixed(1),
-            'larimerDeathRate': ((sheetJson[i].gsx$larimerdeaths.$t / 350362) * 100000).toFixed(1),
-            'puebloDeathRate': ((sheetJson[i].gsx$pueblodeaths.$t / 167116) * 100000).toFixed(1),
-            'weldDeathRate': ((sheetJson[i].gsx$welddeaths.$t / 314251) * 100000).toFixed(1),
+            'adamsCaseRate': ((sheetJson[i].gsx$adamscasesaverage.$t / 511473) * 100000).toFixed(1),
+            'arapahoeCaseRate': ((sheetJson[i].gsx$arapahoecasesaverage.$t / 651342) * 100000).toFixed(1),
+            'boulderCaseRate': ((sheetJson[i].gsx$bouldercasesaverage.$t / 325476) * 100000).toFixed(1),
+            'denverCaseRate': ((sheetJson[i].gsx$denvercasesaverage.$t / 717797) * 100000).toFixed(1),
+            'douglasCaseRate': ((sheetJson[i].gsx$douglascasesaverage.$t / 342842) * 100000).toFixed(1),
+            'elpasoCaseRate': ((sheetJson[i].gsx$elpasocasesaverage.$t / 714395) * 100000).toFixed(1),
+            'jeffersonCaseRate': ((sheetJson[i].gsx$jeffersoncasesaverage.$t / 579491) * 100000).toFixed(1),
+            'larimerCaseRate': ((sheetJson[i].gsx$larimercasesaverage.$t / 350362) * 100000).toFixed(1),
+            'puebloCaseRate': ((sheetJson[i].gsx$pueblocasesaverage.$t / 167116) * 100000).toFixed(1),
+            'weldCaseRate': ((sheetJson[i].gsx$weldcasesaverage.$t / 314251) * 100000).toFixed(1),
+            'adamsDeathRate': ((sheetJson[i].gsx$adamsdeathsaverage.$t / 511473) * 100000).toFixed(1),
+            'arapahoeDeathRate': ((sheetJson[i].gsx$arapahoedeathsaverage.$t / 651342) * 100000).toFixed(1),
+            'boulderDeathRate': ((sheetJson[i].gsx$boulderdeathsaverage.$t / 325476) * 100000).toFixed(1),
+            'denverDeathRate': ((sheetJson[i].gsx$denverdeathsaverage.$t / 717797) * 100000).toFixed(1),
+            'douglasDeathRate': ((sheetJson[i].gsx$douglasdeathsaverage.$t / 342842) * 100000).toFixed(1),
+            'elpasoDeathRate': ((sheetJson[i].gsx$elpasodeathsaverage.$t / 714395) * 100000).toFixed(1),
+            'jeffersonDeathRate': ((sheetJson[i].gsx$jeffersondeathsaverage.$t / 579491) * 100000).toFixed(1),
+            'larimerDeathRate': ((sheetJson[i].gsx$larimerdeathsaverage.$t / 350362) * 100000).toFixed(1),
+            'puebloDeathRate': ((sheetJson[i].gsx$pueblodeathsaverage.$t / 167116) * 100000).toFixed(1),
+            'weldDeathRate': ((sheetJson[i].gsx$welddeathsaverage.$t / 314251) * 100000).toFixed(1),
         })
     }
     var adamsRateArray = [];
@@ -558,7 +879,7 @@ $.getJSON(url, function(data) {
             type: 'bar',
             order: 'asc',
             colors: {
-                'numberofcases': 'rgba(8,81,156,.6)'
+                'numberofcases': 'rgba(8,81,156,.5)'
             }
         },
         axis: {
@@ -646,7 +967,7 @@ $.getJSON(url, function(data) {
             },
             type: 'bar',
             colors: {
-                'numberofdeaths': 'rgba(165,15,21,.6)'
+                'numberofdeaths': 'rgba(165,15,21,.5)'
             }
         },
         axis: {
@@ -881,7 +1202,6 @@ $.getJSON(mapUrl, function(data) {
         },
 
         onEachFeature: function(feature, layer) {
-            console.log(feature);
             var cases = feature.properties.number_of_cases;
             var population = feature.properties.population;
             var rate = ((cases / population) * 100000).toFixed(1);
