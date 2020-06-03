@@ -47,7 +47,7 @@ $.getJSON(url, function(data) {
                 'gsx$reporteddailycasesaverage.$t': 'line'
             },
             colors: {
-                'gsx$onsetdailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$onsetdailycases.$t': 'rgba(8,81,156,.4)',
                 'gsx$reporteddailycasesaverage.$t': 'rgba(8,81,156,1)'
             },
         },
@@ -116,7 +116,7 @@ $.getJSON(url, function(data) {
                 'gsx$reporteddailyhospitalizationsaverage.$t': 'line'
             },
             colors: {
-                'gsx$onsetdailyhospitalizations.$t': 'rgba(254,178,76,.3)',
+                'gsx$onsetdailyhospitalizations.$t': 'rgba(254,178,76,.4)',
                 'gsx$reporteddailyhospitalizationsaverage.$t': 'rgba(254,178,76,1)'
             },
         },
@@ -185,7 +185,7 @@ $.getJSON(url, function(data) {
                 'gsx$reporteddailydeathsaverage.$t': 'line'
             },
             colors: {
-                'gsx$deathcertificatedailydeaths.$t': 'rgba(165,15,21,.2)',
+                'gsx$deathcertificatedailydeaths.$t': 'rgba(165,15,21,.4)',
                 'gsx$reporteddailydeathsaverage.$t': 'rgba(165,15,21,1)'
             },
         },
@@ -472,7 +472,7 @@ $.getJSON(url, function(data) {
 });
 
 /// AGE CHARTS
-var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/3';
+var chartSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/3';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
 
 $.getJSON(url, function(data) {
@@ -624,13 +624,14 @@ $.getJSON(url, function(data) {
 
 /******************** COUNTY-LEVEL GRAPHICS ********************/
 
-var countyDataSpreadsheetID = '1nq3vdVED4LQLd7dHHfUbxbFwzrcm8xfjUrFRn4X28nE/4';
+var countyDataSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/7';
 var url = "https://spreadsheets.google.com/feeds/list/" + countyDataSpreadsheetID + "/public/full?alt=json";
 var caseColor = 'rgba(153,142,195,1)';
 var deathColor = 'rgba(241,163,64,1)';
 
 $.getJSON(url, function(data) {
     var sheetJson = data.feed.entry;
+    console.log(sheetJson);
     //document.getElementById('updated-time').innerHTML = sheetJson[0].gsx$updated.$t;
 
     /// ALL COUNTY CASE RATE LINE CHART
@@ -1016,7 +1017,7 @@ String.prototype.commafy = function() {
     });
 };
 
-var mapSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/1'
+var mapSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/1'
 var mapUrl = 'https://spreadsheets.google.com/feeds/list/' + mapSpreadsheetID + '/public/full?alt=json';
 
 /// BUBBLE CASE MAP
