@@ -1,6 +1,6 @@
 /******************** STATE-LEVEL GRAPHICS ********************/
 
-var chartSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/2';
+var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/2';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
 
 $.getJSON(url, function(data) {
@@ -36,19 +36,22 @@ $.getJSON(url, function(data) {
             json: sheetJson,
             keys: {
                 x: 'gsx$date.$t',
-                value: ['gsx$onsetdailycases.$t', 'gsx$reporteddailycasesaverage.$t']
+                value: ['gsx$onsetdailycases.$t', 'gsx$reporteddailycasesaverage.$t', 'gsx$newaverage.$t']
             },
             names: {
                 'gsx$onsetdailycases.$t': 'Daily cases by date of illness onset',
-                'gsx$reporteddailycasesaverage.$t': '7-day moving average of reported cases'
+                'gsx$reporteddailycasesaverage.$t': 'Average cases by date reported to state',
+                'gsx$newaverage.$t': 'New average'
             },
             types: {
                 'gsx$onsetdailycases.$t': 'bar',
-                'gsx$reporteddailycasesaverage.$t': 'line'
+                'gsx$reporteddailycasesaverage.$t': 'line',
+                'gsx$newaverage.$t': 'line'
             },
             colors: {
                 'gsx$onsetdailycases.$t': 'rgba(8,81,156,.4)',
-                'gsx$reporteddailycasesaverage.$t': 'rgba(8,81,156,1)'
+                'gsx$reporteddailycasesaverage.$t': 'rgba(8,81,156,1)',
+                'gsx$newaverage.$t': '#000'
             },
         },
         // padding: {
@@ -301,7 +304,7 @@ $.getJSON(url, function(data) {
     });
 });
 
-var chartSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/5';
+var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/6';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
 
 $.getJSON(url, function(data) {
@@ -362,7 +365,7 @@ $.getJSON(url, function(data) {
                 show: true,
                 tick: {
                     format: function(value) {
-                        return d3.format('.1%')(value / 100)
+                        return d3.format('.2%')(value / 100)
                     }
                 },
                 label: {
@@ -397,7 +400,7 @@ $.getJSON(url, function(data) {
 });
 
 /// RACE CHARTS
-var chartSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/6';
+var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/4';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
 
 $.getJSON(url, function(data) {
@@ -472,7 +475,7 @@ $.getJSON(url, function(data) {
 });
 
 /// AGE CHARTS
-var chartSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/3';
+var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/5';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
 
 $.getJSON(url, function(data) {
@@ -624,14 +627,13 @@ $.getJSON(url, function(data) {
 
 /******************** COUNTY-LEVEL GRAPHICS ********************/
 
-var countyDataSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/7';
+var countyDataSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/3';
 var url = "https://spreadsheets.google.com/feeds/list/" + countyDataSpreadsheetID + "/public/full?alt=json";
 var caseColor = 'rgba(153,142,195,1)';
 var deathColor = 'rgba(241,163,64,1)';
 
 $.getJSON(url, function(data) {
     var sheetJson = data.feed.entry;
-    console.log(sheetJson);
     //document.getElementById('updated-time').innerHTML = sheetJson[0].gsx$updated.$t;
 
     /// ALL COUNTY CASE RATE LINE CHART
@@ -1017,7 +1019,7 @@ String.prototype.commafy = function() {
     });
 };
 
-var mapSpreadsheetID = '131RyfgkgQxrVgreeFQ3TyhZxMDHShrfAnztS6FMVPAo/1'
+var mapSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/1'
 var mapUrl = 'https://spreadsheets.google.com/feeds/list/' + mapSpreadsheetID + '/public/full?alt=json';
 
 /// BUBBLE CASE MAP
@@ -1043,9 +1045,6 @@ $.getJSON(mapUrl, function(data) {
                 'name': output[i].gsx$county.$t,
                 'number_of_cases': output[i].gsx$numberofcases.$t,
                 'number_of_deaths': output[i].gsx$numberofdeaths.$t,
-                'last_reported_case': output[i].gsx$lastreportedcase.$t,
-                'latest_headline': output[i].gsx$latestheadline.$t,
-                'story_link': output[i].gsx$storylink.$t
             }
         });
     }
@@ -1098,7 +1097,7 @@ $.getJSON(mapUrl, function(data) {
 
             // var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
 
-            var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + (feature.properties.number_of_cases).commafy() + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
+            var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + (feature.properties.number_of_cases).commafy() + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br><br><a href="https://www.denverpost.com/tag/coronavirus-colorado/" target="_blank"><em>Read the latest coronavirus stories</em></a></div>';
 
             if (feature.properties.number_of_cases != '') {
                 return L.circleMarker(latlng, casesCircle).bindPopup(popupText)
@@ -1128,7 +1127,7 @@ $.getJSON(mapUrl, function(data) {
 
             // var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
 
-            var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
+            var popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br><br><a href="https://www.denverpost.com/tag/coronavirus-colorado/" target="_blank"><em>Read the latest coronavirus stories</em></a></div>';
 
             if (feature.properties.number_of_deaths != 0) {
                 return L.circleMarker(latlng, deathsCircle).bindPopup(popupText)
@@ -1155,9 +1154,6 @@ $.getJSON(mapUrl, function(data) {
                 'name': output[i].gsx$county.$t,
                 'number_of_cases': output[i].gsx$numberofcases.$t,
                 'number_of_deaths': output[i].gsx$numberofdeaths.$t,
-                'last_reported_case': output[i].gsx$lastreportedcase.$t,
-                'latest_headline': output[i].gsx$latestheadline.$t,
-                'story_link': output[i].gsx$storylink.$t,
                 'population': output[i].gsx$population.$t
             }
         });
@@ -1212,18 +1208,10 @@ $.getJSON(mapUrl, function(data) {
                 rateText = '*'
             } else rateText = rate.commafy();
 
-            // var popupText;
-            // if (cases == '') {
-            //     popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container"><em>No cases reported</em></div>';
-            // } else popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + feature.properties.number_of_cases + '</strong><br>Case rate: <strong>' + rateText + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br>Last reported case: <strong>' + feature.properties.last_reported_case + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
-            // layer.bindPopup(
-            //     popupText
-            // )
-
             var popupText;
             if (cases == '') {
                 popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container"><em>No cases reported</em></div>';
-            } else popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + cases.commafy() + '</strong><br>Case rate: <strong>' + rateText + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br><br>Related story: <a href="' + feature.properties.story_link + '" target="_blank">' + feature.properties.latest_headline + '</a></div>';
+            } else popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Confirmed cases: <strong>' + cases.commafy() + '</strong><br>Case rate: <strong>' + rateText + '</strong><br>Deaths: <strong>' + feature.properties.number_of_deaths + '</strong><br><br><a href="https://www.denverpost.com/tag/coronavirus-colorado/" target="_blank"><em>Read the latest coronavirus stories</em></a></div>';
             layer.bindPopup(
                 popupText
             )
