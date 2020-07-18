@@ -1,5 +1,4 @@
 /******************** STATE-LEVEL GRAPHICS ********************/
-
 var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/2';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
 
@@ -36,22 +35,19 @@ $.getJSON(url, function(data) {
             json: sheetJson,
             keys: {
                 x: 'gsx$date.$t',
-                value: ['gsx$onsetdailycases.$t', 'gsx$reporteddailycasesaverage.$t', 'gsx$newaverage.$t']
+                value: ['gsx$onsetdailycases.$t', 'gsx$reporteddailycasesaverage.$t']
             },
             names: {
                 'gsx$onsetdailycases.$t': 'Daily cases by date of illness onset',
-                'gsx$reporteddailycasesaverage.$t': 'Average cases by date reported to state',
-                'gsx$newaverage.$t': 'New average'
+                'gsx$reporteddailycasesaverage.$t': 'Average cases by date reported to state'
             },
             types: {
                 'gsx$onsetdailycases.$t': 'bar',
-                'gsx$reporteddailycasesaverage.$t': 'line',
-                'gsx$newaverage.$t': 'line'
+                'gsx$reporteddailycasesaverage.$t': 'line'
             },
             colors: {
                 'gsx$onsetdailycases.$t': 'rgba(8,81,156,.4)',
-                'gsx$reporteddailycasesaverage.$t': 'rgba(8,81,156,1)',
-                'gsx$newaverage.$t': '#000'
+                'gsx$reporteddailycasesaverage.$t': 'rgba(8,81,156,1)'
             },
         },
         // padding: {
