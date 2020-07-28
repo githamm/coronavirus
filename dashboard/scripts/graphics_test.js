@@ -1,6 +1,6 @@
 /******************** STATE-LEVEL GRAPHICS ********************/
 var smallChartHeight = 170;
-var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/9';
+var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/2';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
 
 $.getJSON(url, function(data) {
@@ -476,7 +476,7 @@ var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "
 $.getJSON(url, function(data) {
     var sheetJson = data.feed.entry;
     var smallChartHeight = 170;
-    var recentData = sheetJson.slice(-90); // last 90 days of data
+    var recentData = sheetJson.slice(-91); // last 90 days of data
 
     /// SMALL HOSPITALIZATIONS CHART
     var currentHospitalizationsChartSmall = c3.generate({

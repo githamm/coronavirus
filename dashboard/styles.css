@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+/*** PAGE STYLES ***/
 
 html,
 body {
@@ -7,9 +10,66 @@ body {
     padding: 0;
     background-color: #fafafa;
     font-family: 'Roboto', sans-serif;
-    margin-top: 1%;
+    margin-top: .5%;
 }
 
+.graphic-divider {
+    border-top: 3px solid #d9d9d9;
+    margin: 20px 0 7px 0;
+    clear: both;
+}
+
+.updated {
+    color: #525252;
+    font-size: .9rem;
+    font-style: italic;
+}
+
+.instructions {
+    color: rgba(165, 15, 21, 1);
+    font-size: .9rem;
+    font-style: italic;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.chart-chatter {
+    font-size: .9rem;
+    margin-top: -16px;
+    font-style: italic;
+    text-align: center;
+}
+
+.graphic-left {
+    width: 49%;
+    float: left;
+    margin-bottom: 20px;
+}
+
+.graphic-right {
+    width: 49%;
+    float: right;
+    margin-bottom: 20px;
+}
+
+.section-heading {
+    font-family: 'Roboto Condensed', sans-serif;
+    border-bottom: 3px solid #1e1e1e;
+    padding-bottom: 5px;
+    margin: 50px 0 25px 0;
+    font-size: 2.6rem;
+    line-height: 1;
+}
+
+.source {
+    font-size: .8rem;
+    font-style: italic;
+    color: #505050;
+    line-height: 1.2;
+    margin-top: 10px;
+}
+
+/*** MAPS ***/
 #map,
 #rate-map {
     height: 500px;
@@ -46,18 +106,6 @@ body {
     font-weight: bold;
     color: #525252;
     margin-bottom: -16px;
-}
-
-.graphic-title {
-    font-weight: bold;
-    font-size: 1.5rem;
-}
-
-.credit {
-    font-size: .9rem;
-    font-style: italic;
-    text-align: right;
-    margin: 6px 10px 0 0;
 }
 
 .legend {
@@ -112,56 +160,115 @@ body {
     text-align: center;
 }
 
-.graphic-divider {
-    border-top: 3px solid #d9d9d9;
-    margin: 20px 0 7px 0;
-    clear: both;
-}
+/***CHARTS***/
 
-.subtitle-text {
-    color: #525252;
-    background-color: #d9d9d9;
-    padding: 6px;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.updated {
-    color: #525252;
-    font-size: .9rem;
-    font-style: italic;
-}
-
-.instructions {
-    color: rgba(165, 15, 21, 1);
-    font-size: .9rem;
-    font-style: italic;
+.number-title,
+.number,
+.small-chart-header {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.7rem;
+    font-color: #1e1e1e;
+    letter-spacing: -1px;
     text-align: center;
-    margin-top: 20px;
+    margin-bottom: -14px;
 }
 
-.chart-chatter {
-    font-size: .9rem;
-    margin-top: -16px;
-    font-style: italic;
+.number-title {
+    line-height: 28px;
+    margin-bottom: -6px;
+}
+
+.small-chart-header {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    text-align: left;
+    line-height: 1;
+    letter-spacing: -.2px;
+    margin-bottom: 5px;
+    /*margin-left: 30px;*/
+    padding-bottom: 2px;
+    color: white;
     text-align: center;
+    padding: 5px;
 }
 
-.graphic-left {
-    width: 49%;
-    float: left;
-    margin-bottom: 20px;
+.small-chart-header-cases {
+    background-color: rgba(8, 81, 156, .7);
 }
 
-.graphic-right {
-    width: 49%;
-    float: right;
-    margin-bottom: 20px;
+.small-chart-header-hospitalized {
+    background-color: rgba(255, 138, 74, .7);
+}
+
+.small-chart-header-deaths {
+    background-color: rgba(165, 15, 21, .7);
+}
+
+.small-chart-header-positivity {
+    background-color: rgba(0, 0, 0, .7);
+}
+
+.small-chart-header-tests {
+    background-color: rgba(0, 0, 0, .3);
+}
+
+.number-subtitle {
+    font-family: 'Roboto', sans-serif;
+    font-size: .85rem;
+    font-style: italic;
+    color: #505050;
+    line-height: 17px;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.how-chart {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.1rem;
+    margin-bottom: -1px;
+}
+
+.c3-region.region1 {
+    fill: #000;
+}
+
+.c3-line {
+    stroke-width: 1.5px;
+}
+
+.left-border {
+    border-left: 2px solid silver;
+}
+
+.medium-2Half {
+    width: 20%;
+}
+
+#small-charts-mobile {
+    display: none;
 }
 
 @media only screen and (max-width: 699px) {
-    .graphic-left, .graphic-right {
+
+    .graphic-left,
+    .graphic-right {
         width: 100% !important;
         float: none !important;
+    }
+
+    .left-border {
+        border-left: 0px;
+    }
+
+    #small-charts-desktop {
+        display: none;
+    }
+
+    #small-charts-mobile {
+        display: block;
+    }
+
+    .section-heading {
+        font-size: 2.2rem;
     }
 }

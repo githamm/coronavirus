@@ -1,4 +1,5 @@
 /******************** STATE-LEVEL GRAPHICS ********************/
+var smallChartHeight = 170;
 var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/2';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
 
@@ -14,15 +15,21 @@ $.getJSON(url, function(data) {
     document.getElementById('total-covid-deaths').innerHTML = displayCovidDeaths.toLocaleString();
     document.getElementById('total-hospitalizations').innerHTML = displayTotalHospitalizations.toLocaleString();
 
-    var casesAverageArray = [];
-    for (var i = 0; i < sheetJson.length; i++) {
-        casesAverageArray.push(
-            sheetJson[i].gsx$reporteddailycasesaverage.$t
-        )
-    };
-    casesAverageArray = casesAverageArray.map(function(each_element) {
-        return parseInt(each_element).toFixed(1);
-    });
+    // var notHospitalizationsArrayLength = sheetJson.length - 1;
+    // var hospitalizationsArrayLength = sheetJson.length;
+    // var allData = sheetJson.slice(0, -1);
+    // var recentData = sheetJson.slice(-90, notHospitalizationsArrayLength); // Get last 90 days of data for all charts except current hospitalizations
+    // var recentHospitalizationsData = sheetJson.slice(-90);
+
+    // var casesAverageArray = [];
+    // for (var i = 0; i < sheetJson.length; i++) {
+    //     casesAverageArray.push(
+    //         sheetJson[i].gsx$reporteddailycasesaverage.$t
+    //     )
+    // };
+    // casesAverageArray = casesAverageArray.map(function(each_element) {
+    //     return parseInt(each_element).toFixed(1);
+    // });
 
     /// DAILY CASES CHART
     var dailyCasesChart = c3.generate({
@@ -58,6 +65,9 @@ $.getJSON(url, function(data) {
                     multiline: false,
                     culling: true
                 },
+                padding: {
+                    right: 2
+                }
             },
             y: {
                 tick: {
@@ -119,6 +129,9 @@ $.getJSON(url, function(data) {
                     multiline: false,
                     culling: true
                 },
+                padding: {
+                    right: 2
+                }
             },
             y: {
                 tick: {
@@ -180,6 +193,9 @@ $.getJSON(url, function(data) {
                     multiline: false,
                     culling: true
                 },
+                padding: {
+                    right: 2
+                }
             },
             y: {
                 tick: {
@@ -210,8 +226,7 @@ $.getJSON(url, function(data) {
 
     /***** SMALL AT A GLANCE CHARTS *****/
 
-    var smallChartHeight = 170;
-    var recentData = sheetJson.slice(-90); // Get latest 90 days of data
+    var recentData = sheetJson.slice(-90); // last 90 days of data
 
     /// SMALL DAILY CASES CHART    
     var dailyCasesChartSmall = c3.generate({
@@ -267,62 +282,13 @@ $.getJSON(url, function(data) {
         },
         tooltip: {
             show: true
+        },
+        point: {
+            r: 0
         }
     });
 
-    /// SMALL HOSPITALIZATIONS CHART
-    var currentHospitalizationsChartSmall = c3.generate({
-        bindto: '#current-hospitalizations-chart-small',
-        size: {
-            height: smallChartHeight
-        },
-        padding: {
-            left: 26
-        },
-        data: {
-            json: recentData,
-            keys: {
-                x: 'gsx$date.$t',
-                value: ['gsx$confirmedcaseshospitalized.$t']
-            },
-            names: {
-                'gsx$confirmedcaseshospitalized.$t': 'Hospitalized'
-            },
-            type: 'line',
-            colors: {
-                'gsx$confirmedcaseshospitalized.$t': 'rgba(255,138,74,.8)'
 
-            }
-        },
-        axis: {
-            x: {
-                type: 'category',
-                tick: {
-                    count: 2
-                },
-                padding: {
-                    right: 10
-                }
-            },
-            y: {
-                tick: {
-                    format: d3.format(',')
-                },
-                show: true
-            }
-        },
-        grid: {
-            x: {
-                show: false
-            },
-            y: {
-                show: false
-            }
-        },
-        legend: {
-            show: false
-        }
-    });
 
     /// SMALL DAILY DEATHS CHART
     var dailyDeathsChartSmall = c3.generate({
@@ -374,112 +340,9 @@ $.getJSON(url, function(data) {
         },
         legend: {
             show: false
-        }
-    });
-
-    /// SMALL TESTING CHART
-    var testingRateChartSmall = c3.generate({
-        bindto: '#testing-rate-chart-small',
-        size: {
-            height: smallChartHeight
         },
-        padding: {
-            left: 26
-        },
-        data: {
-            json: recentData,
-            keys: {
-                x: 'gsx$date.$t',
-                value: ['gsx$testingrateaverage.$t']
-            },
-            names: {
-                'gsx$testingrateaverage.$t': 'Tests'
-            },
-            type: 'line',
-            colors: {
-                'gsx$testingrateaverage.$t': 'rgba(0,0,0,.2)'
-            },
-        },
-        axis: {
-            x: {
-                type: 'category',
-                tick: {
-                    count: 2
-                },
-                padding: {
-                    right: 10
-                }
-            },
-            y: {
-                tick: {
-                    format: d3.format(',')
-                },
-                show: true
-            }
-        },
-        grid: {
-            x: {
-                show: false
-            },
-            y: {
-                show: false
-            }
-        },
-        legend: {
-            show: false
-        }
-    });
-
-    /// SMALL POSITIVITY CHART
-    var positivityRateChartSmall = c3.generate({
-        bindto: '#positivity-rate-chart-small',
-        size: {
-            height: smallChartHeight
-        },
-        padding: {
-            left: 28
-        },
-        data: {
-            json: recentData,
-            keys: {
-                x: 'gsx$date.$t',
-                value: ['gsx$percentpositive.$t']
-            },
-            names: {
-                'gsx$percentpositive.$t': 'Positive'
-            },
-            type: 'line',
-            colors: {
-                'gsx$percentpositive.$t': 'rgba(0,0,0,1)'
-            },
-        },
-        axis: {
-            x: {
-                type: 'category',
-                tick: {
-                    count: 2
-                },
-                padding: {
-                    right: 10
-                }
-            },
-            y: {
-                tick: {
-                    format: (function(d) { return d + "%"; })
-                },
-                show: true
-            }
-        },
-        grid: {
-            x: {
-                show: false
-            },
-            y: {
-                show: false
-            }
-        },
-        legend: {
-            show: false
+        point: {
+            r: 0
         }
     });
 
@@ -537,6 +400,138 @@ $.getJSON(url, function(data) {
         },
         tooltip: {
             show: true
+        },
+        point: {
+            r: 0
+        }
+    });
+
+    /// MOBILE - SMALL DAILY DEATHS CHART
+    var dailyDeathsChartSmall = c3.generate({
+        bindto: '#daily-deaths-chart-small-mobile',
+        size: {
+            height: smallChartHeight
+        },
+        padding: {
+            left: 26
+        },
+        data: {
+            json: recentData,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$reporteddailydeathsaverage.$t']
+            },
+            names: {
+                'gsx$reporteddailydeathsaverage.$t': 'Deaths'
+            },
+            type: 'line',
+            colors: {
+                'gsx$reporteddailydeathsaverage.$t': 'rgba(165,15,21,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 10
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(',')
+                },
+                show: true
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: false
+        },
+        point: {
+            r: 0
+        }
+    });
+
+    $('#daily-cases-chart-small').find('.c3-circle:last').css({ r: 3 });
+    $('#daily-deaths-chart-small').find('.c3-circle:last').css({ r: 3 });
+    $('#daily-cases-chart-small-mobile').find('.c3-circle:last').css({ r: 3 });
+    $('#daily-deaths-chart-small-mobile').find('.c3-circle:last').css({ r: 3 });
+
+});
+
+/// PEOPLE CURRENTLY HOSPITALIZED CHARTS
+var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/8';
+var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+
+$.getJSON(url, function(data) {
+    var sheetJson = data.feed.entry;
+    var smallChartHeight = 170;
+    var recentData = sheetJson.slice(-91); // last 90 days of data
+
+    /// SMALL HOSPITALIZATIONS CHART
+    var currentHospitalizationsChartSmall = c3.generate({
+        bindto: '#current-hospitalizations-chart-small',
+        size: {
+            height: smallChartHeight
+        },
+        padding: {
+            left: 26
+        },
+        data: {
+            json: recentData,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$confirmedcaseshospitalized.$t']
+            },
+            names: {
+                'gsx$confirmedcaseshospitalized.$t': 'Hospitalized'
+            },
+            type: 'line',
+            colors: {
+                'gsx$confirmedcaseshospitalized.$t': 'rgba(255,138,74,.8)'
+
+            }
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 10
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(',')
+                },
+                show: true
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: false
+        },
+        point: {
+            r: 0
         }
     });
 
@@ -591,12 +586,87 @@ $.getJSON(url, function(data) {
         },
         legend: {
             show: false
+        },
+        point: {
+            r: 0
         }
     });
 
-    /// MOBILE - SMALL DAILY DEATHS CHART
-    var dailyDeathsChartSmall = c3.generate({
-        bindto: '#daily-deaths-chart-small-mobile',
+    /// CURRENT PEOPLE HOSPITALIZED CHART
+    var currentHospitalizationsChart = c3.generate({
+        bindto: '#current-hospitalizations-chart',
+        size: {
+            height: 250
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$confirmedcaseshospitalized.$t', 'gsx$suspectedcaseshospitalized.$t']
+            },
+            names: {
+                'gsx$confirmedcaseshospitalized.$t': 'Confirmed cases',
+                'gsx$suspectedcaseshospitalized.$t': 'Suspected cases'
+            },
+            type: 'bar',
+            groups: [
+                ['gsx$confirmedcaseshospitalized.$t', 'gsx$suspectedcaseshospitalized.$t']
+            ],
+            colors: {
+                'gsx$confirmedcaseshospitalized.$t': 'rgba(255,138,74,.8)',
+                'gsx$suspectedcaseshospitalized.$t': 'rgba(255,138,74,.3)'
+
+            },
+            order: null
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    rotate: 0,
+                    multiline: false,
+                    culling: true
+                },
+                padding: {
+                    right: 2
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(',')
+                }
+            }
+        },
+        bar: {
+            width: {
+                ratio: .65
+            }
+        },
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        }
+    });
+    $('#current-hospitalizations-chart-small').find('.c3-circle:last').css({ r: 3 });
+    $('#current-hospitalizations-chart-small-mobile').find('.c3-circle:last').css({ r: 3 });
+});
+
+/// DAILY TESTS/POSITIVITY CHARTS
+
+var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/6';
+var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+
+$.getJSON(url, function(data) {
+    var sheetJson = data.feed.entry;
+    var recentData = sheetJson.slice(-90); // last 90 days of data
+
+    /// SMALL TESTING CHART
+    var testingRateChartSmall = c3.generate({
+        bindto: '#testing-rate-chart-small',
         size: {
             height: smallChartHeight
         },
@@ -607,14 +677,14 @@ $.getJSON(url, function(data) {
             json: recentData,
             keys: {
                 x: 'gsx$date.$t',
-                value: ['gsx$reporteddailydeathsaverage.$t']
+                value: ['gsx$testingrateaverage.$t']
             },
             names: {
-                'gsx$reporteddailydeathsaverage.$t': 'Deaths'
+                'gsx$testingrateaverage.$t': 'Tests'
             },
             type: 'line',
             colors: {
-                'gsx$reporteddailydeathsaverage.$t': 'rgba(165,15,21,1)'
+                'gsx$testingrateaverage.$t': 'rgba(0,0,0,.3)'
             },
         },
         axis: {
@@ -644,6 +714,65 @@ $.getJSON(url, function(data) {
         },
         legend: {
             show: false
+        },
+        point: {
+            r: 0
+        }
+    });
+
+    /// SMALL POSITIVITY CHART
+    var positivityRateChartSmall = c3.generate({
+        bindto: '#positivity-rate-chart-small',
+        size: {
+            height: smallChartHeight
+        },
+        padding: {
+            left: 28
+        },
+        data: {
+            json: recentData,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$percentpositive.$t']
+            },
+            names: {
+                'gsx$percentpositive.$t': 'Positive'
+            },
+            type: 'line',
+            colors: {
+                'gsx$percentpositive.$t': 'rgba(0,0,0,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 10
+                }
+            },
+            y: {
+                tick: {
+                    format: (function(d) { return d + "%"; })
+                },
+                show: true
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: false
+        },
+        point: {
+            r: 0
         }
     });
 
@@ -667,7 +796,7 @@ $.getJSON(url, function(data) {
             },
             type: 'line',
             colors: {
-                'gsx$testingrateaverage.$t': 'rgba(0,0,0,.2)'
+                'gsx$testingrateaverage.$t': 'rgba(0,0,0,.3)'
             },
         },
         axis: {
@@ -697,6 +826,9 @@ $.getJSON(url, function(data) {
         },
         legend: {
             show: false
+        },
+        point: {
+            r: 0
         }
     });
 
@@ -750,78 +882,18 @@ $.getJSON(url, function(data) {
         },
         legend: {
             show: false
+        },
+        point: {
+            r: 0
         }
     });
 
-    /// CURRENT PEOPLE HOSPITALIZED CHART
-    var currentHospitalizationsChart = c3.generate({
-        bindto: '#current-hospitalizations-chart',
-        size: {
-            height: 250
-        },
-        data: {
-            json: recentData,
-            keys: {
-                x: 'gsx$date.$t',
-                value: ['gsx$confirmedcaseshospitalized.$t', 'gsx$suspectedcaseshospitalized.$t']
-            },
-            names: {
-                'gsx$confirmedcaseshospitalized.$t': 'Confirmed cases',
-                'gsx$suspectedcaseshospitalized.$t': 'Suspected cases'
-            },
-            type: 'bar',
-            groups: [
-                ['gsx$confirmedcaseshospitalized.$t', 'gsx$suspectedcaseshospitalized.$t']
-            ],
-            colors: {
-                'gsx$confirmedcaseshospitalized.$t': 'rgba(255,138,74,.8)',
-                'gsx$suspectedcaseshospitalized.$t': 'rgba(255,138,74,.3)'
+    $('#testing-rate-chart-small').find('.c3-circle:last').css({ r: 3 });
+    $('#positivity-rate-chart-small').find('.c3-circle:last').css({ r: 3 });
+    $('#testing-rate-chart-small-mobile').find('.c3-circle:last').css({ r: 3 });
+    $('#positivity-rate-chart-small-mobile').find('.c3-circle:last').css({ r: 3 });
 
-            },
-            order: null
-        },
-        axis: {
-            x: {
-                type: 'category',
-                tick: {
-                    rotate: 0,
-                    multiline: false,
-                    culling: true
-                }
-            },
-            y: {
-                tick: {
-                    format: d3.format(',')
-                }
-            }
-        },
-        bar: {
-            width: {
-                ratio: .65
-            }
-        },
-        grid: {
-            x: {
-                show: true
-            },
-            y: {
-                show: true
-            }
-        }
-    })
-    $('#daily-cases-chart-small').find('.c3-circle:not(:last)').css({ opacity: 0 });
-    $('#current-hospitalizations-chart-small').find('.c3-circle:not(:last)').css({ opacity: 0 });
-    $('#daily-deaths-chart-small').find('.c3-circle:not(:last)').css({ opacity: 0 });
-    $('#testing-rate-chart-small').find('.c3-circle:not(:last)').css({ opacity: 0 });
-    $('#positivity-rate-chart-small').find('.c3-circle:not(:last)').css({ opacity: 0 });
-});
-
-var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/6';
-var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
-
-/// DAILY TESTS/POSITIVITY CHART
-$.getJSON(url, function(data) {
-    var sheetJson = data.feed.entry;
+    // DAILY TESTS AND POSITIVITY CHARTS
     var dailyTestsChart = c3.generate({
         bindto: '#daily-tests-chart',
         size: {
@@ -858,6 +930,9 @@ $.getJSON(url, function(data) {
                     multiline: false,
                     culling: true
                 },
+                padding: {
+                    right: 2
+                }
             },
             y: {
                 tick: {
