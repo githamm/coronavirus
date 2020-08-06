@@ -133,16 +133,16 @@
     <div id="filters">
         <div class="row">
             <div class="large-12 columns">
-                <div class="large-3 medium-3 small-12 columns">
+                <div class="large-4 medium-4 small-12 columns">
                     <p id="filter-1"></p>
                 </div>
-                <div class="large-3 medium-3 small-12 columns">
+                <!-- <div class="large-3 medium-3 small-12 columns">
                     <p id="filter-2"></p>
-                </div>
-                <div class="large-3 medium-3 small-12 columns">
+                </div> -->
+                <div class="large-4 medium-4 small-12 columns">
                     <p id="filter-3"></p>
                 </div>
-                <div class="large-3 medium-3 small-12 columns">
+                <div class="large-4 medium-4 small-12 columns">
                     <p id="filter-4"></p>
                 </div>
             </div>
@@ -215,8 +215,8 @@
             // },
             dom: '<if<t>lp>',
             order: [
-                [2, 'desc'],
-                [1, 'desc']
+                [7, 'desc'],
+                // [1, 'desc']
             ],
             columns: [
                 //{ data: 'button' },
@@ -249,12 +249,12 @@
                     filter_default_label: 'Filter by facility type',
                     //data: donorTypes
                 },
-                {
+                // {
 
-                    column_number: 4,
-                    filter_container_id: 'filter-2',
-                    filter_default_label: 'Filter by facility subtype'
-                },
+                //     column_number: 4,
+                //     filter_container_id: 'filter-2',
+                //     filter_default_label: 'Filter by facility subtype'
+                // },
                 {
 
                     column_number: 5,
