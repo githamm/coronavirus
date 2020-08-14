@@ -259,7 +259,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 10
+                    right: 13
                 }
             },
             y: {
@@ -320,7 +320,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 10
+                    right: 13
                 }
             },
             y: {
@@ -377,7 +377,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 10
+                    right: 13
                 }
             },
             y: {
@@ -436,7 +436,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 10
+                    right: 13
                 }
             },
             y: {
@@ -509,7 +509,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 10
+                    right: 13
                 }
             },
             y: {
@@ -566,7 +566,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 10
+                    right: 13
                 }
             },
             y: {
@@ -694,7 +694,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 10
+                    right: 13
                 }
             },
             y: {
@@ -750,7 +750,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 10
+                    right: 13
                 }
             },
             y: {
@@ -806,7 +806,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 10
+                    right: 13
                 }
             },
             y: {
@@ -862,7 +862,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 10
+                    right: 13
                 }
             },
             y: {
