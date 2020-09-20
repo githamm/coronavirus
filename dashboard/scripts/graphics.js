@@ -224,7 +224,7 @@ $.getJSON(url, function(data) {
         }
     });
 
-    /***** SMALL AT A GLANCE CHARTS *****/
+    /***** SMALL SNAPSHOT CHARTS *****/
 
     var recentData = sheetJson.slice(-90); // last 90 days of data
 
@@ -903,22 +903,22 @@ $.getJSON(url, function(data) {
             json: sheetJson,
             keys: {
                 x: 'gsx$date.$t',
-                value: ['gsx$testingrate.$t', 'gsx$percentpositive.$t']
+                value: ['gsx$testingrateaverage.$t', 'gsx$percentpositive.$t']
             },
             names: {
-                'gsx$testingrate.$t': 'Tests per 100,000 people',
+                'gsx$testingrateaverage.$t': 'Tests per 100,000 people',
                 'gsx$percentpositive.$t': '3-day moving average of positive tests'
             },
             types: {
-                'gsx$testingrate.$t': 'bar',
+                'gsx$testingrateaverage.$t': 'bar',
                 'gsx$percentpositive.$t': 'line'
             },
             colors: {
-                'gsx$testingrate.$t': 'rgba(0,0,0,.2)',
+                'gsx$testingrateaverage.$t': 'rgba(0,0,0,.2)',
                 'gsx$percentpositive.$t': 'rgba(0,0,0,1)'
             },
             axes: {
-                'gsx$testingrate.$t': 'y',
+                'gsx$testingrateaverage.$t': 'y',
                 'gsx$percentpositive.$t': 'y2'
             }
         },

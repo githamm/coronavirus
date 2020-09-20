@@ -69,7 +69,7 @@ $.getJSON(mapUrl, function(data) {
             var circleBorder;
 
             if (feature.properties.number_of_cases > 0) {
-                casesCircleRadius = (Math.sqrt(feature.properties.number_of_cases) * .6)
+                casesCircleRadius = (Math.sqrt(feature.properties.number_of_cases) * .3)
             } else {
                 casesCircleRadius = 0
             };
@@ -97,7 +97,7 @@ $.getJSON(mapUrl, function(data) {
             var circleBorder;
 
             if (feature.properties.number_of_deaths > 0) {
-                deathsCircleRadius = (Math.sqrt(feature.properties.number_of_deaths) * .6)
+                deathsCircleRadius = (Math.sqrt(feature.properties.number_of_deaths) * .3)
             } else {
                 deathsCircleRadius = 0
             };
@@ -167,9 +167,9 @@ $.getJSON(mapUrl, function(data) {
             var borderColor;
             // Blue color ramp (light to dark): ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']
             if (cases > 5) {
-                if (rate > 500) fillColor = '#08306b';
-                else if (rate > 250) fillColor = '#2171b5';
-                else if (rate > 100) fillColor = '#6baed6';
+                if (rate > 2000) fillColor = '#08306b';
+                else if (rate > 1000) fillColor = '#2171b5';
+                else if (rate > 500) fillColor = '#6baed6';
                 else if (rate > 0) fillColor = '#c6dbef';
             } else if (cases == 0) fillColor = 'rgba(0,0,0,0)';
             else fillColor = '#ccc';

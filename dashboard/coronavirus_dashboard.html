@@ -45,7 +45,7 @@
                     <div id="daily-deaths-chart-small"></div>
                 </div>
                 <div class="large-2 medium-2Half small-12 columns">
-                    <p class="small-chart-header small-chart-header-positivity">Positive<br>tests</p>
+                    <p class="small-chart-header small-chart-header-positivity">Avg positive<br>tests</p>
                     <div id="positivity-rate-chart-small"></div>
                 </div>
                 <div class="large-2 medium-2Half small-12 columns">
@@ -75,7 +75,7 @@
                     <div id="daily-deaths-chart-small-mobile"></div>
                 </div>
                 <div class="large-6 medium-6 small-6 columns">
-                    <p class="small-chart-header small-chart-header-positivity">Positive<br>tests</p>
+                    <p class="small-chart-header small-chart-header-positivity">Avg positive<br>tests</p>
                     <div id="positivity-rate-chart-small-mobile"></div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
     <div class="row">
         <div class="large-12 columns">
             <p class="how-chart">HOW TO READ THE CHARTS</p>
-            <p><em>Please note that each chart uses two different data sets: The lines show data by reported date and the bars show data by symptom onset date or date of death.</em></p>
+            <p><em>Please note that each chart uses two different data sets: The lines show data by the date it was reported to the Colorado Department of Public Health and Environment, and the bars show data by symptom onset date or date of death.</em></p>
             <p><strong>Lines:</strong> <em>Best for showing trend.</em> The line charts show when cases, deaths and hospitalizations were reported to the Colorado Department of Public Health and Environment. The lag time between when those occurred and when they were reported to the state can be several days. The chart uses a 7-day moving average to smooth out peaks and valleys in the data due to reporting lag times.</p>
             <p><strong>Bars:</strong> <em>Best for showing historical data.</em> The bar charts show when cases and hospitalizations occurred based on CDPHE's investigation into the onset date of symptoms, and when a death occurred based on the date on the death certificate. <strong>Data for most recent two weeks is not shown because it will be signifcantly revised</strong> with subsequent data releases as CDPHE investigations progress, and is not an accurate representation of recent cases, deaths and hospitalizations.</p>
             <p><strong>Totals:</strong> The total number of cases, deaths and hospitalizations that have been reported to the CDPHE.</p>
@@ -164,11 +164,11 @@
         <div class="large-12 columns">
             <h2 class="section-heading">Testing rate and results</h2>
             <p class="how-chart">HOW TO READ THE CHARTS</p>
-            <p><strong>Bar:</strong> The bar chart shows the number of daily tests per 100,000 people, as reported to the CDPHE. Health officials say a testing rate of 152 per 100,000 <a href="https://www.nytimes.com/interactive/2020/04/17/us/coronavirus-testing-states.html" target="_blank">is necessary to identify the majority of people who are infected</a>.</p>
-            <p><strong>Line:</strong> The line chart shows a 3-day moving average of the percentage of daily tests for COVID-19 that were positive.</p>
+            <p><strong>Bar:</strong> The bar chart shows the 7-day moving average of the number of daily tests per 100,000 people, as reported to the CDPHE. Health officials say a testing rate of 152 per 100,000 <a href="https://www.nytimes.com/interactive/2020/04/17/us/coronavirus-testing-states.html" target="_blank">is necessary to identify the majority of people who are infected</a>.</p>
+            <p><strong>Line:</strong> The line chart shows a 7-day moving average of the percentage of daily tests for COVID-19 that were positive.</p>
             <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
             <div id="daily-tests-chart"></div>
-            <p class="source">CDPHE data set used | Bar: Total Tests per 100k People | Line: Three-day Moving Average of Percent Positivity</p>
+            <p class="source">CDPHE data set used | Bar: Total Tests per 100k People | Line: Positivity Data from Clinical Laboratories</p>
         </div>
     </div>
     <div id="county-charts"></div>
@@ -229,16 +229,16 @@
                 <p class="legend-text-choropleth">*</p>
             </div>
             <div class="legend-box" style="background-color:#c6dbef">
-                <p class="legend-text-choropleth">1-100</p>
+                <p class="legend-text-choropleth">1-500</p>
             </div>
             <div class="legend-box" style="background-color:#6baed6">
-                <p class="legend-text-choropleth">101-250</p>
+                <p class="legend-text-choropleth">500-1K</p>
             </div>
             <div class="legend-box" style="background-color:#2171b5">
-                <p class="legend-text-choropleth" style="color:#fff">251-500</p>
+                <p class="legend-text-choropleth" style="color:#fff">1K-2K</p>
             </div>
             <div class="legend-box" style="background-color:#08306b">
-                <p class="legend-text-choropleth" style="color:#fff">501+</p>
+                <p class="legend-text-choropleth" style="color:#fff">2,000+</p>
             </div>
             <p style="text-transform:none" class="legend-chatter"><em>*Fewer than 5 cases, no rate calculated</em></p>
         </div>

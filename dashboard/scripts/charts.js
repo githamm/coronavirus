@@ -45,8 +45,8 @@ $.getJSON(url, function(data) {
                 value: ['gsx$onsetdailycases.$t', 'gsx$reporteddailycasesaverage.$t']
             },
             names: {
-                'gsx$onsetdailycases.$t': 'Daily cases by date of illness onset',
-                'gsx$reporteddailycasesaverage.$t': '7-day moving average of reported cases'
+                'gsx$onsetdailycases.$t': 'Cases by illness onset date',
+                'gsx$reporteddailycasesaverage.$t': 'Average cases by reported date'
             },
             types: {
                 'gsx$onsetdailycases.$t': 'bar',
@@ -109,8 +109,8 @@ $.getJSON(url, function(data) {
                 value: ['gsx$deathcertificatedailydeaths.$t', 'gsx$reporteddailydeathsaverage.$t']
             },
             names: {
-                'gsx$deathcertificatedailydeaths.$t': 'Daily deaths by death certificate date',
-                'gsx$reporteddailydeathsaverage.$t': '7-day moving average of reported deaths'
+                'gsx$deathcertificatedailydeaths.$t': 'Deaths by death certificate date',
+                'gsx$reporteddailydeathsaverage.$t': 'Average deaths by reported date'
             },
             types: {
                 'gsx$deathcertificatedailydeaths.$t': 'bar',
@@ -173,8 +173,8 @@ $.getJSON(url, function(data) {
                 value: ['gsx$onsetdailyhospitalizations.$t', 'gsx$reporteddailyhospitalizationsaverage.$t']
             },
             names: {
-                'gsx$onsetdailyhospitalizations.$t': 'Daily hospitalizations by date of illness onset',
-                'gsx$reporteddailyhospitalizationsaverage.$t': '7-day moving average of reported hospitalizations'
+                'gsx$onsetdailyhospitalizations.$t': 'Hospitalizations by illness onset date',
+                'gsx$reporteddailyhospitalizationsaverage.$t': 'Average hospitalizations by reported date'
             },
             types: {
                 'gsx$onsetdailyhospitalizations.$t': 'bar',
@@ -727,20 +727,20 @@ $.getJSON(url, function(data) {
             height: smallChartHeight
         },
         padding: {
-            left: 28
+            left: 35
         },
         data: {
             json: recentData,
             keys: {
                 x: 'gsx$date.$t',
-                value: ['gsx$percentpositive.$t']
+                value: ['gsx$percentpositiveaverage.$t']
             },
             names: {
-                'gsx$percentpositive.$t': 'Positive'
+                'gsx$percentpositiveaverage.$t': 'Positive'
             },
             type: 'line',
             colors: {
-                'gsx$percentpositive.$t': 'rgba(0,0,0,1)'
+                'gsx$percentpositiveaverage.$t': 'rgba(0,0,0,1)'
             },
         },
         axis: {
@@ -750,7 +750,7 @@ $.getJSON(url, function(data) {
                     count: 2
                 },
                 padding: {
-                    right: 13
+                    right: 14
                 }
             },
             y: {
@@ -839,20 +839,20 @@ $.getJSON(url, function(data) {
             height: smallChartHeight
         },
         padding: {
-            left: 28
+            left: 35
         },
         data: {
             json: recentData,
             keys: {
                 x: 'gsx$date.$t',
-                value: ['gsx$percentpositive.$t']
+                value: ['gsx$percentpositiveaverage.$t']
             },
             names: {
-                'gsx$percentpositive.$t': 'Positive'
+                'gsx$percentpositiveaverage.$t': 'Positive'
             },
             type: 'line',
             colors: {
-                'gsx$percentpositive.$t': 'rgba(0,0,0,1)'
+                'gsx$percentpositiveaverage.$t': 'rgba(0,0,0,1)'
             },
         },
         axis: {
@@ -903,23 +903,23 @@ $.getJSON(url, function(data) {
             json: sheetJson,
             keys: {
                 x: 'gsx$date.$t',
-                value: ['gsx$testingrate.$t', 'gsx$percentpositive.$t']
+                value: ['gsx$testingrateaverage.$t', 'gsx$percentpositiveaverage.$t']
             },
             names: {
-                'gsx$testingrate.$t': 'Tests per 100,000 people',
-                'gsx$percentpositive.$t': '3-day moving average of positive tests'
+                'gsx$testingrateaverage.$t': 'Average tests per 100,000 people',
+                'gsx$percentpositiveaverage.$t': 'Average positive tests'
             },
             types: {
-                'gsx$testingrate.$t': 'bar',
-                'gsx$percentpositive.$t': 'line'
+                'gsx$testingrateaverage.$t': 'bar',
+                'gsx$percentpositiveaverage.$t': 'line'
             },
             colors: {
-                'gsx$testingrate.$t': 'rgba(0,0,0,.2)',
-                'gsx$percentpositive.$t': 'rgba(0,0,0,1)'
+                'gsx$testingrateaverage.$t': 'rgba(0,0,0,.2)',
+                'gsx$percentpositiveaverage.$t': 'rgba(0,0,0,1)'
             },
             axes: {
-                'gsx$testingrate.$t': 'y',
-                'gsx$percentpositive.$t': 'y2'
+                'gsx$testingrateaverage.$t': 'y',
+                'gsx$percentpositiveaverage.$t': 'y2'
             }
         },
         axis: {
@@ -947,7 +947,8 @@ $.getJSON(url, function(data) {
                 show: true,
                 tick: {
                     format: function(value) {
-                        return d3.format('.2%')(value / 100)
+                        //return d3.format('%')(value / 100)
+                        return (value) + '%'
                     }
                 },
                 label: {
