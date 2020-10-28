@@ -236,7 +236,7 @@ $.getJSON(url, function(data) {
             //width: 800
         },
         padding: {
-            left: 26
+            left: 35
         },
         data: {
             json: recentData,
