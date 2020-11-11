@@ -26,6 +26,12 @@
 <body>
     <div class="row">
         <div class="large-12 columns">
+            <div id="section-button-container">
+                <a href="#state-data"><span class="section-button">State data</span></a>
+                <a href="#county-data"><span class="section-button">County data</span></a>
+                <a href="#maps"><span class="section-button">Maps</span></a>
+                <a href="#demographic-data"><span class="section-button">Demographic data</span></a>
+            </div>
             <h2 class="section-heading">COVID-19 in Colorado</h2>
         </div>
     </div>
@@ -91,7 +97,7 @@
             </div>
         </div>
     </div>
-    <div id="cases"></div>
+    <div id="state-data"></div>
     <div class="row">
         <div class="large-12 columns">
             <h2 class="section-heading">Cases, deaths and hospitalizations</h2>
@@ -171,7 +177,86 @@
             <p class="source">CDPHE data set used | Bar: Total Tests per 100k People | Line: Positivity Data from Clinical Laboratories</p>
         </div>
     </div>
-    <div id="county-charts"></div>
+    <div id="county-data"></div>
+    <!-- COUNTY DAILY CASE NUMBERS -->
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="section-heading">Daily cases in Colorado's largest counties</h2>
+            <p>These charts show the daily case count and 7-day average of reported COVID-19 cases for the state's 10 most-populous counties. <strong>Note: Each chart's vertical axis range is unique to its data.</strong></p>
+            <p class="instructions">Hover over legend item to highlight, click to filter; hover over charts for details</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Adams<br>
+                    <span class="cases-change" id="adams-change"></span></p>
+                <div id="adams-daily-cases"></div>
+            </div>
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Arapahoe<br>
+                    <span class="cases-change" id="arapahoe-change"></span></p>
+                <div id="arapahoe-daily-cases"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Boulder<br>
+                    <span class="cases-change" id="boulder-change"></span></p>
+                <div id="boulder-daily-cases"></div>
+            </div>
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Denver<br>
+                    <span class="cases-change" id="denver-change"></span></p>
+                <div id="denver-daily-cases"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Douglas<br>
+                    <span class="cases-change" id="douglas-change"></span></p>
+                <div id="douglas-daily-cases"></div>
+            </div>
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">El Paso<br>
+                    <span class="cases-change" id="elpaso-change"></span></p>
+                <div id="el-paso-daily-cases"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Jefferson<br>
+                    <span class="cases-change" id="jefferson-change"></span></p>
+                <div id="jefferson-daily-cases"></div>
+            </div>
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Larimer<br>
+                    <span class="cases-change" id="larimer-change"></span></p>
+                <div id="larimer-daily-cases"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Pueblo<br>
+                    <span class="cases-change" id="pueblo-change"></span></p>
+                <div id="pueblo-daily-cases"></div>
+            </div>
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Weld<br>
+                    <span class="cases-change" id="weld-change"></span></p>
+                <div id="weld-daily-cases"></div>
+            </div>
+        </div>
+    </div>
+    <!-- COUNTY CUMULATIVE CASE AND DEATH RATES -->
     <div class="row">
         <div class="large-12 columns">
             <h2 class="section-heading">Case and death rates for counties</h2>
@@ -204,48 +289,61 @@
     </div>
     <p class="source">CDPHE data sets used | Colorado Case Counts by County, Number of Deaths by County</p>
     <hr>
-    <div id="county-maps"></div>
+    <div id="maps"></div>
     <!-- BUBBLE CASE MAP -->
-    <p>The first map shows the total number of cases and deaths by county and the second shows the case rate per 100,000 by county (rate will be slightly different than chart above because it is not a 7-day moving average).</p>
-    </p>
-    <p class="instructions">Circles are centered in counties and are not meant to indicate an actual location; click circles for details</p>
-    <div class="legend-container">
-        <div>
-            <div class="legend-circle" id="cases-legend-circle"></div>
-            <div class="legend-text-bubble">County confirmed cases</div>
-        </div>
-        <div style="margin-top:-5px">
-            <div class="legend-circle" id="deaths-legend-circle"></div>
-            <div class="legend-text-bubble">County confirmed deaths</div>
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="section-heading">Maps: County cases and deaths</h2>
+            <p>The first map shows the total number of cases and deaths by county and the second shows the case rate per 100,000 by county (rate will be slightly different than chart above because it is not a 7-day moving average).</p>
+            <p class="instructions">Circles are centered in counties and are not meant to indicate an actual location; click circles for details</p>
         </div>
     </div>
-    <div id="map"></div>
-    <p class="source">CDPHE data sets used | Colorado Case Counts by County, Number of Deaths by County</p>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="legend-container">
+                <div>
+                    <div class="legend-circle" id="cases-legend-circle"></div>
+                    <div class="legend-text-bubble">County confirmed cases</div>
+                </div>
+                <div style="margin-top:-5px">
+                    <div class="legend-circle" id="deaths-legend-circle"></div>
+                    <div class="legend-text-bubble">County confirmed deaths</div>
+                </div>
+            </div>
+            <div id="map"></div>
+            <p class="source">CDPHE data sets used | Colorado Case Counts by County, Number of Deaths by County</p>
+        </div>
+    </div>
     <!-- CHOROPLETH RATE MAP -->
-    <div class="legend-container">
-        <div class="legend-container">
-            <p class="legend-chatter">Coronavirus case rate per 100,000 people</p>
-            <div class="legend-box" style="background-color:#ccc">
-                <p class="legend-text-choropleth">*</p>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="legend-container">
+                <div class="legend-container">
+                    <p class="legend-chatter">Coronavirus case rate per 100,000 people</p>
+                    <div class="legend-box" style="background-color:#ccc">
+                        <p class="legend-text-choropleth">*</p>
+                    </div>
+                    <div class="legend-box" style="background-color:#c6dbef">
+                        <p class="legend-text-choropleth">1-500</p>
+                    </div>
+                    <div class="legend-box" style="background-color:#6baed6">
+                        <p class="legend-text-choropleth">500-1K</p>
+                    </div>
+                    <div class="legend-box" style="background-color:#2171b5">
+                        <p class="legend-text-choropleth" style="color:#fff">1K-2K</p>
+                    </div>
+                    <div class="legend-box" style="background-color:#08306b">
+                        <p class="legend-text-choropleth" style="color:#fff">2,000+</p>
+                    </div>
+                    <p style="text-transform:none" class="legend-chatter"><em>*Fewer than 5 cases, no rate calculated</em></p>
+                </div>
             </div>
-            <div class="legend-box" style="background-color:#c6dbef">
-                <p class="legend-text-choropleth">1-500</p>
-            </div>
-            <div class="legend-box" style="background-color:#6baed6">
-                <p class="legend-text-choropleth">500-1K</p>
-            </div>
-            <div class="legend-box" style="background-color:#2171b5">
-                <p class="legend-text-choropleth" style="color:#fff">1K-2K</p>
-            </div>
-            <div class="legend-box" style="background-color:#08306b">
-                <p class="legend-text-choropleth" style="color:#fff">2,000+</p>
-            </div>
-            <p style="text-transform:none" class="legend-chatter"><em>*Fewer than 5 cases, no rate calculated</em></p>
+            <div id="rate-map"></div>
+            <p class="source">CDPHE data set used | Number of Deaths by County</p>
         </div>
     </div>
-    <div id="rate-map"></div>
-    <p class="source">CDPHE data set used | Number of Deaths by County</p>
-    <div id="race"></div>
+    <!-- DEMOGRAPHIC CHARTS -->
+    <div id="demographic-data"></div>
     <div class="row">
         <div class="large-12 columns">
             <h2 class="section-heading">Cases and deaths by race</h2>

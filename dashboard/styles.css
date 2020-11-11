@@ -163,8 +163,7 @@ body {
 /***CHARTS***/
 
 .number-title,
-.number,
-.small-chart-header {
+.number {
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 1.7rem;
     font-color: #1e1e1e;
@@ -178,7 +177,9 @@ body {
     margin-bottom: -6px;
 }
 
-.small-chart-header {
+.small-chart-header,
+.county-chart-header {
+    font-family: 'Roboto Condensed', sans-serif;
     font-size: 1.1rem;
     text-transform: uppercase;
     text-align: left;
@@ -187,9 +188,9 @@ body {
     margin-bottom: 5px;
     /*margin-left: 30px;*/
     padding-bottom: 2px;
-    color: white;
-    text-align: center;
-    padding: 5px;
+    color: #fff !important;
+    text-align: center !important;
+    padding: 7px;
 }
 
 .small-chart-header-cases {
@@ -210,6 +211,10 @@ body {
 
 .small-chart-header-tests {
     background-color: rgba(0, 0, 0, .3);
+}
+
+.county-chart-header {
+    background-color: rgba(8, 81, 156, .9);
 }
 
 .number-subtitle {
@@ -246,6 +251,35 @@ body {
 
 #small-charts-mobile {
     display: none;
+}
+
+.cases-change {
+    font-family: 'Roboto', sans-serif;
+    font-size: .9rem;
+    text-transform: none;
+    margin-top: 0
+}
+
+.cases-change-number {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.section-button {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 10px;
+    display: inline-block;
+    margin-top: 5px;
+    border-radius: 4px;
+    background-color: rgba(165, 15, 21, .6);
+
+}
+
+.section-button:hover {
+    background-color: rgba(165, 15, 21, 1) !important;
+    transition: 0.5s;
 }
 
 @media only screen and (max-width: 699px) {

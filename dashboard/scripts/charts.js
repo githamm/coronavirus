@@ -1158,6 +1158,700 @@ var deathColor = 'rgba(241,163,64,1)';
 $.getJSON(url, function(data) {
     var sheetJson = data.feed.entry;
     //document.getElementById('updated-time').innerHTML = sheetJson[0].gsx$updated.$t;
+    
+    // COUNTY DAILY CASE CHARTS
+    var smallChartHeight = 200;
+    var yAxisMax = null;
+    var lastRow = (sheetJson.length - 1);
+    var secondLastRow = (sheetJson.length - 2);
+
+    var adamsChange = Number(sheetJson[lastRow].gsx$adamsdailycases.$t) - Number(sheetJson[secondLastRow].gsx$adamsdailycases.$t);
+    var arapahoeChange = Number(sheetJson[lastRow].gsx$arapahoedailycases.$t) - Number(sheetJson[secondLastRow].gsx$arapahoedailycases.$t);
+    var boulderChange = Number(sheetJson[lastRow].gsx$boulderdailycases.$t) - Number(sheetJson[secondLastRow].gsx$boulderdailycases.$t);
+    var denverChange = Number(sheetJson[lastRow].gsx$denverdailycases.$t) - Number(sheetJson[secondLastRow].gsx$denverdailycases.$t);
+    var douglasChange = Number(sheetJson[lastRow].gsx$douglasdailycases.$t) - Number(sheetJson[secondLastRow].gsx$douglasdailycases.$t);
+    var elpasoChange = Number(sheetJson[lastRow].gsx$elpasodailycases.$t) - Number(sheetJson[secondLastRow].gsx$elpasodailycases.$t);
+    var jeffersonChange = Number(sheetJson[lastRow].gsx$jeffersondailycases.$t) - Number(sheetJson[secondLastRow].gsx$jeffersondailycases.$t);
+    var larimerChange = Number(sheetJson[lastRow].gsx$larimerdailycases.$t) - Number(sheetJson[secondLastRow].gsx$larimerdailycases.$t);
+    var puebloChange = Number(sheetJson[lastRow].gsx$pueblodailycases.$t) - Number(sheetJson[secondLastRow].gsx$pueblodailycases.$t);
+    var weldChange = Number(sheetJson[lastRow].gsx$welddailycases.$t) - Number(sheetJson[secondLastRow].gsx$welddailycases.$t);
+
+    // Up triangle if cases have increased, down if decreased
+    const changeText = function(x, y) {
+        if (x < 0) { document.getElementById(y).innerHTML = '&#9660; <span class="cases-change-number">' + Math.abs(x) + '</span> from previous day' } else { document.getElementById(y).innerHTML = '&#9650; <span class="cases-change-number">' + Math.abs(x) + '</span> from previous day' }
+    };
+    changeText(adamsChange, 'adams-change');
+    changeText(arapahoeChange, 'arapahoe-change');
+    changeText(boulderChange, 'boulder-change');
+    changeText(denverChange, 'denver-change');
+    changeText(douglasChange, 'douglas-change');
+    changeText(elpasoChange, 'elpaso-change');
+    changeText(jeffersonChange, 'jefferson-change');
+    changeText(larimerChange, 'larimer-change');
+    changeText(puebloChange, 'pueblo-change');
+    changeText(weldChange, 'weld-change');
+
+    //var recentData = sheetJson.slice(-90); // last 90 days of data
+
+    // ADAMS COUNTY
+    var adamsDailyCasesChart = c3.generate({
+        bindto: '#adams-daily-cases',
+        size: {
+            height: smallChartHeight
+            //width: 800
+        },
+        padding: {
+            left: 35
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$adamsdailycases.$t', 'gsx$adamsdailycasesaverage.$t']
+            },
+            names: {
+                'gsx$adamsdailycases.$t': 'Cases',
+                'gsx$adamsdailycasesaverage.$t': 'Average'
+            },
+            types: {
+                'gsx$adamsdailycases.$t': 'bar',
+                'gsx$adamsdailycasesaverage.$t': 'line'
+            },
+            colors: {
+                'gsx$adamsdailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$adamsdailycasesaverage.$t': 'rgba(8,81,156,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 15
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(',')
+                },
+                show: true,
+                max: yAxisMax
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: true
+        },
+        tooltip: {
+            show: true
+        },
+        point: {
+            r: 0
+        }
+    })
+
+    // ARAPAHOE COUNTY
+    var arapahoeDailyCasesChart = c3.generate({
+        bindto: '#arapahoe-daily-cases',
+        size: {
+            height: smallChartHeight
+            //width: 800
+        },
+        padding: {
+            left: 35
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$arapahoedailycases.$t', 'gsx$arapahoedailycasesaverage.$t']
+            },
+            names: {
+                'gsx$arapahoedailycases.$t': 'Cases',
+                'gsx$arapahoedailycasesaverage.$t': 'Average'
+            },
+            types: {
+                'gsx$arapahoedailycases.$t': 'bar',
+                'gsx$arapahoedailycasesaverage.$t': 'line'
+            },
+            colors: {
+                'gsx$arapahoedailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$arapahoedailycasesaverage.$t': 'rgba(8,81,156,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 13
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(','),
+                },
+                show: true,
+                max: yAxisMax
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: true
+        },
+        tooltip: {
+            show: true
+        },
+        point: {
+            r: 0
+        }
+    })
+
+    //BOULDER  COUNTY
+    var boulderDailyCasesChart = c3.generate({
+        bindto: '#boulder-daily-cases',
+        size: {
+            height: smallChartHeight
+            //width: 800
+        },
+        padding: {
+            left: 35
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$boulderdailycases.$t', 'gsx$boulderdailycasesaverage.$t']
+            },
+            names: {
+                'gsx$boulderdailycases.$t': 'Cases',
+                'gsx$boulderdailycasesaverage.$t': 'Average'
+            },
+            types: {
+                'gsx$boulderdailycases.$t': 'bar',
+                'gsx$boulderdailycasesaverage.$t': 'line'
+            },
+            colors: {
+                'gsx$boulderdailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$boulderdailycasesaverage.$t': 'rgba(8,81,156,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 13
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(','),
+                },
+                show: true,
+                max: yAxisMax
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: true
+        },
+        tooltip: {
+            show: true
+        },
+        point: {
+            r: 0
+        }
+    })
+
+    // DENVER COUNTY
+    var denverDailyCasesChart = c3.generate({
+        bindto: '#denver-daily-cases',
+        size: {
+            height: smallChartHeight
+            //width: 800
+        },
+        padding: {
+            left: 35
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$denverdailycases.$t', 'gsx$denverdailycasesaverage.$t']
+            },
+            names: {
+                'gsx$denverdailycases.$t': 'Cases',
+                'gsx$denverdailycasesaverage.$t': 'Average'
+            },
+            types: {
+                'gsx$denverdailycases.$t': 'bar',
+                'gsx$denverdailycasesaverage.$t': 'line'
+            },
+            colors: {
+                'gsx$denverdailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$denverdailycasesaverage.$t': 'rgba(8,81,156,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 13
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(','),
+                },
+                show: true,
+                max: yAxisMax
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: true
+        },
+        tooltip: {
+            show: true
+        },
+        point: {
+            r: 0
+        }
+    })
+
+    // DOUGLAS  COUNTY
+    var douglasDailyCasesChart = c3.generate({
+        bindto: '#douglas-daily-cases',
+        size: {
+            height: smallChartHeight
+            //width: 800
+        },
+        padding: {
+            left: 35
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$douglasdailycases.$t', 'gsx$douglasdailycasesaverage.$t']
+            },
+            names: {
+                'gsx$douglasdailycases.$t': 'Cases',
+                'gsx$douglasdailycasesaverage.$t': 'Average'
+            },
+            types: {
+                'gsx$douglasdailycases.$t': 'bar',
+                'gsx$douglasdailycasesaverage.$t': 'line'
+            },
+            colors: {
+                'gsx$douglasdailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$douglasdailycasesaverage.$t': 'rgba(8,81,156,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 13
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(','),
+                },
+                show: true,
+                max: yAxisMax
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: true
+        },
+        tooltip: {
+            show: true
+        },
+        point: {
+            r: 0
+        }
+    })
+
+    // EL PASO COUNTY
+    var elpasoDailyCasesChart = c3.generate({
+        bindto: '#el-paso-daily-cases',
+        size: {
+            height: smallChartHeight
+            //width: 800
+        },
+        padding: {
+            left: 35
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$elpasodailycases.$t', 'gsx$elpasodailycasesaverage.$t']
+            },
+            names: {
+                'gsx$elpasodailycases.$t': 'Cases',
+                'gsx$elpasodailycasesaverage.$t': 'Average'
+            },
+            types: {
+                'gsx$elpasodailycases.$t': 'bar',
+                'gsx$elpasodailycasesaverage.$t': 'line'
+            },
+            colors: {
+                'gsx$elpasodailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$elpasodailycasesaverage.$t': 'rgba(8,81,156,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 13
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(','),
+                },
+                show: true,
+                max: yAxisMax
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: true
+        },
+        tooltip: {
+            show: true
+        },
+        point: {
+            r: 0
+        }
+    })
+
+    // JEFFERSON COUNTY
+    var jeffersonDailyCasesChart = c3.generate({
+        bindto: '#jefferson-daily-cases',
+        size: {
+            height: smallChartHeight
+            //width: 800
+        },
+        padding: {
+            left: 35
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$jeffersondailycases.$t', 'gsx$jeffersondailycasesaverage.$t']
+            },
+            names: {
+                'gsx$jeffersondailycases.$t': 'Cases',
+                'gsx$jeffersondailycasesaverage.$t': 'Average'
+            },
+            types: {
+                'gsx$jeffersondailycases.$t': 'bar',
+                'gsx$jeffersondailycasesaverage.$t': 'line'
+            },
+            colors: {
+                'gsx$jeffersondailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$jeffersondailycasesaverage.$t': 'rgba(8,81,156,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 13
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(','),
+                },
+                show: true,
+                max: yAxisMax
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: true
+        },
+        tooltip: {
+            show: true
+        },
+        point: {
+            r: 0
+        }
+    })
+
+    // LARIMER COUNTY
+    var larimerDailyCasesChart = c3.generate({
+        bindto: '#larimer-daily-cases',
+        size: {
+            height: smallChartHeight
+            //width: 800
+        },
+        padding: {
+            left: 35
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$larimerdailycases.$t', 'gsx$larimerdailycasesaverage.$t']
+            },
+            names: {
+                'gsx$larimerdailycases.$t': 'Cases',
+                'gsx$larimerdailycasesaverage.$t': 'Average'
+            },
+            types: {
+                'gsx$larimerdailycases.$t': 'bar',
+                'gsx$larimerdailycasesaverage.$t': 'line'
+            },
+            colors: {
+                'gsx$larimerdailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$larimerdailycasesaverage.$t': 'rgba(8,81,156,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 13
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(','),
+                },
+                show: true,
+                max: yAxisMax
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: true
+        },
+        tooltip: {
+            show: true
+        },
+        point: {
+            r: 0
+        }
+    })
+
+    // PUEBLO COUNTY
+    var puebloDailyCasesChart = c3.generate({
+        bindto: '#pueblo-daily-cases',
+        size: {
+            height: smallChartHeight
+            //width: 800
+        },
+        padding: {
+            left: 35
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$pueblodailycases.$t', 'gsx$pueblodailycasesaverage.$t']
+            },
+            names: {
+                'gsx$pueblodailycases.$t': 'Cases',
+                'gsx$pueblodailycasesaverage.$t': 'Average'
+            },
+            types: {
+                'gsx$pueblodailycases.$t': 'bar',
+                'gsx$pueblodailycasesaverage.$t': 'line'
+            },
+            colors: {
+                'gsx$pueblodailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$pueblodailycasesaverage.$t': 'rgba(8,81,156,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 13
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(','),
+                },
+                show: true,
+                max: yAxisMax
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: true
+        },
+        tooltip: {
+            show: true
+        },
+        point: {
+            r: 0
+        }
+    })
+
+    // WELD COUNTY
+    var weldDailyCasesChart = c3.generate({
+        bindto: '#weld-daily-cases',
+        size: {
+            height: smallChartHeight
+            //width: 800
+        },
+        padding: {
+            left: 35
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$date.$t',
+                value: ['gsx$welddailycases.$t', 'gsx$welddailycasesaverage.$t']
+            },
+            names: {
+                'gsx$welddailycases.$t': 'Cases',
+                'gsx$welddailycasesaverage.$t': 'Average'
+            },
+            types: {
+                'gsx$welddailycases.$t': 'bar',
+                'gsx$welddailycasesaverage.$t': 'line'
+            },
+            colors: {
+                'gsx$welddailycases.$t': 'rgba(8,81,156,.2)',
+                'gsx$welddailycasesaverage.$t': 'rgba(8,81,156,1)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    count: 2
+                },
+                padding: {
+                    right: 13
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(','),
+                },
+                show: true,
+                max: yAxisMax
+            }
+        },
+        grid: {
+            x: {
+                show: false
+            },
+            y: {
+                show: false
+            }
+        },
+        legend: {
+            show: true
+        },
+        tooltip: {
+            show: true
+        },
+        point: {
+            r: 0
+        }
+    });
 
     /// ALL COUNTY CASE RATE LINE CHART
     var rateData = [];
