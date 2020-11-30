@@ -81,7 +81,7 @@ $.getJSON(url, function(data) {
             }
         },
         regions: [
-            { axis: 'x', start: 85, end: 86, class: 'region1' }
+            { axis: 'x', start: 54, end: 85, class: 'region1' }
         ],
         grid: {
             x: {
@@ -145,7 +145,7 @@ $.getJSON(url, function(data) {
             }
         },
         regions: [
-            { axis: 'x', start: 85, end: 86, class: 'region1' }
+            { axis: 'x', start: 54, end: 85, class: 'region1' }
         ],
         grid: {
             x: {
@@ -209,7 +209,7 @@ $.getJSON(url, function(data) {
             }
         },
         regions: [
-            { axis: 'x', start: 85, end: 86, class: 'region1' }
+            { axis: 'x', start: 54, end: 85, class: 'region1' }
         ],
         grid: {
             x: {
@@ -485,7 +485,7 @@ $.getJSON(url, function(data) {
             height: smallChartHeight
         },
         padding: {
-            left: 26
+            left: 35
         },
         data: {
             json: recentData,
@@ -1938,9 +1938,9 @@ $.getJSON(url, function(data) {
                 }
             }
         },
-        regions: [
-            { axis: 'x', start: 40, end: 41, class: 'region1' }
-        ],
+        // regions: [
+        //     { axis: 'x', start: 40, end: 41, class: 'region1' }
+        // ],
         legend: {
             position: 'inset'
         },
@@ -2000,9 +2000,9 @@ $.getJSON(url, function(data) {
                 }
             }
         },
-        regions: [
-            { axis: 'x', start: 40, end: 41, class: 'region1' }
-        ],
+        // regions: [
+        //     { axis: 'x', start: 40, end: 41, class: 'region1' }
+        // ],
         legend: {
             position: 'inset'
         },

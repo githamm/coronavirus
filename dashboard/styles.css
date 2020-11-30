@@ -8,9 +8,9 @@ body {
     height: 100%;
     width: 100%;
     padding: 0;
-    background-color: #fafafa;
+    /*background-color: #fafafa;*/
     font-family: 'Roboto', sans-serif;
-    margin-top: .5%;
+    /*margin-top: .5%;*/
 }
 
 .graphic-divider {
@@ -56,7 +56,7 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
     border-bottom: 3px solid #1e1e1e;
     padding-bottom: 5px;
-    margin: 50px 0 25px 0;
+    margin: 35px 0 25px 0;
     font-size: 2.6rem;
     line-height: 1;
 }

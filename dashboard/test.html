@@ -24,15 +24,8 @@
 </head>
 
 <body>
-    <!-- BUTTONS -->
     <div class="row">
         <div class="large-12 columns">
-            <!-- <div id="section-button-container">
-                <a href="#state-data"><span class="section-button">State data</span></a>
-                <a href="#county-data"><span class="section-button">County data</span></a>
-                <a href="#maps"><span class="section-button">Maps</span></a>
-                <a href="#demographic-data"><span class="section-button">Demographic data</span></a>
-            </div> -->
             <h2 class="section-heading">COVID-19 in Colorado</h2>
         </div>
     </div>
@@ -100,6 +93,13 @@
             </div>
         </div>
     </div>
+    <ul class="accordion" data-accordion>
+  <li class="accordion-item" data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">Accordion 1</a>
+
+    <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+    <div class="accordion-content" data-tab-content>
     <div id="state-data"></div>
     <div class="row">
         <div class="large-12 columns">
@@ -180,6 +180,14 @@
             <p class="source">CDPHE data set used | Bar: Total Tests per 100k People | Line: Positivity Data from Clinical Laboratories</p>
         </div>
     </div>
+</div>
+</li>
+<li class="accordion-item" data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">Accordion 2</a>
+
+    <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+    <div class="accordion-content" data-tab-content>
     <div id="county-data"></div>
     <!-- COUNTY DAILY CASE NUMBERS -->
     <div class="row">
@@ -290,6 +298,9 @@
         <div id="county-comparison-deaths"></div>
     </div>
     <p class="source">CDPHE data sets used | Colorado Case Counts by County, Number of Deaths by County</p>
+</div>
+</li>
+</ul>
     <hr>
     <div id="maps"></div>
     <!-- BUBBLE CASE MAP -->
@@ -367,7 +378,7 @@
         </div>
     </div>
     <script>
-    // $(document).foundation();
+    $(document).foundation();
     </script>
 </body>
 
