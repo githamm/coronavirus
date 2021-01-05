@@ -69,7 +69,7 @@ $.getJSON(mapUrl, function(data) {
             var circleBorder;
 
             if (feature.properties.number_of_cases > 0) {
-                casesCircleRadius = (Math.sqrt(feature.properties.number_of_cases) * .3)
+                casesCircleRadius = (Math.sqrt(feature.properties.number_of_cases) * .2)
             } else {
                 casesCircleRadius = 0
             };
@@ -97,7 +97,7 @@ $.getJSON(mapUrl, function(data) {
             var circleBorder;
 
             if (feature.properties.number_of_deaths > 0) {
-                deathsCircleRadius = (Math.sqrt(feature.properties.number_of_deaths) * .3)
+                deathsCircleRadius = (Math.sqrt(feature.properties.number_of_deaths) * .2)
             } else {
                 deathsCircleRadius = 0
             };
@@ -141,6 +141,7 @@ $.getJSON(mapUrl, function(data) {
                 'population': output[i].gsx$population.$t
             }
         });
+        //console.log(coords);
     }
 
     var rateMap = L.map('rate-map', {
@@ -158,6 +159,7 @@ $.getJSON(mapUrl, function(data) {
         maxZoom: 19
     });
     basemap.addTo(rateMap);
+
     L.geoJSON(geojsonCounties, {
         style: function(feature) {
             var cases = feature.properties.number_of_cases;
@@ -166,12 +168,10 @@ $.getJSON(mapUrl, function(data) {
             var fillColor;
             var borderColor;
             // Blue color ramp (light to dark): ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']
-            if (cases > 5) {
-                if (rate > 2000) fillColor = '#08306b';
-                else if (rate > 1000) fillColor = '#2171b5';
-                else if (rate > 500) fillColor = '#6baed6';
-                else if (rate > 0) fillColor = '#c6dbef';
-            } else if (cases == 0) fillColor = 'rgba(0,0,0,0)';
+            if (rate > 9000) fillColor = '#08306b';
+            else if (rate > 6000) fillColor = '#2171b5';
+            else if (rate > 3000) fillColor = '#6baed6';
+            else if (rate > 0) fillColor = '#c6dbef';
             else fillColor = '#ccc';
             return {
                 color: '#000000',

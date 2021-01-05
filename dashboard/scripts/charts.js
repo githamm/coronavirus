@@ -1163,33 +1163,33 @@ $.getJSON(url, function(data) {
     var smallChartHeight = 200;
     var yAxisMax = null;
     var lastRow = (sheetJson.length - 1);
-    var secondLastRow = (sheetJson.length - 2);
+    var lastWeekRow = (sheetJson.length - 8);
 
-    var adamsChange = Number(sheetJson[lastRow].gsx$adamsdailycases.$t) - Number(sheetJson[secondLastRow].gsx$adamsdailycases.$t);
-    var arapahoeChange = Number(sheetJson[lastRow].gsx$arapahoedailycases.$t) - Number(sheetJson[secondLastRow].gsx$arapahoedailycases.$t);
-    var boulderChange = Number(sheetJson[lastRow].gsx$boulderdailycases.$t) - Number(sheetJson[secondLastRow].gsx$boulderdailycases.$t);
-    var denverChange = Number(sheetJson[lastRow].gsx$denverdailycases.$t) - Number(sheetJson[secondLastRow].gsx$denverdailycases.$t);
-    var douglasChange = Number(sheetJson[lastRow].gsx$douglasdailycases.$t) - Number(sheetJson[secondLastRow].gsx$douglasdailycases.$t);
-    var elpasoChange = Number(sheetJson[lastRow].gsx$elpasodailycases.$t) - Number(sheetJson[secondLastRow].gsx$elpasodailycases.$t);
-    var jeffersonChange = Number(sheetJson[lastRow].gsx$jeffersondailycases.$t) - Number(sheetJson[secondLastRow].gsx$jeffersondailycases.$t);
-    var larimerChange = Number(sheetJson[lastRow].gsx$larimerdailycases.$t) - Number(sheetJson[secondLastRow].gsx$larimerdailycases.$t);
-    var puebloChange = Number(sheetJson[lastRow].gsx$pueblodailycases.$t) - Number(sheetJson[secondLastRow].gsx$pueblodailycases.$t);
-    var weldChange = Number(sheetJson[lastRow].gsx$welddailycases.$t) - Number(sheetJson[secondLastRow].gsx$welddailycases.$t);
+    var adamsChange = Number(sheetJson[lastRow].gsx$adamsdailycasesaverage.$t) - Number(sheetJson[lastWeekRow].gsx$adamsdailycasesaverage.$t);
+    var arapahoeChange = Number(sheetJson[lastRow].gsx$arapahoedailycasesaverage.$t) - Number(sheetJson[lastWeekRow].gsx$arapahoedailycasesaverage.$t);
+    var boulderChange = Number(sheetJson[lastRow].gsx$boulderdailycasesaverage.$t) - Number(sheetJson[lastWeekRow].gsx$boulderdailycasesaverage.$t);
+    var denverChange = Number(sheetJson[lastRow].gsx$denverdailycasesaverage.$t) - Number(sheetJson[lastWeekRow].gsx$denverdailycasesaverage.$t);
+    var douglasChange = Number(sheetJson[lastRow].gsx$douglasdailycasesaverage.$t) - Number(sheetJson[lastWeekRow].gsx$douglasdailycasesaverage.$t);
+    var elpasoChange = Number(sheetJson[lastRow].gsx$elpasodailycasesaverage.$t) - Number(sheetJson[lastWeekRow].gsx$elpasodailycasesaverage.$t);
+    var jeffersonChange = Number(sheetJson[lastRow].gsx$jeffersondailycasesaverage.$t) - Number(sheetJson[lastWeekRow].gsx$jeffersondailycasesaverage.$t);
+    var larimerChange = Number(sheetJson[lastRow].gsx$larimerdailycasesaverage.$t) - Number(sheetJson[lastWeekRow].gsx$larimerdailycasesaverage.$t);
+    var puebloChange = Number(sheetJson[lastRow].gsx$pueblodailycasesaverage.$t) - Number(sheetJson[lastWeekRow].gsx$pueblodailycasesaverage.$t);
+    var weldChange = Number(sheetJson[lastRow].gsx$welddailycasesaverage.$t) - Number(sheetJson[lastWeekRow].gsx$welddailycasesaverage.$t);
 
     // Up triangle if cases have increased, down if decreased
     const changeText = function(x, y) {
-        if (x < 0) { document.getElementById(y).innerHTML = '&#9660; <span class="cases-change-number">' + Math.abs(x) + '</span> from previous day' } else { document.getElementById(y).innerHTML = '&#9650; <span class="cases-change-number">' + Math.abs(x) + '</span> from previous day' }
+        if (x < 0) { document.getElementById(y).innerHTML = '&#9660; <span class="cases-change-number">' + Math.abs(x) + '</span> from a week ago' } else { document.getElementById(y).innerHTML = '&#9650; <span class="cases-change-number">' + Math.abs(x) + '</span> from a week ago' }
     };
-    changeText(adamsChange, 'adams-change');
-    changeText(arapahoeChange, 'arapahoe-change');
-    changeText(boulderChange, 'boulder-change');
-    changeText(denverChange, 'denver-change');
-    changeText(douglasChange, 'douglas-change');
-    changeText(elpasoChange, 'elpaso-change');
-    changeText(jeffersonChange, 'jefferson-change');
-    changeText(larimerChange, 'larimer-change');
-    changeText(puebloChange, 'pueblo-change');
-    changeText(weldChange, 'weld-change');
+    changeText(Math.round(adamsChange), 'adams-change');
+    changeText(Math.round(arapahoeChange), 'arapahoe-change');
+    changeText(Math.round(boulderChange), 'boulder-change');
+    changeText(Math.round(denverChange), 'denver-change');
+    changeText(Math.round(douglasChange), 'douglas-change');
+    changeText(Math.round(elpasoChange), 'elpaso-change');
+    changeText(Math.round(jeffersonChange), 'jefferson-change');
+    changeText(Math.round(larimerChange), 'larimer-change');
+    changeText(Math.round(puebloChange), 'pueblo-change');
+    changeText(Math.round(weldChange), 'weld-change');
 
     //var recentData = sheetJson.slice(-90); // last 90 days of data
 

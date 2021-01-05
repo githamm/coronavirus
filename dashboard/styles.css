@@ -71,7 +71,8 @@ body {
 
 /*** MAPS ***/
 #map,
-#rate-map {
+#rate-map,
+#icu-beds-map {
     height: 500px;
     width: 100%;
     /*width: 893px;
