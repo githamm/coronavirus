@@ -31,6 +31,7 @@ body {
     font-style: italic;
     text-align: center;
     margin-top: 20px;
+    line-height: 16px;
 }
 
 .chart-chatter {
@@ -264,6 +265,28 @@ body {
 .cases-change-number {
     font-size: 1.1rem;
     font-weight: bold;
+}
+
+.immunization-date {
+    font-family: 'Roboto Condensed';
+    font-size: 1.5rem;
+    line-height: 24px;
+    margin-bottom: 10px;
+}
+
+.immunization-percent {
+    font-family: 'Roboto Condensed';
+    text-transform: uppercase;
+    font-size: 2rem;
+    margin: 10px 0 0 0;
+}
+
+.immunization-count {
+    font-family: 'Roboto';
+    font-size: 1rem;
+    font-style: italic;
+    text-transform: none;
+    margin-top: -14px;
 }
 
 .section-button {

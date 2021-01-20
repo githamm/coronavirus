@@ -36,6 +36,11 @@
             <h2 class="section-heading">COVID-19 in Colorado</h2>
         </div>
     </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <p class="updated"><em>Charts updated <span id="updated-time"></span></em></p>
+        </div>
+    </div>
     <div id="small-charts-desktop">
         <div class="row">
             <div class="large-12 columns">
@@ -100,6 +105,42 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="section-heading">Vaccinations</h2>
+        </div>
+        <div class="large-12 columns">
+            <p class="immunization-date">Colorado population vaccinated through <span id="last-date"></span></p>
+            <p class="chart-chatter" style="margin-top:-10px;text-align:left">Current vaccine distribution phase: <a href="https://www.denverpost.com/2020/12/09/vaccine-covid-colorado-timeline-phases-distribution/" target="_blank">1A and 1B</a></p>
+            <div class="large-6 medium-6 small-12 columns" style="background:rgba(81,156,8,.3);text-align:center">
+                <p class="immunization-percent">One dose</p>
+                <p class="immunization-percent" style="font-size:3rem;margin:-24px 0 0 0"><span id="one-dose-pct"></span>%</p>
+                <p class="immunization-count"><span id="one-dose-count"></span> people vaccinated</p>
+            </div>
+            <div class="large-6 medium-6 small-12 columns" style="background:rgba(81,156,8,.6);text-align:center">
+                <p class="immunization-percent">Two doses</p>
+                <p class="immunization-percent" style="font-size:3rem;margin:-24px 0 0 0"><span id="two-dose-pct"></span>%</p>
+                <p class="immunization-count"><span id="two-dose-count"></span> people vaccinated</p>
+            </div>
+            <div style="margin-bottom:-9px">&nbsp;</div>
+            <p class="immunization-date">Vaccines administered</p>
+            <p class="chart-chatter" style="margin-top:-10px;text-align:left">By week; current week will update daily</p>
+            <p class="instructions" style="margin-top:-16px;text-align:left">Hover/click chart for details; click legend item to filter chart</p>
+            <div id="immunization-chart"></div>
+        </div>
+    </div>
+    <!-- <table>
+                <tr class="number-title" style="text-align: center">
+                    <td style="width:30%">Percent of Coloradans vaccinated as of</td>
+                    <td style="background:rgba(81,156,8,.3);padding:25px;width:35%">One dose</td>
+                    <td style="background:rgba(81,156,8,.6);padding:25px;width:35%">Two doses</td>
+                </tr>
+                <tr>
+                    <td>Jan 7</td>
+                    <td>2.4%<br>138,679</td>
+                    <td>.06%<br>16,751</td>
+                </tr>
+            </table> -->
     <div id="state-data"></div>
     <div class="row">
         <div class="large-12 columns">
@@ -113,9 +154,8 @@
             <p><strong>Lines:</strong> <em>Best for showing trend.</em> The line charts show when cases, deaths and hospitalizations were reported to the Colorado Department of Public Health and Environment. The lag time between when those occurred and when they were reported to the state can be several days. The chart uses a 7-day moving average to smooth out peaks and valleys in the data due to reporting lag times.</p>
             <p><strong>Bars:</strong> <em>Best for showing historical data.</em> The bar charts show when cases and hospitalizations occurred based on CDPHE's investigation into the onset date of symptoms, and when a death occurred based on the date on the death certificate. <strong>Data for most recent two weeks is not shown because it will be signifcantly revised</strong> with subsequent data releases as CDPHE investigations progress, and is not an accurate representation of recent cases, deaths and hospitalizations.</p>
             <p><strong>Totals:</strong> The total number of cases, deaths and hospitalizations that have been reported to the CDPHE.</p>
-            <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+            <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
             <p class="chart-chatter">Gray area indicates the statewide stay-at-home order</p>
-            <p class="updated"><em>Charts updated <span id="updated-time"></span></em></p>
         </div>
     </div>
     <div class="row">
@@ -163,7 +203,7 @@
         <div class="large-12 columns">
             <h2 class="section-heading">People currently hospitalized</h2>
             <p>This chart shows the number of people currently hospitalized with either a confirmed or suspected case of COVID-19.</p>
-            <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over bars for details</p>
+            <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
             <div id="current-hospitalizations-chart"></div>
             <p class="source">CDPHE data set used | <a href="https://covid19.colorado.gov/hospital-data" target="_blank">Colorado COVID-19 Hospital Data</a></p>
         </div>
@@ -175,7 +215,7 @@
             <p class="how-chart">HOW TO READ THE CHARTS</p>
             <p><strong>Bar:</strong> The bar chart shows the 7-day moving average of the number of daily tests per 100,000 people, as reported to the CDPHE. Health officials say a testing rate of 152 per 100,000 <a href="https://www.nytimes.com/interactive/2020/04/17/us/coronavirus-testing-states.html" target="_blank">is necessary to identify the majority of people who are infected</a>.</p>
             <p><strong>Line:</strong> The line chart shows a 7-day moving average of the percentage of daily tests for COVID-19 that were positive.</p>
-            <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+            <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
             <div id="daily-tests-chart"></div>
             <p class="source">CDPHE data set used | Bar: Total Tests per 100k People | Line: Positivity Data from Clinical Laboratories</p>
         </div>
@@ -186,7 +226,7 @@
         <div class="large-12 columns">
             <h2 class="section-heading">Daily cases in Colorado's largest counties</h2>
             <p>These charts show the daily case count and 7-day average of reported COVID-19 cases for the state's 10 most-populous counties. <strong>Note: Each chart's vertical axis range is unique to its data; change from a week ago is based on averages.</strong></p>
-            <p class="instructions">Hover over legend item to highlight, click to filter; hover over charts for details</p>
+            <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
         </div>
     </div>
     <div class="row">
@@ -268,7 +308,7 @@
     <div class="row">
         <div class="large-12 columns">
             <p>These charts compare the total case and death rates per 100,000 people for Colorado's 10 most-populous counties using a 7-day moving average of cases and deaths as they are reported to CDPHE. Rates are useful for comparing areas with different populations.</p>
-            <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+            <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
         </div>
     </div>
     <div class="graphic-left">
@@ -346,7 +386,7 @@
         <div class="large-12 columns">
             <h2 class="section-heading">Cases and deaths by race</h2>
             <p>These charts show the percentage of statewide cases, deaths and population broken down by race and ethnicity. The dark gray bar shows the percentage of the state's population that race makes up; a cases or deaths bar shorter than the population bar indicates that race is underrepresented, a bar longer than the population bar indicates a race is overrepresented.</p>
-            <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+            <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
             <div id="race-chart"></div>
             <p class="source">CDPHE data set used | COVID-19 in Colorado by Race & Ethnicity</p>
         </div>
@@ -356,7 +396,7 @@
         <div class="large-12 columns">
             <h2 class="section-heading">Cases, hospitalizations and deaths by age</h2>
             <p>These charts show the total number of cases by age group and breaks them down by the number of people who have been hospitalized, the number who haven't been hospitalized and the number who have died. The second chart shows the same information as percentages of total cases by age group.</p>
-            <p class="instructions">Hover over legend item to highlight, click to add/remove; hover over lines for details</p>
+            <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
             <div id="age-chart"></div>
             <div id="age-pct-chart"></div>
             <p class="source">CDPHE data set used | Cases of COVID-19 Reported in Colorado by Age Group, Hospitalization, and Outcome</p>

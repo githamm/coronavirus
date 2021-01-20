@@ -1158,7 +1158,7 @@ var deathColor = 'rgba(241,163,64,1)';
 $.getJSON(url, function(data) {
     var sheetJson = data.feed.entry;
     //document.getElementById('updated-time').innerHTML = sheetJson[0].gsx$updated.$t;
-    
+
     // COUNTY DAILY CASE CHARTS
     var smallChartHeight = 200;
     var yAxisMax = null;
@@ -2195,3 +2195,96 @@ $.getJSON(url, function(data) {
         }
     })
 });
+
+/******************** IMMUNIZATION CHARTS ********************/
+var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/11';
+var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+
+$.getJSON(url, function(data) {
+    var sheetJson = data.feed.entry;
+    var lastRow = sheetJson.length - 1;
+    var lastDate = sheetJson[lastRow].gsx$date.$t;
+    var coloradoPopulation = 5758736;
+    var oneDoseCount = Number(sheetJson[lastRow].gsx$onedosecount.$t);
+    var oneDosePct = Math.round(((oneDoseCount / coloradoPopulation) * 100) * 10) / 10;
+    var twoDoseCount = Number(sheetJson[lastRow].gsx$twodosecount.$t);
+    var twoDosePct = Math.round(((twoDoseCount / coloradoPopulation) * 100) * 10) / 10;
+    console.log(oneDosePct + ' / ' + twoDosePct);
+    // var displayTotalCases = Number(sheetJson[0].gsx$totalcases.$t);
+    // var displayRelatedDeaths = Number(sheetJson[0].gsx$totalrelateddeaths.$t);
+    // var displayCovidDeaths = Number(sheetJson[0].gsx$totalcoviddeaths.$t);
+    // var displayTotalHospitalizations = Number(sheetJson[0].gsx$totalhospitalizations.$t);
+    document.getElementById('last-date').innerHTML = lastDate;
+    document.getElementById('one-dose-count').innerHTML = oneDoseCount.toLocaleString();
+    document.getElementById('two-dose-count').innerHTML = twoDoseCount.toLocaleString();
+    document.getElementById('one-dose-pct').innerHTML = oneDosePct;
+    document.getElementById('two-dose-pct').innerHTML = twoDosePct;
+    // document.getElementById('total-related-deaths').innerHTML = displayRelatedDeaths.toLocaleString();
+    // document.getElementById('total-covid-deaths').innerHTML = displayCovidDeaths.toLocaleString();
+    // document.getElementById('total-hospitalizations').innerHTML = displayTotalHospitalizations.toLocaleString();
+    var immunizationChart = c3.generate({
+        bindto: '#immunization-chart',
+        size: {
+            height: 225
+            //width: 800
+        },
+        data: {
+            json: sheetJson,
+            keys: {
+                x: 'gsx$week.$t',
+                value: ['gsx$pfizeradministered.$t', 'gsx$modernaadministered.$t', 'gsx$unspecifiedadministered.$t']
+            },
+            type: 'bar',
+            groups: [
+                ['gsx$pfizeradministered.$t', 'gsx$modernaadministered.$t', 'gsx$unspecifiedadministered.$t']
+            ],
+            names: {
+                'gsx$pfizeradministered.$t': 'Pfizer',
+                'gsx$modernaadministered.$t': 'Moderna',
+                'gsx$unspecifiedadministered.$t': 'Unspecified'
+            },
+            colors: {
+                'gsx$pfizeradministered.$t': 'rgba(0,0,0,1)',
+                'gsx$modernaadministered.$t': 'rgba(0,0,0,.5)',
+                'gsx$unspecifiedadministered.$t': 'rgba(0,0,0,.2)'
+            },
+        },
+        axis: {
+            x: {
+                type: 'category',
+                tick: {
+                    rotate: 0,
+                    multiline: false,
+                    culling: true
+                },
+                padding: {
+                    right: 2
+                }
+            },
+            y: {
+                tick: {
+                    format: d3.format(',')
+                }
+            }
+        },
+        bar: {
+            width: {
+                ratio: .65
+            }
+        },
+        regions: [
+            { axis: 'x', start: 54, end: 85, class: 'region1' }
+        ],
+        grid: {
+            x: {
+                show: true
+            },
+            y: {
+                show: true
+            }
+        },
+        point: {
+            r: 0
+        }
+    })
+})
