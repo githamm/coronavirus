@@ -2287,4 +2287,95 @@ $.getJSON(url, function(data) {
             r: 0
         }
     })
-})
+});
+
+/// TABLE
+
+var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/12';
+var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+
+$.getJSON(url, function(data) {
+    var sheetJson = data.feed.entry;
+    console.log(sheetJson);
+
+    var homicideTable = $('#vaccine-table').DataTable({
+        data: sheetJson,
+        //pageLength: 15,
+        scrollY: "500px",
+        scrollCollapse: true,
+        paging: false,
+        scrollX: true,
+        fixedHeader: true,
+        responsive: false,
+        //dom: '<if<t>lp>',
+        dom: '<t>p',
+        order: [
+            [0, 'asc']
+        ],
+        // name population  name_test   State/Territory/Federal Entity  administered_pct    one_dose_pct    two_dose_pct    Total Distributed   Total Administered  Distributed per 100K    Administered per 100K   People with 1+ Doses    People with 1+ Doses per 100K   People with 2 Doses People with 2 Doses Per 100K
+        rowCallback: function(row, data, index) {
+            if (data.gsx$name.$t == 'Colorado') {
+                $(row).css('background-color', 'rgba(81,156,8,.2');
+            }
+        },
+        columns: [{ data: 'gsx$name.$t' },
+            { data: 'gsx$population.$t', 'visible': false },
+            { data: 'gsx$nametest.$t', 'visible': false },
+            { data: 'gsx$stateterritoryfederalentity.$t', 'visible': false },
+            {
+                data: 'gsx$onedosepct.$t',
+                render: function(data, type, row) {
+                    return data + '%'
+                }
+            },
+            {
+                data: 'gsx$twodosepct.$t',
+                render: function(data, type, row) {
+                    return data + '%'
+                }
+            },
+            {
+                data: 'gsx$administeredpct.$t',
+                render: function(data, type, row) {
+                    return data + '%'
+                }
+            },
+            { data: 'gsx$totaldistributed.$t', 'visible': false },
+            { data: 'gsx$totaladministered.$t', 'visible': false },
+            { data: 'gsx$distributedper100k.$t', 'visible': false },
+            { data: 'gsx$administeredper100k.$t', 'visible': false },
+            { data: 'gsx$peoplewith1doses.$t', 'visible': false },
+            { data: 'gsx$peoplewith1dosesper100k.$t', 'visible': false },
+            { data: 'gsx$peoplewith2doses.$t', 'visible': false },
+            { data: 'gsx$peoplewith2dosesper100k.$t', 'visible': false }
+            // {
+            //     data: 'gsx$homicidedate.$t',
+            //     type: 'date'
+            // },
+            // { data: 'gsx$homicidemonth.$t' },
+            // { data: 'gsx$homicideyear.$t' },
+            // {
+            //     orderable: false,
+            //     data: 'gsx$victimname.$t'
+            // },
+            // { data: 'gsx$victimage.$t' },
+            // { data: 'gsx$victimsex.$t' },
+            // { data: 'gsx$victimrace.$t' },
+            // { data: 'gsx$mannerofdeath.$t' },
+            // {
+            //     orderable: false,
+            //     data: 'gsx$blockaddress.$t'
+            // },
+            // { data: 'gsx$neighborhood.$t' },
+            // { data: 'gsx$latitude.$t' },
+            // { data: 'gsx$longitude.$t' },
+            // {
+            //     orderable: false,
+            //     data: 'gsx$articlelink.$t',
+            //     render: function(data, type, row) {
+            //         return '<a href="' + data + '" target="_blank">Read story</a>';
+            //     }
+            // }
+        ]
+    })
+});
