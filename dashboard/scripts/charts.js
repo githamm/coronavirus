@@ -2312,70 +2312,81 @@ $.getJSON(url, function(data) {
         order: [
             [0, 'asc']
         ],
-        // name population  name_test   State/Territory/Federal Entity  administered_pct    one_dose_pct    two_dose_pct    Total Distributed   Total Administered  Distributed per 100K    Administered per 100K   People with 1+ Doses    People with 1+ Doses per 100K   People with 2 Doses People with 2 Doses Per 100K
         rowCallback: function(row, data, index) {
             if (data.gsx$name.$t == 'Colorado') {
                 $(row).css('background-color', 'rgba(81,156,8,.2');
             }
         },
-        columns: [{ data: 'gsx$name.$t' },
-            { data: 'gsx$population.$t', 'visible': false },
-            { data: 'gsx$nametest.$t', 'visible': false },
-            { data: 'gsx$stateterritoryfederalentity.$t', 'visible': false },
+        columns: [
+            { data: 'gsx$name.$t' },
             {
-                data: 'gsx$onedosepct.$t',
-                render: function(data, type, row) {
+                data: 'gsx$population.$t',
+                visible: false
+            },
+            {
+                data: 'gsx$nametest.$t',
+                visible: false
+            },
+            {
+                data: 'gsx$stateterritoryfederalentity.$t',
+                visible: false
+            },
+            {
+                data: 'gsx$percentoftotalpopwithatleastonedosebystateofresidence.$t',
+                render: function(data, type, row, meta) {
                     return data + '%'
                 }
             },
             {
-                data: 'gsx$twodosepct.$t',
-                render: function(data, type, row) {
+                data: 'gsx$percentoftotalpopfullyvaccinatedbystateofresidence.$t',
+                render: function(data, type, row, meta) {
                     return data + '%'
                 }
             },
             {
-                data: 'gsx$administeredpct.$t',
-                render: function(data, type, row) {
+                data: 'gsx$percentofadultpopwithatleastonedosebystateofresidence.$t',
+                render: function(data, type, row, meta) {
                     return data + '%'
                 }
             },
-            { data: 'gsx$totaldistributed.$t', 'visible': false },
-            { data: 'gsx$totaladministered.$t', 'visible': false },
-            { data: 'gsx$distributedper100k.$t', 'visible': false },
-            { data: 'gsx$administeredper100k.$t', 'visible': false },
-            { data: 'gsx$peoplewith1doses.$t', 'visible': false },
-            { data: 'gsx$peoplewith1dosesper100k.$t', 'visible': false },
-            { data: 'gsx$peoplewith2doses.$t', 'visible': false },
-            { data: 'gsx$peoplewith2dosesper100k.$t', 'visible': false }
-            // {
-            //     data: 'gsx$homicidedate.$t',
-            //     type: 'date'
-            // },
-            // { data: 'gsx$homicidemonth.$t' },
-            // { data: 'gsx$homicideyear.$t' },
-            // {
-            //     orderable: false,
-            //     data: 'gsx$victimname.$t'
-            // },
-            // { data: 'gsx$victimage.$t' },
-            // { data: 'gsx$victimsex.$t' },
-            // { data: 'gsx$victimrace.$t' },
-            // { data: 'gsx$mannerofdeath.$t' },
-            // {
-            //     orderable: false,
-            //     data: 'gsx$blockaddress.$t'
-            // },
-            // { data: 'gsx$neighborhood.$t' },
-            // { data: 'gsx$latitude.$t' },
-            // { data: 'gsx$longitude.$t' },
-            // {
-            //     orderable: false,
-            //     data: 'gsx$articlelink.$t',
-            //     render: function(data, type, row) {
-            //         return '<a href="' + data + '" target="_blank">Read story</a>';
-            //     }
-            // }
+            {
+                data: 'gsx$percentofadultpopfullyvaccinatedbystateofresidence.$t',
+                render: function(data, type, row, meta) {
+                    return data + '%'
+                }
+            },
+            {
+                data: 'gsx$totaldosesadministeredbystatewhereadministered.$t',
+                render: $.fn.dataTable.render.number(',', '', '', '')
+            },
+            {
+                data: 'gsx$dosesadministeredper100kbystatewhereadministered.$t',
+                render: $.fn.dataTable.render.number(',', '', '', '')
+            },
+            {
+                data: 'gsx$adultdosesadministeredbystatewhereadministered.$t',
+                visible: false
+            },
+            {
+                data: 'gsx$adultdosesadministeredper100kbystatewhereadministered.$t',
+                visible: false
+            },
+            {
+                data: 'gsx$peoplewithatleastonedosebystateofresidence.$t',
+                visible: false
+            },
+            {
+                data: 'gsx$peopleadultwithatleastonedosebystateofresidence.$t',
+                visible: false
+            },
+            {
+                data: 'gsx$peoplefullyvaccinatedbystateofresidence.$t',
+                visible: false
+            },
+            {
+                data: 'gsx$peopleadultfullyvaccinatedbystateofresidence.$t',
+                visible: false
+            },
         ]
     })
 });
