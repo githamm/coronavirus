@@ -2232,21 +2232,24 @@ $.getJSON(url, function(data) {
             json: sheetJson,
             keys: {
                 x: 'gsx$week.$t',
-                value: ['gsx$pfizeradministered.$t', 'gsx$modernaadministered.$t', 'gsx$unspecifiedadministered.$t']
+                value: ['gsx$pfizeradministered.$t', 'gsx$modernaadministered.$t', 'gsx$janssenadministered.$t', 'gsx$unspecifiedadministered.$t']
             },
             type: 'bar',
             groups: [
-                ['gsx$pfizeradministered.$t', 'gsx$modernaadministered.$t', 'gsx$unspecifiedadministered.$t']
+                ['gsx$unspecifiedadministered.$t', 'gsx$janssenadministered.$t', 'gsx$modernaadministered.$t', 'gsx$pfizeradministered.$t']
             ],
             names: {
                 'gsx$pfizeradministered.$t': 'Pfizer',
                 'gsx$modernaadministered.$t': 'Moderna',
+                'gsx$janssenadministered.$t': 'Janssen', 
                 'gsx$unspecifiedadministered.$t': 'Unspecified'
             },
+            // ['#edf8e9','#bae4b3','#74c476','#238b45']
             colors: {
-                'gsx$pfizeradministered.$t': 'rgba(0,0,0,1)',
-                'gsx$modernaadministered.$t': 'rgba(0,0,0,.5)',
-                'gsx$unspecifiedadministered.$t': 'rgba(0,0,0,.2)'
+                'gsx$pfizeradministered.$t': '#41ab5d',
+                'gsx$modernaadministered.$t': '#74c476',
+                'gsx$janssenadministered.$t': '#a1d99b', 
+                'gsx$unspecifiedadministered.$t': '#c7e9c0'
             },
         },
         axis: {
