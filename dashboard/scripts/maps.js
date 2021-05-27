@@ -17,6 +17,7 @@ $.getJSON(mapUrl, function(data) {
         'type': 'FeatureCollection',
         'features': []
     };
+    console.log(output);
 
     for (i = 0; i < output.length; i++) {
         var longitude = (output[i].gsx$longitude.$t);
@@ -138,10 +139,12 @@ $.getJSON(mapUrl, function(data) {
                 'name': output[i].gsx$county.$t,
                 'number_of_cases': output[i].gsx$numberofcases.$t,
                 'number_of_deaths': output[i].gsx$numberofdeaths.$t,
-                'population': output[i].gsx$population.$t
+                'population': output[i].gsx$population.$t,
+                'all_vaccinated_pct': output[i].gsx$allvaccinatedpct.$t,
+                'teen_vaccinated_pct': output[i].gsx$teenvaccinatedpct.$t,
+                'elderly_vaccinated_pct': output[i].gsx$elderlyvaccinatedpct.$t
             }
         });
-        //console.log(coords);
     }
 
     var rateMap = L.map('rate-map', {
@@ -153,12 +156,28 @@ $.getJSON(mapUrl, function(data) {
         preferCanvas: true
     });
 
-    var basemap = L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetrateMap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
+    var vaccinationMap = L.map('vaccination-map', {
+        center: [39.001, -105.7821],
+        zoom: 7,
+        minZoom: 5,
+        maxZoom: 10,
+        scrollWheelZoom: false,
+        preferCanvas: true
+    });
+
+    let vaccinationBaseMap = L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
         subdomains: "abcd",
         maxZoom: 19
     });
-    basemap.addTo(rateMap);
+    let rateBaseMap = L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://cartodb.com/attributions">CartoDB</a>',
+        subdomains: "abcd",
+        maxZoom: 19
+    });
+    vaccinationBaseMap.addTo(vaccinationMap);
+    rateBaseMap.addTo(rateMap);
+
 
     L.geoJSON(geojsonCounties, {
         style: function(feature) {
@@ -167,7 +186,7 @@ $.getJSON(mapUrl, function(data) {
             var rate = ((cases / population) * 100000);
             var fillColor;
             var borderColor;
-            // Blue color ramp (light to dark): ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']
+            // Green color ramp (light to dark): ['#f7fbff','#deebf7','#c6dbef','#9ecae1','#6baed6','#4292c6','#2171b5','#08519c','#08306b']
             if (rate > 9000) fillColor = '#08306b';
             else if (rate > 6000) fillColor = '#2171b5';
             else if (rate > 3000) fillColor = '#6baed6';
@@ -201,4 +220,36 @@ $.getJSON(mapUrl, function(data) {
             )
         }
     }).addTo(rateMap)
+
+    L.geoJSON(geojsonCounties, {
+        style: function(feature) {
+            var vaccinatedPct = feature.properties.all_vaccinated_pct;
+            //var population = feature.properties.population;
+            //var rate = ((cases / population) * 100000);
+            var fillColor;
+            var borderColor;
+            // Breen color ramp (light to dark): ['#edf8e9','#bae4b3','#74c476','#238b45']
+            if (vaccinatedPct > 75) fillColor = '#238b45';
+            else if (vaccinatedPct > 50) fillColor = '#74c476';
+            else if (vaccinatedPct > 25) fillColor = '#bae4b3';
+            else if (vaccinatedPct > 0) fillColor = '#edf8e9';
+            else fillColor = '#ccc';
+            return {
+                color: '#000000',
+                opacity: .33,
+                weight: 2,
+                fillColor: fillColor,
+                fillOpacity: .77
+            }
+        },
+
+        onEachFeature: function(feature, layer) {
+
+            var popupText;
+            popupText = '<h3 class="popup-header">' + feature.properties.name + ' County</h3><hr><div class="popup-container">Total vaccinated: <strong>' + feature.properties.all_vaccinated_pct + '%</strong><br>Age 18+ vaccinated: <strong>' + feature.properties.teen_vaccinated_pct + '%</strong><br>Age 65+ vaccinated: <strong>' + feature.properties.elderly_vaccinated_pct + '%</strong><br><br><a href="https://www.denverpost.com/tag/coronavirus-colorado/" target="_blank"><em>Read the latest coronavirus stories</em></a></div>';
+            layer.bindPopup(
+                popupText
+            )
+        }
+    }).addTo(vaccinationMap)
 });

@@ -128,6 +128,29 @@
             <p class="instructions" style="margin-top:-16px;text-align:left">Hover/click chart for details; click legend item to filter chart</p>
             <div id="immunization-chart"></div>
         </div>
+        <div class="large-12 columns">
+            <p class="immunization-date" style="margin-top:10px">Vaccinations by county</p>
+            <p class="instructions" style="margin-top:0;text-align:left">Click county for details</p>
+            <!-- Green color ramp (light to dark): ['#edf8e9','#bae4b3','#74c476','#238b45'] -->
+            <div class="legend-container">
+                <div class="legend-container">
+                    <p class="legend-chatter">Total population vaccinated</p>
+                    <div class="legend-box" style="background-color:#edf8e9">
+                        <p class="legend-text-choropleth">0-25%</p>
+                    </div>
+                    <div class="legend-box" style="background-color:#bae4b3">
+                        <p class="legend-text-choropleth">25-50%</p>
+                    </div>
+                    <div class="legend-box" style="background-color:#74c476">
+                        <p class="legend-text-choropleth" style="color:#fff">50-75%</p>
+                    </div>
+                    <div class="legend-box" style="background-color:#238b45">
+                        <p class="legend-text-choropleth" style="color:#fff">75-100%</p>
+                    </div>
+                </div>
+            </div>
+            <div id="vaccination-map"></div>
+        </div> 
     </div>
     <!-- <table>
                 <tr class="number-title" style="text-align: center">
