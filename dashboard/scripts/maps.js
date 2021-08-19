@@ -9,9 +9,10 @@ String.prototype.commafy = function() {
 
 var mapSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/1'
 var mapUrl = 'https://spreadsheets.google.com/feeds/list/' + mapSpreadsheetID + '/public/full?alt=json';
+var tab1Data = "./data/tab_1.json";
 
 /// BUBBLE CASE MAP
-$.getJSON(mapUrl, function(data) {
+$.getJSON(tab1Data, function(data) {
     var output = data.feed.entry;
     var countyCoordinates = {
         'type': 'FeatureCollection',

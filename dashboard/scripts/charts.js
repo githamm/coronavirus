@@ -2,8 +2,9 @@
 var smallChartHeight = 170;
 var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/2';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+var tab2Data = "./data/tab_2.json";
 
-$.getJSON(url, function(data) {
+$.getJSON(tab2Data, function(data) {
     var sheetJson = data.feed.entry;
     var displayTotalCases = Number(sheetJson[0].gsx$totalcases.$t);
     var displayRelatedDeaths = Number(sheetJson[0].gsx$totalrelateddeaths.$t);
@@ -472,8 +473,9 @@ $.getJSON(url, function(data) {
 /// PEOPLE CURRENTLY HOSPITALIZED CHARTS
 var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/8';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+var tab8Data = "./data/tab_8.json";
 
-$.getJSON(url, function(data) {
+$.getJSON(tab8Data, function(data) {
     var sheetJson = data.feed.entry;
     var smallChartHeight = 170;
     var recentData = sheetJson.slice(-91); // last 90 days of data
@@ -659,8 +661,9 @@ $.getJSON(url, function(data) {
 
 var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/6';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+var tab6Data = "./data/tab_6.json";
 
-$.getJSON(url, function(data) {
+$.getJSON(tab6Data, function(data) {
     var sheetJson = data.feed.entry;
     var recentData = sheetJson.slice(-90); // last 90 days of data
 
@@ -979,8 +982,9 @@ $.getJSON(url, function(data) {
 /// RACE CHARTS
 var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/4';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+var tab4Data = "./data/tab_4.json";
 
-$.getJSON(url, function(data) {
+$.getJSON(tab4Data, function(data) {
     var sheetJson = data.feed.entry;
 
     var ageChart = c3.generate({
@@ -1037,9 +1041,10 @@ $.getJSON(url, function(data) {
 /// AGE CHARTS
 var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/5';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+var tab5Data = "./data/tab_5.json";
 
 /// AGE RAW NUMBERS CHART
-$.getJSON(url, function(data) {
+$.getJSON(tab5Data, function(data) {
     var sheetJson = data.feed.entry;
 
     var ageChart = c3.generate({
@@ -1152,10 +1157,11 @@ $.getJSON(url, function(data) {
 
 var countyDataSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/3';
 var url = "https://spreadsheets.google.com/feeds/list/" + countyDataSpreadsheetID + "/public/full?alt=json";
+var tab3Data = "./data/tab_3.json";
 var caseColor = 'rgba(153,142,195,1)';
 var deathColor = 'rgba(241,163,64,1)';
 
-$.getJSON(url, function(data) {
+$.getJSON(tab3Data, function(data) {
     var sheetJson = data.feed.entry;
     //document.getElementById('updated-time').innerHTML = sheetJson[0].gsx$updated.$t;
 
@@ -2199,8 +2205,9 @@ $.getJSON(url, function(data) {
 /******************** IMMUNIZATION CHARTS ********************/
 var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/11';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+var tab11Data = "./data/tab_11.json";
 
-$.getJSON(url, function(data) {
+$.getJSON(tab11Data, function(data) {
     var sheetJson = data.feed.entry;
     var lastRow = sheetJson.length - 1;
     var lastDate = sheetJson[lastRow].gsx$date.$t;
@@ -2296,8 +2303,9 @@ $.getJSON(url, function(data) {
 
 var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/12';
 var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+var tab12Data = "./data/tab_12.json";
 
-$.getJSON(url, function(data) {
+$.getJSON(tab12Data, function(data) {
     var sheetJson = data.feed.entry;
     console.log(sheetJson);
 
