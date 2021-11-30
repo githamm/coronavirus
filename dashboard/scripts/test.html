@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorado Coronavirus Tracker | The Denver Post</title>
+    <link rel="shortcut icon" href="https://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.js"></script>
+    <script src="https://extras.denverpost.com/foundation/js/vendor/modernizr.js"></script>
+    <script src="https://extras.denverpost.com/app/homicide-report/js/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <!-- <script src="./scripts/leaflet.min.ajax.js"></script>
+    <script src="./scripts/choropleth.js"></script>
+    <script src="./scripts/charts.js"></script>
+    <script src="./scripts/maps.js"></script> -->
+</head>
+
+<body>
+    <!-- BUTTONS -->
+    <div class="row">
+        <div class="large-12 columns">
+            <!-- <div id="section-button-container">
+                <a href="#state-data"><span class="section-button">State data</span></a>
+                <a href="#county-data"><span class="section-button">County data</span></a>
+                <a href="#maps"><span class="section-button">Maps</span></a>
+                <a href="#demographic-data"><span class="section-button">Demographic data</span></a>
+            </div> -->
+            <h2 class="section-heading">COVID-19 in Colorado</h2>
+        </div>
+    </div>
+    <div id="small-charts-desktop">
+        <div class="row">
+            <div class="large-12 columns">
+                <div id="chart-test"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+    //var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+    //var url = "https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/colorado_covid19_daily_state_statistics_cumulative/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json";
+    var url = "https://api.covidtracking.com/v1/states/co/daily.json";
+
+    $.getJSON(url, function(data) {
+        //console.log(data);
+        var deaths = [];
+        for (var i = 0; i < data.length; i++) {
+            deaths.push(data[i].death)
+        }
+
+        var result = deaths.map(function(x, i) {
+            return x - deaths[i + 1]
+        }).filter(Number);
+
+        var test = result.reverse();
+        console.log(test);
+
+        var testData = [];
+        for (i = 0; i < data.length; i++) {
+            //var coords = JSON.parse(output[i].gsx$geometry.$t);
+            testData.push({
+                'date': data[i].date,
+                'deaths': data[i].death
+            })
+        }
+        var testDataReverse = testData.reverse();
+
+        //const date = data.features.attributes.Date;
+        //const deaths = data.features.attributes.Deaths;
+
+        // var date = [];
+        // var deaths = [];
+        // for (var i = 0; i < data.features.length; i++) {
+        //     date.push(data.features[i].attributes.Date)
+        //     deaths.push(data.features[i].attributes.Deaths)
+        // }
+
+        // var sheetJson = data.feed.entry;
+        // var displayTotalCases = Number(sheetJson[0].gsx$totalcases.$t);
+        // var displayRelatedDeaths = Number(sheetJson[0].gsx$totalrelateddeaths.$t);
+        // var displayCovidDeaths = Number(sheetJson[0].gsx$totalcoviddeaths.$t);
+        // var displayTotalHospitalizations = Number(sheetJson[0].gsx$totalhospitalizations.$t);
+        // document.getElementById('updated-time').innerHTML = sheetJson[0].gsx$updated.$t;
+        // document.getElementById('total-cases').innerHTML = displayTotalCases.toLocaleString();
+        // document.getElementById('total-related-deaths').innerHTML = displayRelatedDeaths.toLocaleString();
+        // document.getElementById('total-covid-deaths').innerHTML = displayCovidDeaths.toLocaleString();
+        // document.getElementById('total-hospitalizations').innerHTML = displayTotalHospitalizations.toLocaleString();
+
+        // var notHospitalizationsArrayLength = sheetJson.length - 1;
+        // var hospitalizationsArrayLength = sheetJson.length;
+        // var allData = sheetJson.slice(0, -1);
+        // var recentData = sheetJson.slice(-90, notHospitalizationsArrayLength); // Get last 90 days of data for all charts except current hospitalizations
+        // var recentHospitalizationsData = sheetJson.slice(-90);
+
+        // var casesAverageArray = [];
+        // for (var i = 0; i < sheetJson.length; i++) {
+        //     casesAverageArray.push(
+        //         sheetJson[i].gsx$reporteddailycasesaverage.$t
+        //     )
+        // };
+        // casesAverageArray = casesAverageArray.map(function(each_element) {
+        //     return parseInt(each_element).toFixed(1);
+        // });
+
+        /// DAILY CASES CHART
+        var dailyCasesChart = c3.generate({
+            bindto: '#chart-test',
+            size: {
+                height: 500
+                //width: 800
+            },
+            //},
+            // data: {
+            //     json: [
+            //     	//date,
+            //         deaths
+            //         //['data2', 50, 20, 10, 40, 15, 25]
+            //     ]
+            // },
+            data: {
+                json: testDataReverse,
+                keys: {
+                    x: 'date', // it's possible to specify 'x' when category axis
+                    value: ['deaths']
+                }
+                // names: {
+                //     'gsx$onsetdailycases.$t': 'Daily cases by date of illness onset',
+                //     'gsx$reporteddailycasesaverage.$t': '7-day moving average of reported cases'
+                // },
+                // types: {
+                //     'gsx$onsetdailycases.$t': 'bar',
+                //     'gsx$reporteddailycasesaverage.$t': 'line'
+                // },
+                // colors: {
+                //     'gsx$onsetdailycases.$t': 'rgba(8,81,156,.4)',
+                //     'gsx$reporteddailycasesaverage.$t': 'rgba(8,81,156,1)'
+                // },
+            },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        rotate: 0,
+                        multiline: false,
+                        culling: true
+                    },
+                    padding: {
+                        right: 2
+                    }
+                },
+                y: {
+                    tick: {
+                        format: d3.format(',')
+                    }
+                }
+            },
+            bar: {
+                width: {
+                    ratio: .65
+                }
+            },
+            regions: [
+                { axis: 'x', start: 85, end: 86, class: 'region1' }
+            ],
+            grid: {
+                x: {
+                    show: true
+                },
+                y: {
+                    show: true
+                }
+            },
+            point: {
+                r: 0
+            }
+        })
+    });
+    </script>
+</body>
+
+</html>

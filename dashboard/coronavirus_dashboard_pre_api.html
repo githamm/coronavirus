@@ -19,13 +19,8 @@
     <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
     <script src="./scripts/leaflet.min.ajax.js"></script>
     <script src="./scripts/choropleth.js"></script>
-    <script src="./scripts/api_charts.js"></script>
-    <script src="./scripts/api_maps.js"></script>
-    <style>
-    html body {
-        font-family: Helvetica, sans-serif;
-    }
-    </style>
+    <script src="./scripts/charts.js"></script>
+    <script src="./scripts/maps.js"></script>
 </head>
 
 <body>
@@ -155,7 +150,7 @@
                 </div>
             </div>
             <div id="vaccination-map"></div>
-        </div>
+        </div> 
     </div>
     <!-- <table>
                 <tr class="number-title" style="text-align: center">
@@ -179,8 +174,7 @@
         <div class="large-12 columns">
             <p class="how-chart">HOW TO READ THE CHARTS</p>
             <p><em>Please note that each chart uses two different data sets: The lines show data by the date it was reported to the Colorado Department of Public Health and Environment, and the bars show data by symptom onset date or date of death.</em></p>
-            <p><em>Lag times for reported cases, hospitalizations and deaths has grown longer &mdash; represented as lines on the charts &mdash; which can give an inaccurate reprsentation of what is happening currently. We are now using a 14-day average to lessen the effect of that lag time, but data for the most recent week could change significantly with each day's data release.</em></p>
-            <p><strong>Lines:</strong> <em>Best for showing trend.</em> The line charts show when cases, deaths and hospitalizations were reported to the Colorado Department of Public Health and Environment. The lag time between when those occurred and when they were reported to the state can be several days. The chart uses a 14-day average to smooth out peaks and valleys in the data due to reporting lag times.</p>
+            <p><strong>Lines:</strong> <em>Best for showing trend.</em> The line charts show when cases, deaths and hospitalizations were reported to the Colorado Department of Public Health and Environment. The lag time between when those occurred and when they were reported to the state can be several days. The chart uses a 7-day moving average to smooth out peaks and valleys in the data due to reporting lag times.</p>
             <p><strong>Bars:</strong> <em>Best for showing historical data.</em> The bar charts show when cases and hospitalizations occurred based on CDPHE's investigation into the onset date of symptoms, and when a death occurred based on the date on the death certificate. <strong>Data for most recent two weeks is not shown because it will be signifcantly revised</strong> with subsequent data releases as CDPHE investigations progress, and is not an accurate representation of recent cases, deaths and hospitalizations.</p>
             <p><strong>Totals:</strong> The total number of cases, deaths and hospitalizations that have been reported to the CDPHE.</p>
             <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
@@ -201,14 +195,13 @@
     </div>
     <div class="row">
         <div class="large-12 columns left-border" style="border:2px solid silver">
-            <!-- <div class="large-2 medium-2 small-12 columns" style="padding-top:2%"> -->
-            <div class="large-2 medium-2 small-12 columns" style="padding:5% 0 3% 0">
+            <div class="large-2 medium-2 small-12 columns" style="padding-top:2%">
                 <p class="number-title">DEATHS</p>
                 <p class="number" id="total-covid-deaths"></p>
-                <div style="display:none"><p class="number-subtitle">Deaths due to COVID-19</p>
+                <p class="number-subtitle">Deaths due to COVID-19</p>
                 <hr style="margin:-5px 45px 5px 45px">
                 <p class="number" id="total-related-deaths"></p>
-                <p class="number-subtitle">Deaths among people<br>with COVID-19</p></div>
+                <p class="number-subtitle">Deaths among people<br>with COVID-19</p>
             </div>
             <div class="large-10 medium-10 small-12 columns left-border">
                 <div id="daily-deaths-chart"></div>
@@ -255,8 +248,7 @@
     <div class="row">
         <div class="large-12 columns">
             <h2 class="section-heading">Daily cases in Colorado's largest counties</h2>
-            <p><em>In July the CDPHE stopped breaking out daily cases for weekend days. We are now using a 10-day average to smooth out those spikes in reported cases.</em></p>
-            <p>These charts show the daily case count and 10-day average of reported COVID-19 cases for the state's 10 most-populous counties. <strong>Note: Each chart's vertical axis range is unique to its data; change from a week ago is based on averages.</strong></p>
+            <p>These charts show the daily case count and 7-day average of reported COVID-19 cases for the state's 10 most-populous counties. <strong>Note: Each chart's vertical axis range is unique to its data; change from a week ago is based on averages.</strong></p>
             <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
         </div>
     </div>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorado COVID-19 Deaths | The Denver Post</title>
+    <link rel="shortcut icon" href="https://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.js"></script>
+    <script src="https://extras.denverpost.com/foundation/js/vendor/modernizr.js"></script>
+    <script src="https://extras.denverpost.com/app/homicide-report/js/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.js"></script>
+    <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <script src="./scripts/leaflet.min.ajax.js"></script>
+    <script src="./scripts/choropleth.js"></script>
+    <script src="./scripts/charts.js"></script>
+    <script src="./scripts/maps.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <div class="large-12 columns">
+            <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
+            <p class="chart-chatter">Gray area indicates the statewide stay-at-home order</p>
+            <p class="updated"><em>Chart updated <span id="updated-time"></span></em></p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns left-border" style="border:2px solid silver">
+            <div class="large-2 medium-2 small-12 columns" style="padding-top:2%">
+                <p class="number-title">DEATHS</p>
+                <p class="number" id="total-covid-deaths"></p>
+                <p class="number-subtitle">Deaths due to COVID-19</p>
+                <hr style="margin:-5px 45px 5px 45px">
+                <p class="number" id="total-related-deaths"></p>
+                <p class="number-subtitle">Deaths among people<br>with COVID-19</p>
+            </div>
+            <div class="large-10 medium-10 small-12 columns left-border">
+                <div id="daily-deaths-chart"></div>
+                <p class="source">CDPHE data sets used | Line chart: Cumulative Number of Deaths From COVID-19 in Colorado by Date Reported to the State &bull; Bar chart: Number of Deaths From COVID-19 in Colorado by Date of Death - By Day</p>
+            </div>
+        </div>
+        <p><em>For a full explanation of our methodology, go to our <a href="https://www.denverpost.com/2020/03/06/coronavirus-map-colorado/" target="_blank">COVID-19 dashboard.</em></p>
+    </div>
+    <p style="display:none" id="total-cases"></p>
+    <p style="display:none" id="total-hospitalizations"></p>
+</body>
+
+</html>

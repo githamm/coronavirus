@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex,follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>County COVID-19 Cases Over Time | The Denver Post</title>
+    <link rel="shortcut icon" href="https://extras.mnginteractive.com/live/media/favIcon/dpo/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.css" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/foundation/6.2.4/foundation.min.js"></script>
+    <script src="https://extras.denverpost.com/foundation/js/vendor/modernizr.js"></script>
+    <script src="https://extras.denverpost.com/app/homicide-report/js/d3.v3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.js"></script>
+    <!-- <script src="./scripts/charts.js"></script> -->
+</head>
+
+<body>
+    <div class="row">
+        <div class="large-12 columns">
+            <h2 class="section-heading">Daily cases in Colorado's largest counties</h2>
+            <p>These charts show the daily case count and 7-day average of reported COVID-19 cases for the state's 10 most-populous counties. <strong>Note: Each chart's vertical axis range is unique to its data.</strong></p>
+            <p class="instructions">Hover over legend item to highlight, click to filter; hover over charts for details</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="large-12 columns">
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Adams<br>
+                    <span class="cases-change" id="adams-change"></span></p>
+                <div id="adams-daily-cases"></div>
+            </div>
+            <div class="large-6 medium-6 small-12 columns">
+                <p class="county-chart-header">Adams<br>
+                    <span class="cases-change" id="adams-change"></span></p>
+                <div id="test-daily-cases"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    /******************** COUNTY-CASE GRAPHICS ********************/
+    var smallChartHeight = 300;
+    var yAxisMax = null;
+    var chartSpreadsheetID = '1LbgEc_fJasdCwRpfkHSMyXYXx3V5szrJSbfJcCNl2fQ/9';
+    var url = "https://spreadsheets.google.com/feeds/list/" + chartSpreadsheetID + "/public/full?alt=json";
+
+    $.getJSON(url, function(data) {
+        var sheetJson = data.feed.entry;
+        console.log(sheetJson);
+        // var lastRow = (sheetJson.length - 1);
+        // var secondLastRow = (sheetJson.length - 2);
+
+        // var adamsChange = Number(sheetJson[lastRow].gsx$adamsdailycases.$t) - Number(sheetJson[secondLastRow].gsx$adamsdailycases.$t);
+        // var arapahoeChange = Number(sheetJson[lastRow].gsx$arapahoedailycases.$t) - Number(sheetJson[secondLastRow].gsx$arapahoedailycases.$t);
+        // var boulderChange = Number(sheetJson[lastRow].gsx$boulderdailycases.$t) - Number(sheetJson[secondLastRow].gsx$boulderdailycases.$t);
+        // var denverChange = Number(sheetJson[lastRow].gsx$denverdailycases.$t) - Number(sheetJson[secondLastRow].gsx$denverdailycases.$t);
+        // var douglasChange = Number(sheetJson[lastRow].gsx$douglasdailycases.$t) - Number(sheetJson[secondLastRow].gsx$douglasdailycases.$t);
+        // var elpasoChange = Number(sheetJson[lastRow].gsx$elpasodailycases.$t) - Number(sheetJson[secondLastRow].gsx$elpasodailycases.$t);
+        // var jeffersonChange = Number(sheetJson[lastRow].gsx$jeffersondailycases.$t) - Number(sheetJson[secondLastRow].gsx$jeffersondailycases.$t);
+        // var larimerChange = Number(sheetJson[lastRow].gsx$larimerdailycases.$t) - Number(sheetJson[secondLastRow].gsx$larimerdailycases.$t);
+        // var puebloChange = Number(sheetJson[lastRow].gsx$pueblodailycases.$t) - Number(sheetJson[secondLastRow].gsx$pueblodailycases.$t);
+        // var weldChange = Number(sheetJson[lastRow].gsx$welddailycases.$t) - Number(sheetJson[secondLastRow].gsx$welddailycases.$t);
+
+        // Up triangle if cases have increased, down if decreased
+        // const changeText = function(x, y) {
+        //     if (x < 0) { document.getElementById(y).innerHTML = '&#9660; <span class="cases-change-number">' + Math.abs(x) + '</span> from previous day' } else { document.getElementById(y).innerHTML = '&#9650; <span class="cases-change-number">' + Math.abs(x) + '</span> from previous day' }
+        // };
+        // changeText(adamsChange, 'adams-change');
+        // changeText(arapahoeChange, 'arapahoe-change');
+        // changeText(boulderChange, 'boulder-change');
+        // changeText(denverChange, 'denver-change');
+        // changeText(douglasChange, 'douglas-change');
+        // changeText(elpasoChange, 'elpaso-change');
+        // changeText(jeffersonChange, 'jefferson-change');
+        // changeText(larimerChange, 'larimer-change');
+        // changeText(puebloChange, 'pueblo-change');
+        // changeText(weldChange, 'weld-change');
+
+        //var recentData = sheetJson.slice(-90); // last 90 days of data
+
+        // ADAMS COUNTY
+        var adamsDailyCasesChart = c3.generate({
+            bindto: '#adams-daily-cases',
+            size: {
+                height: smallChartHeight
+                //width: 800
+            },
+            padding: {
+                left: 35
+            },
+            data: {
+                json: sheetJson,
+                keys: {
+                    x: 'gsx$date.$t',
+                    value: ['gsx$hospavg20.$t', 'gsx$hospavg40.$t', 'gsx$hospavg50.$t', 'gsx$hospavg60.$t', 'gsx$hospavg70.$t', 'gsx$hospavg80.$t']
+                },
+                names: {
+                    'gsx$hospavg20.$t': '20-29',
+                    'gsx$hospavg40.$t': '40-49',
+                    'gsx$hospavg50.$t': '50-59',
+                    'gsx$hospavg60.$t': '60-69',
+                    'gsx$hospavg70.$t': '70-79',
+                    'gsx$hospavg80.$t': '80+'
+                },
+                //types: {
+                    //'gsx$adamsdailycases.$t': 'bar',
+                    //'gsx$average.$t': 'line',
+                    //'gsx$hospavg.$t': 'line'
+                //},
+                type: 'line',
+                colors: {
+                    //'gsx$hospavg.$t': 'orange',
+                    //'gsx$hospavg60.$t': 'rgba(8,81,156,1)'
+                },
+            },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        count: 2
+                    },
+                    padding: {
+                        right: 2
+                    }
+                },
+                y: {
+                    tick: {
+                        format: d3.format(',')
+                    },
+                    show: true,
+                    max: yAxisMax
+                }
+            },
+            grid: {
+                x: {
+                    show: false
+                },
+                y: {
+                    show: false
+                }
+            },
+            legend: {
+                show: true
+            },
+            tooltip: {
+                show: true
+            },
+            point: {
+                r: 0
+            }
+        })
+
+        var testDailyCasesChart = c3.generate({
+            bindto: '#test-daily-cases',
+            size: {
+                height: smallChartHeight
+                //width: 800
+            },
+            padding: {
+                left: 35
+            },
+            data: {
+                json: sheetJson,
+                keys: {
+                    x: 'gsx$date.$t',
+                    value: ['gsx$hospavg80.$t', 'gsx$deathavg80.$t', 'gsx$nothospavg80.$t']
+                },
+                names: {
+                    'gsx$nothospavg80.$t': 'Not hospitaled',
+                    'gsx$hospavg80.$t': 'Hospitalized',
+                    'gsx$deathavg80.$t': 'Deaths'
+                },
+                //types: {
+                    //'gsx$adamsdailycases.$t': 'bar',
+                    //'gsx$average.$t': 'line',
+                    //'gsx$hospavg.$t': 'line'
+                //},
+                type: 'line',
+                colors: {
+                    //'gsx$hospavg.$t': 'orange',
+                    //'gsx$hospavg60.$t': 'rgba(8,81,156,1)'
+                },
+            },
+            axis: {
+                x: {
+                    type: 'category',
+                    tick: {
+                        count: 2
+                    },
+                    padding: {
+                        right: 2
+                    }
+                },
+                y: {
+                    tick: {
+                        format: d3.format(',')
+                    },
+                    show: true,
+                    max: yAxisMax
+                }
+            },
+            grid: {
+                x: {
+                    show: false
+                },
+                y: {
+                    show: false
+                }
+            },
+            legend: {
+                show: true
+            },
+            tooltip: {
+                show: true
+            },
+            point: {
+                r: 0
+            }
+        })
+    });
+    </script>
+</body>
+
+</html>
