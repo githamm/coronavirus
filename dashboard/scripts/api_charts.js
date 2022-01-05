@@ -766,7 +766,7 @@ $.getJSON(tab6Data, function(data) {
             y: {
                 tick: {
                     format: (function(d) { return d + "%"; }),
-                    values: [0, 2, 4, 6, 8, 10]
+                    // values: [0, 2, 4, 6, 8, 10]
                 },
                 show: true,
                 min: 0
@@ -881,7 +881,7 @@ $.getJSON(tab6Data, function(data) {
             y: {
                 tick: {
                     format: (function(d) { return d + "%"; }),
-                    values: [0, 2, 4, 6, 8, 10]
+                    // values: [0, 2, 4, 6, 8, 10]
                 },
                 show: true,
                 min: 0
@@ -2294,9 +2294,9 @@ $.getJSON(tab11Data, function(data) {
                 ratio: .65
             }
         },
-        regions: [
-            { axis: 'x', start: 54, end: 85, class: 'region1' }
-        ],
+        // regions: [
+        //     { axis: 'x', start: 54, end: 85, class: 'region1' }
+        // ],
         grid: {
             x: {
                 show: true
