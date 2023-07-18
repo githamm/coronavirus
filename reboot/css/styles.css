@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+
+html body {
+    font-family: 'Roboto Mono', sans-serif;
+}
+
+.section-wrapper {
+    display: inline-block;
+    width: 100%;
+}
+
+.chart-section {
+    color: #ebebeb;
+    padding-top: 4px;
+}
+
+.chart-section-cases {
+    border-top: 5px solid rgba(8, 81, 156, 1);
+}
+
+.chart-section-hospitalizations {
+    border-top: 5px solid rgba(255, 138, 74, 1);
+}
+
+.chart-section-deaths {
+    border-top: 5px solid rgba(165, 15, 21, 1);
+}
+
+.chart-section-positivity {
+    border-top: 5px solid rgba(155, 82, 8, 1);
+}
+
+.chart-section-counties {
+    border-top: 5px solid #1e1e1e;
+}
+
+.chart-section-title {
+    padding: 5px 8px 5px 10px;
+    letter-spacing: -1px;
+}
+
+.chart-section-title-cases {
+    background: rgba(8, 81, 156, 1);
+}
+
+.chart-section-title-hospitalizations {
+    background: rgba(255, 138, 74, 1);
+}
+
+.chart-section-title-deaths {
+    background: rgba(165, 15, 21, 1);
+}
+
+.chart-section-title-positivity {
+    background: rgba(155, 82, 8, 1);
+}
+
+.chart-section-title-counties {
+    background: #1e1e1e;
+}
+
+.totals {
+    color: #000;
+    background: #ebebeb;
+    padding: 4px 5px 0 5px;
+    letter-spacing: -1.5px;
+}
+
+#total-cases,
+#total-hospitalized,
+#total-deaths {
+    border-right: 5px solid #ebebeb;
+    border-bottom: 5px solid #ebebeb;
+    border-left: 5px solid #ebebeb;
+}
+
+.note {
+    font-size: .8em;
+    font-style: italic;
+    color: #646464;
+    /*margin: -20px 0 5px 35px;*/
+    text-align: left;
+    height: 32px;
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 50px;
+}
+
+.updated {
+    font-size: .8em;
+    font-style: italic;
+    color: #646464;
+    margin: 0 10px -15px 0;
+    text-align: right;
+}
+
+.source {
+    font-size: .8em;
+    font-style: italic;
+    color: #646464;
+    margin: 5px 0 0 0;
+}
+
+.c3-line {
+    stroke-width: 2px !important;
+}
+
+.left,
+.right {
+    width: 49%;
+    margin-bottom: 25px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+th {
+    text-align: left;
+    vertical-align: bottom;
+}
+
+table.dataTable tbody td {
+    padding-left: 19px !important;
+}
+
+button {
+    margin: 0 0 5px 10px;
+}
+
+#county-table-wrapper {
+    margin-top: 30px;
+}
+
+@media screen and (max-width: 500px) {
+
+    .left,
+    .right {
+        width: 100%;
+        float: none;
+    }
+
+    .right {
+        margin-top: 30px;
+    }
+}

@@ -1,0 +1,47 @@
+name: Get COVID API data
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 23 * * *"
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out this repo
+        uses: actions/checkout@v2
+      - name: Fetch latest data
+        run: |-
+          curl -k -X GET "https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_State_Level_Expanded_Case_Data/FeatureServer/0/query?where=section%20%3D%20%27CASE%20SUMMARY%27%20AND%20category%20%3D%20%27CASES%27%20AND%20description%20%3D%20%277-DAY%20AVERAGE%20OF%20COVID-19%20CASES%20IN%20COLORADO%20BY%20DATE%20REPORTED%20TO%20THE%20STATE%27%20AND%20metric%20%3D%20%277-DAY%20MOVING%20AVERAGE%20OF%20CASES%27&outFields=*&resultType=standard&outSR=4326&f=json" -H "accept: application/json" | jq '.'  > daily_cases.json
+      - name: Fetch lastest data
+        run: |-
+          curl -k -X GET "https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Hospital_Data/FeatureServer/0/query?where=description%20%3D%20%27CURRENTLY%20HOSPITALIZED%27%20AND%20metric%20%3D%20%27CONFIRMED%20COVID-19%27&outFields=date,value&resultType=standard&outSR=4326&f=json" -H "accept: application/json" | jq '.'  > weekly_hospitalizations.json
+      - name: Fetch lastest data
+        run: |-
+          curl -k -X GET "https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_State_Level_Expanded_Case_Data/FeatureServer/0/query?where=section%20%3D%20%27CASE%20SUMMARY%27%20AND%20category%20%3D%20%27DEATHS%27%20AND%20description%20%3D%20%277-DAY%20AVERAGE%20OF%20DEATHS%20AMONG%20COVID-19%20CASES%20IN%20COLORADO%20BY%20DATE%20OF%20DEATH%27%20AND%20metric%20%3D%20%277-DAY%20MOVING%20AVERAGE%20OF%20DEATHS%27&outFields=*&resultType=standard&outSR=4326&f=json" -H "accept: application/json" | jq '.'  > daily_deaths.json
+      - name: Fetch lastest data
+        run: |-
+          curl -k -X GET "https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Sentinel_Positivity/FeatureServer/0/query?where=1%3D1&outFields=*&resultType=standard&outSR=4326&f=json" -H "accept: application/json" | jq '.'  > daily_positivity_rate.json
+      - name: Fetch lastest data
+        run: |-
+          curl -k -X GET "https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Sentinel_Positivity/FeatureServer/0/query?where=1%3D1&outFields=*&resultType=standard&outSR=4326&f=json" -H "accept: application/json" | jq '.'  > weekly_tests.json    
+      - name: Fetch lastest data
+        run: |-
+          #Cases, hospitalizations and deaths by vaccination status
+          curl -k -X GET "https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Vaccine_Breakthrough_Metrics/FeatureServer/0/query?where=description%20%3D%20%27AGES%205%2B%27%20OR%20metric%20%3D%20%27UNVACCINATED%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27%20OR%20%20(metric%20%3D%20%27VACCINATED%27%20OR%20metric%20%3D%20%27WITH%20BOOSTER%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27)%20%20OR%20%20(metric%20%3D%20%27VACCINATED%27%20OR%20metric%20%3D%20%27WITHOUT%20BOOSTER%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27)%20&outFields=*&resultType=standard&resultType=standard&outSR=4326&f=json" | jq '.'  > vax_unvax_data.json
+      - name: Fetch lastest data
+        run: |-
+          curl -k -X GET "https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_State_Level_Expanded_Case_Data/FeatureServer/0/query?where=section%20%3D%20%27STATE%20DATA%27%20AND%20category%20%3D%20%27COLORADO%20COVID-19%20DATA%27%20AND%20description%20%3D%20%27CUMULATIVE%20COUNTS%20TO%20DATE%27&outFields=*&resultType=standard&outSR=4326&f=json" -H "accept: application/json" | jq '.'  > statewide_cumulative_totals.json
+      - name: Fetch lastest data
+        run: |-
+          curl -k -X GET "https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_State_Level_Expanded_Case_Data/FeatureServer/0/query?where=section%20%3D%20%27CASE%20SUMMARY%27%20AND%20category%20%3D%20%27MAPS%27&outFields=*&outSR=4326&f=json" -H "accept: application/json" | jq '.'  > county_cumulative_totals.json
+      - name: Commit and push if changed
+        run: |-
+          git config user.name "Automated"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          timestamp=$(date -u)
+          git commit -m "Latest data: ${timestamp}" || exit 0
+          git push

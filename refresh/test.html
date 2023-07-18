@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<body>
+    <div class="w3-container">
+        <h2>Maps</h2>
+        <p>Yada and yada and some more yada</p>
+    </div>
+    <div class="w3-bar w3-black">
+        <button class="w3-bar-item w3-button tablink w3-red" onclick="openCity(event,'cases-map')">Cases</button>
+        <button class="w3-bar-item w3-button tablink w3-red" onclick="openCity(event,'deaths-map')">Deaths</button>
+    </div>
+    <div id="cases-map" class="w3-container w3-border city" style="padding-top:20px">
+        <iframe title="" aria-label="Map" id="datawrapper-chart-YhoDR" src="https://datawrapper.dwcdn.net/YhoDR/3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="505"></iframe>
+        <script type="text/javascript">
+        ! function() { "use strict";
+            window.addEventListener("message", (function(e) { if (void 0 !== e.data["datawrapper-height"]) { var t = document.querySelectorAll("iframe"); for (var a in e.data["datawrapper-height"])
+                        for (var r = 0; r < t.length; r++) { if (t[r].contentWindow === e.source) t[r].style.height = e.data["datawrapper-height"][a] + "px" } } })) }();
+        </script>
+    </div>
+    <div id="deaths-map" class="w3-container w3-border city" style="padding-top:20px">
+        Coming soon!
+    </div>
+    <div class="w3-container">
+        <h2>Tables</h2>
+        <p>Yada and yada and some more yada</p>
+    </div>
+    <div class="w3-bar w3-black">
+        <button class="w3-bar-item w3-button tablink" onclick="openCity(event,'cases-table')">Cases</button>
+        <button class="w3-bar-item w3-button tablink" onclick="openCity(event,'deaths-table')">Deaths</button>
+    </div>
+    <div id="cases-table" class="w3-container w3-border city" style="display:none;padding-top:20px">
+        <iframe title="" aria-label="table" id="datawrapper-chart-p3rBV" src="https://datawrapper.dwcdn.net/p3rBV/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="907"></iframe>
+        <script type="text/javascript">
+        ! function() {
+            "use strict";
+            window.addEventListener("message", (function(e) {
+                if (void 0 !== e.data["datawrapper-height"]) {
+                    var t = document.querySelectorAll("iframe");
+                    for (var a in e.data["datawrapper-height"])
+                        for (var r = 0; r < t.length; r++) { if (t[r].contentWindow === e.source) t[r].style.height = e.data["datawrapper-height"][a] + "px" }
+                }
+            }))
+        }();
+        </script>
+    </div>
+    <div id="deaths-table" class="w3-container w3-border city" style="display:none;padding-top:20px">
+        <iframe title="" aria-label="table" id="datawrapper-chart-oCTzY" src="https://datawrapper.dwcdn.net/oCTzY/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="925"></iframe>
+        <script type="text/javascript">
+        ! function() {
+            "use strict";
+            window.addEventListener("message", (function(e) {
+                if (void 0 !== e.data["datawrapper-height"]) {
+                    var t = document.querySelectorAll("iframe");
+                    for (var a in e.data["datawrapper-height"])
+                        for (var r = 0; r < t.length; r++) { if (t[r].contentWindow === e.source) t[r].style.height = e.data["datawrapper-height"][a] + "px" }
+                }
+            }))
+        }();
+        </script>
+    </div>
+    <script>
+    function openCity(evt, cityName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("city");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " w3-red";
+    }
+    </script>
+</body>
+
+</html>

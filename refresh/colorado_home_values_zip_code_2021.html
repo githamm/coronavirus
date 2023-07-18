@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<title>Colorado Home Values by ZIP Code 2021</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+<div class="w3-container">
+  <h2 style="font-family:Helvetica,sans-serif;line-height:34px;font-weight:bold;margin-bottom:-10px">Colorado housing market hits warp speed</h2>
+  <p style="font-family:Helvetica,sans-serif;font-size:1.1em">Price gains the past 12 months through July are strongest in areas outside metro Denver, in particular the mountain resorts, the southern Front Range and Mesa County on the Western Slope. Colorado is one of eight states where more than half of ZIP codes have registered double-digit price gains the past year.</p>
+</div>
+
+<div class="w3-bar w3-black">
+  <button  style="font-family:Helvetica,sans-serif;font-size:1.1em" class="w3-bar-item w3-button tablink w3-red" onclick="openTab(event,'cases-map')">Value change map</button>
+  <button  style="font-family:Helvetica,sans-serif;font-size:1.1em" class="w3-bar-item w3-button tablink" onclick="openTab(event,'cases-table')">Median value map</button>
+</div>
+
+<div id="cases-map" class="w3-container w3-border city" style="padding-top:20px">
+  <iframe title="" aria-label="Map" id="datawrapper-chart-bPoNu" src="https://datawrapper.dwcdn.net/bPoNu/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="522"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+</script>
+</div>
+
+<div id="cases-table" class="w3-container w3-border city" style="display:none;padding-top:20px">
+  <iframe title="Colorado housing market hits warp speed" aria-label="Map" id="datawrapper-chart-RKgi3" src="https://datawrapper.dwcdn.net/RKgi3/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="635"></iframe><script type="text/javascript">!function(){"use strict";window.addEventListener("message",(function(e){if(void 0!==e.data["datawrapper-height"]){var t=document.querySelectorAll("iframe");for(var a in e.data["datawrapper-height"])for(var r=0;r<t.length;r++){if(t[r].contentWindow===e.source)t[r].style.height=e.data["datawrapper-height"][a]+"px"}}}))}();
+</script>
+</div>
+
+<script>
+function openTab(evt, tabName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("city");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " w3-red";
+}
+</script>
+
+</body>
+</html>

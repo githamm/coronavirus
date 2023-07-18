@@ -17,10 +17,11 @@
     <script src="https://extras.denverpost.com/app/homicide-report/js/d3.v3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.4.14/c3.js"></script>
     <script src="https://unpkg.com/leaflet@1.0.0-rc.3/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.js"></script>
     <script src="./scripts/leaflet.min.ajax.js"></script>
     <script src="./scripts/choropleth.js"></script>
-    <script src="./scripts/api_charts.js"></script>
-    <script src="./scripts/api_maps.js"></script>
+    <script src="./scripts/papa_charts.js"></script>
+    <script src="./scripts/papa_maps.js"></script>
     <style>
     html body {
         font-family: Helvetica, sans-serif;
@@ -232,7 +233,8 @@
     <div class="row">
         <div class="large-12 columns">
             <h2 class="section-heading">People currently hospitalized</h2>
-            <p>This chart shows the number of people currently hospitalized with either a confirmed or suspected case of COVID-19.</p>
+            <p>This chart shows the number of people currently hospitalized with COVID-19.</p>
+            <p><em>On March 16, the CDPHE stopped reporting daily hospitalization data. The data is now reported weekly.</em></p>
             <p class="instructions">Hover/click chart for details; click legend item to filter chart</p>
             <div id="current-hospitalizations-chart"></div>
             <p class="source">CDPHE data set used | <a href="https://covid19.colorado.gov/hospital-data" target="_blank">Colorado COVID-19 Hospital Data</a></p>
