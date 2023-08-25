@@ -833,6 +833,13 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/county_cumu
         return obj.county_name !== 'International';
     });
 
+    // For some reason CDPHE started reporting each county's data nine separate times, which would result in nine duplicate rows for each county in the table. This de-dupes it (8/25/23)
+    countyData = countyData.filter((value, index, self) =>
+        index === self.findIndex((t) => (
+            t.county_name === value.county_name
+        ))
+    );
+
     // TABLE
     //$(document).ready(function() {
     var table = $('#county-table').DataTable({
