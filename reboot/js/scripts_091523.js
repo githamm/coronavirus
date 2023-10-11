@@ -225,7 +225,8 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/daily_death
 
 /////***** VAX VS UNVAX DATA *****/////
 //https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Vaccine_Breakthrough_Metrics/FeatureServer/0/query?where=description%20%3D%20%27AGES%205%2B%27%20OR%20metric%20%3D%20%27UNVACCINATED%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27%20OR%20%20(metric%20%3D%20%27VACCINATED%27%20OR%20metric%20%3D%20%27WITH%20BOOSTER%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27)%20%20OR%20%20(metric%20%3D%20%27VACCINATED%27%20OR%20metric%20%3D%20%27WITHOUT%20BOOSTER%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27)%20&outFields=*&resultType=standard&resultType=standard&outSR=4326&f=json
-$.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_data.json", function(result) {
+//$.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_data.json", function(result) {
+$.getJSON("https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Vaccine_Breakthrough_Metrics/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json", function(result) {
     var sheetJson = result.features;
     var vaccinatedAndUnvaccinatedCases = [];
     var vaccinatedBoosterCases = [];
@@ -250,22 +251,24 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
             })
         }
     }
-    
+
     for (let i = 0; i < vaccinatedAndUnvaccinatedCases.length; i++) {
-        if (vaccinatedAndUnvaccinatedCases[i].metric == 'Vaccinated, with Omicron booster rate per 100k of COVID-19 Cases') {
+        if (vaccinatedAndUnvaccinatedCases[i].metric == null) {
             vaccinatedBoosterCases.push({
                 vaccinatedBoosterCases: vaccinatedAndUnvaccinatedCases[i].value,
                 date: vaccinatedAndUnvaccinatedCases[i].date
             })
-        } else if (vaccinatedAndUnvaccinatedCases[i].metric == 'Vaccinated, without Omicron booster rate per 100k of COVID-19 Cases') {
-            vaccinatedNoBoosterCases.push({
-                vaccinatedNoBoosterCases: vaccinatedAndUnvaccinatedCases[i].value,
+            // } else if (vaccinatedAndUnvaccinatedCases[i].metric == 'Vaccinated, without Omicron booster rate per 100k of COVID-19 Cases') {
+            //     vaccinatedNoBoosterCases.push({
+            //         vaccinatedNoBoosterCases: vaccinatedAndUnvaccinatedCases[i].value,
+            //         date: vaccinatedAndUnvaccinatedCases[i].date
+            //     })
+        } else if (vaccinatedAndUnvaccinatedCases[i].metric == 'Unvaccinated rate per 100k of COVID-19 Cases') {
+            unvaccinatedCases.push({
+                unvaccinatedCases: vaccinatedAndUnvaccinatedCases[i].value,
                 date: vaccinatedAndUnvaccinatedCases[i].date
             })
-        } else unvaccinatedCases.push({
-            unvaccinatedCases: vaccinatedAndUnvaccinatedCases[i].value,
-            date: vaccinatedAndUnvaccinatedCases[i].date
-        })
+        }
     }
 
     const mergeByDateCases = (a1, a2, a3) =>
@@ -276,7 +279,6 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
         }));
 
     let finalDataCases = mergeByDateCases(vaccinatedBoosterCases, vaccinatedNoBoosterCases, unvaccinatedCases);
-    //console.log(unvaccinatedCases);
 
     // GET HOSPITALIZATIONS DATA
     for (let i = 0; i < sheetJson.length; i++) {
@@ -290,20 +292,22 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
     }
 
     for (let i = 0; i < vaccinatedAndUnvaccinatedHospitalizations.length; i++) {
-        if (vaccinatedAndUnvaccinatedHospitalizations[i].metric == 'Vaccinated, with Omicron booster rate per 100k of COVID-19 Hospitalizations') {
+        if (vaccinatedAndUnvaccinatedHospitalizations[i].metric == null) {
             vaccinatedBoosterHospitalizations.push({
                 vaccinatedBoosterHospitalizations: vaccinatedAndUnvaccinatedHospitalizations[i].value,
                 date: vaccinatedAndUnvaccinatedHospitalizations[i].date
             })
-        } else if (vaccinatedAndUnvaccinatedHospitalizations[i].metric == 'Vaccinated, without Omicron booster rate per 100k of COVID-19 Hospitalizations') {
-            vaccinatedNoBoosterHospitalizations.push({
-                vaccinatedNoBoosterHospitalizations: vaccinatedAndUnvaccinatedHospitalizations[i].value,
+            // } else if (vaccinatedAndUnvaccinatedHospitalizations[i].metric == 'Vaccinated, without Omicron booster rate per 100k of COVID-19 Hospitalizations') {
+            //     vaccinatedNoBoosterHospitalizations.push({
+            //         vaccinatedNoBoosterHospitalizations: vaccinatedAndUnvaccinatedHospitalizations[i].value,
+            //         date: vaccinatedAndUnvaccinatedHospitalizations[i].date
+            //     })
+        } else if (vaccinatedAndUnvaccinatedHospitalizations[i].metric == 'Unvaccinated rate per 100k of COVID-19 Hospitalizations') {
+            unvaccinatedHospitalizations.push({
+                unvaccinatedHospitalizations: vaccinatedAndUnvaccinatedHospitalizations[i].value,
                 date: vaccinatedAndUnvaccinatedHospitalizations[i].date
             })
-        } else unvaccinatedHospitalizations.push({
-            unvaccinatedHospitalizations: vaccinatedAndUnvaccinatedHospitalizations[i].value,
-            date: vaccinatedAndUnvaccinatedHospitalizations[i].date
-        })
+        }
     }
 
     const mergeByDateHospitalizations = (a1, a2, a3) =>
@@ -327,20 +331,22 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
     }
 
     for (let i = 0; i < vaccinatedAndUnvaccinatedDeaths.length; i++) {
-        if (vaccinatedAndUnvaccinatedDeaths[i].metric == 'Vaccinated, with Omicron booster rate per 1 million of COVID-19 Deaths') {
+        if (vaccinatedAndUnvaccinatedDeaths[i].metric == null) {
             vaccinatedBoosterDeaths.push({
                 vaccinatedBoosterDeaths: vaccinatedAndUnvaccinatedDeaths[i].value,
                 date: vaccinatedAndUnvaccinatedDeaths[i].date
             })
-        } else if (vaccinatedAndUnvaccinatedDeaths[i].metric == 'Vaccinated, without Omicron booster rate per 1 million of COVID-19 Deaths') {
-            vaccinatedNoBoosterDeaths.push({
-                vaccinatedNoBoosterDeaths: vaccinatedAndUnvaccinatedDeaths[i].value,
+        // } else if (vaccinatedAndUnvaccinatedDeaths[i].metric == 'Vaccinated, without Omicron booster rate per 1 million of COVID-19 Deaths') {
+        //     vaccinatedNoBoosterDeaths.push({
+        //         vaccinatedNoBoosterDeaths: vaccinatedAndUnvaccinatedDeaths[i].value,
+        //         date: vaccinatedAndUnvaccinatedDeaths[i].date
+        //     })
+        } else if (vaccinatedAndUnvaccinatedDeaths[i].metric == 'Unvaccinated rate per 1 million of COVID-19 Deaths') {
+            unvaccinatedHospitalizations.push({
+                unvaccinatedDeaths: vaccinatedAndUnvaccinatedDeaths[i].value,
                 date: vaccinatedAndUnvaccinatedDeaths[i].date
             })
-        } else unvaccinatedDeaths.push({
-            unvaccinatedDeaths: vaccinatedAndUnvaccinatedDeaths[i].value,
-            date: vaccinatedAndUnvaccinatedDeaths[i].date
-        })
+        }
     }
 
     const mergeByDateDeaths = (a1, a2, a3) =>

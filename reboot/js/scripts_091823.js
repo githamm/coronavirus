@@ -225,24 +225,27 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/daily_death
 
 /////***** VAX VS UNVAX DATA *****/////
 //https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Vaccine_Breakthrough_Metrics/FeatureServer/0/query?where=description%20%3D%20%27AGES%205%2B%27%20OR%20metric%20%3D%20%27UNVACCINATED%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27%20OR%20%20(metric%20%3D%20%27VACCINATED%27%20OR%20metric%20%3D%20%27WITH%20BOOSTER%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27)%20%20OR%20%20(metric%20%3D%20%27VACCINATED%27%20OR%20metric%20%3D%20%27WITHOUT%20BOOSTER%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27)%20&outFields=*&resultType=standard&resultType=standard&outSR=4326&f=json
-$.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_data.json", function(result) {
+//$.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_data.json", function(result) {
+$.getJSON("./js/updated_data.json", function(result) {
     var sheetJson = result.features;
+    //var sheetJson = result;
     var vaccinatedAndUnvaccinatedCases = [];
-    var vaccinatedBoosterCases = [];
-    var vaccinatedNoBoosterCases = [];
+    var upToDateCases = [];
+    var notUpToDateCases = [];
     var unvaccinatedCases = [];
     var vaccinatedAndUnvaccinatedHospitalizations = [];
-    var vaccinatedBoosterHospitalizations = [];
-    var vaccinatedNoBoosterHospitalizations = [];
+    var upToDateHospitalizations = [];
+    var notUpToDateHospitalizations = [];
     var unvaccinatedHospitalizations = [];
     var vaccinatedAndUnvaccinatedDeaths = [];
-    var vaccinatedBoosterDeaths = [];
-    var vaccinatedNoBoosterDeaths = [];
+    var upToDateDeaths = [];
+    var notUpToDateDeaths = [];
     var unvaccinatedDeaths = [];
 
     // GET CASES DATA
     for (let i = 0; i < sheetJson.length; i++) {
         if (sheetJson[i].attributes.category == 'Age-Adjusted Four-Week Average COVID-19 Cases per 100,000 by Week of Specimen Collection Date & Vaccination Status') {
+        //if (sheetJson[i].category == 'Age-Adjusted Four-Week Average COVID-19 Cases per 100,000 by Week of Specimen Collection Date & Vaccination Status') {
             vaccinatedAndUnvaccinatedCases.push({
                 metric: sheetJson[i].attributes.metric,
                 date: sheetJson[i].attributes.date,
@@ -252,14 +255,14 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
     }
     
     for (let i = 0; i < vaccinatedAndUnvaccinatedCases.length; i++) {
-        if (vaccinatedAndUnvaccinatedCases[i].metric == 'Vaccinated, with Omicron booster rate per 100k of COVID-19 Cases') {
-            vaccinatedBoosterCases.push({
-                vaccinatedBoosterCases: vaccinatedAndUnvaccinatedCases[i].value,
+        if (vaccinatedAndUnvaccinatedCases[i].metric == 'Up to Date rate per 100k of COVID-19 Cases') {
+            upToDateCases.push({
+                upToDateCases: vaccinatedAndUnvaccinatedCases[i].value,
                 date: vaccinatedAndUnvaccinatedCases[i].date
             })
-        } else if (vaccinatedAndUnvaccinatedCases[i].metric == 'Vaccinated, without Omicron booster rate per 100k of COVID-19 Cases') {
-            vaccinatedNoBoosterCases.push({
-                vaccinatedNoBoosterCases: vaccinatedAndUnvaccinatedCases[i].value,
+        } else if (vaccinatedAndUnvaccinatedCases[i].metric == 'Vaccinated but not yet up to date rate per 100k of COVID-19 Cases') {
+            notUpToDateCases.push({
+                notUpToDateCases: vaccinatedAndUnvaccinatedCases[i].value,
                 date: vaccinatedAndUnvaccinatedCases[i].date
             })
         } else unvaccinatedCases.push({
@@ -267,7 +270,6 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
             date: vaccinatedAndUnvaccinatedCases[i].date
         })
     }
-
     const mergeByDateCases = (a1, a2, a3) =>
         a1.map(itm => ({
             ...a2.find((item) => (item['date'] === itm['date']) && item),
@@ -275,8 +277,7 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
             ...itm
         }));
 
-    let finalDataCases = mergeByDateCases(vaccinatedBoosterCases, vaccinatedNoBoosterCases, unvaccinatedCases);
-    //console.log(unvaccinatedCases);
+    let finalDataCases = mergeByDateCases(upToDateCases, notUpToDateCases, unvaccinatedCases);
 
     // GET HOSPITALIZATIONS DATA
     for (let i = 0; i < sheetJson.length; i++) {
@@ -288,16 +289,17 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
             })
         }
     }
+    console.log(vaccinatedAndUnvaccinatedHospitalizations);
 
     for (let i = 0; i < vaccinatedAndUnvaccinatedHospitalizations.length; i++) {
-        if (vaccinatedAndUnvaccinatedHospitalizations[i].metric == 'Vaccinated, with Omicron booster rate per 100k of COVID-19 Hospitalizations') {
-            vaccinatedBoosterHospitalizations.push({
-                vaccinatedBoosterHospitalizations: vaccinatedAndUnvaccinatedHospitalizations[i].value,
+        if (vaccinatedAndUnvaccinatedHospitalizations[i].metric == 'Up to Date rate per 100k of COVID-19 Hospitalizations') {
+            upToDateHospitalizations.push({
+                upToDateHospitalizations: vaccinatedAndUnvaccinatedHospitalizations[i].value,
                 date: vaccinatedAndUnvaccinatedHospitalizations[i].date
             })
-        } else if (vaccinatedAndUnvaccinatedHospitalizations[i].metric == 'Vaccinated, without Omicron booster rate per 100k of COVID-19 Hospitalizations') {
-            vaccinatedNoBoosterHospitalizations.push({
-                vaccinatedNoBoosterHospitalizations: vaccinatedAndUnvaccinatedHospitalizations[i].value,
+        } else if (vaccinatedAndUnvaccinatedHospitalizations[i].metric == 'Vaccinated but not yet up to date rate per 100k of COVID-19 Hospitalizations') {
+            notUpToDateHospitalizations.push({
+                notUpToDateHospitalizations: vaccinatedAndUnvaccinatedHospitalizations[i].value,
                 date: vaccinatedAndUnvaccinatedHospitalizations[i].date
             })
         } else unvaccinatedHospitalizations.push({
@@ -313,7 +315,7 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
             ...itm
         }));
 
-    let finalDataHospitalizations = mergeByDateHospitalizations(vaccinatedBoosterHospitalizations, vaccinatedNoBoosterHospitalizations, unvaccinatedHospitalizations);
+    let finalDataHospitalizations = mergeByDateHospitalizations(upToDateHospitalizations, notUpToDateHospitalizations, unvaccinatedHospitalizations);
 
     // GET DEATHS DATA
     for (let i = 0; i < sheetJson.length; i++) {
@@ -327,14 +329,14 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
     }
 
     for (let i = 0; i < vaccinatedAndUnvaccinatedDeaths.length; i++) {
-        if (vaccinatedAndUnvaccinatedDeaths[i].metric == 'Vaccinated, with Omicron booster rate per 1 million of COVID-19 Deaths') {
-            vaccinatedBoosterDeaths.push({
-                vaccinatedBoosterDeaths: vaccinatedAndUnvaccinatedDeaths[i].value,
+        if (vaccinatedAndUnvaccinatedDeaths[i].metric == 'Up to Date rate per 1 million of COVID-19 Deaths') {
+            upToDateDeaths.push({
+                upToDateDeaths: vaccinatedAndUnvaccinatedDeaths[i].value,
                 date: vaccinatedAndUnvaccinatedDeaths[i].date
             })
-        } else if (vaccinatedAndUnvaccinatedDeaths[i].metric == 'Vaccinated, without Omicron booster rate per 1 million of COVID-19 Deaths') {
-            vaccinatedNoBoosterDeaths.push({
-                vaccinatedNoBoosterDeaths: vaccinatedAndUnvaccinatedDeaths[i].value,
+        } else if (vaccinatedAndUnvaccinatedDeaths[i].metric == 'Vaccinated but not yet up to date rate per 1 million of COVID-19 Deaths') {
+            notUpToDateDeaths.push({
+                notUpToDateDeaths: vaccinatedAndUnvaccinatedDeaths[i].value,
                 date: vaccinatedAndUnvaccinatedDeaths[i].date
             })
         } else unvaccinatedDeaths.push({
@@ -350,7 +352,7 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
             ...itm
         }));
 
-    let finalDataDeaths = mergeByDateDeaths(vaccinatedBoosterDeaths, vaccinatedNoBoosterDeaths, unvaccinatedDeaths);
+    let finalDataDeaths = mergeByDateDeaths(upToDateDeaths, notUpToDateDeaths, unvaccinatedDeaths);
 
     //CASES VAX VS UNVAX CHART
     var vaxUnvaxCasesChart = c3.generate({
@@ -369,25 +371,26 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
             json: finalDataCases,
             keys: {
                 x: 'date',
-                xFormat: '%m/%d/%Y',
-                value: ['vaccinatedBoosterCases', 'vaccinatedNoBoosterCases', 'unvaccinatedCases']
+                // xFormat: '%Y/%m/%d %H:%M:%S+%Z',
+                value: ['upToDateCases', 'notUpToDateCases', 'unvaccinatedCases']
             },
-            xFormat: '%m/%d/%Y',
+            // xFormat: '%m/%d/%Y',
+            xFormat: '%Y/%m/%d',
             names: {
-                'vaccinatedBoosterCases': 'Vaccinated w/ booster',
-                'vaccinatedNoBoosterCases': 'Vaccinated w/o booster',
+                'upToDateCases': 'Vaccinated, up to date',
+                'notUpToDateCases': 'Vaccinated, not up to date',
                 'unvaccinatedCases': 'Unvaccinated'
             },
 
 
             types: {
-                'vaccinatedBoosterCases': 'line',
-                'vaccinatedNoBoosterCases': 'line',
+                'upToDateCases': 'line',
+                'notUpToDateCases': 'line',
                 'unvaccinatedCases': 'line'
             },
             colors: {
-                'vaccinatedBoosterCases': 'green',
-                'vaccinatedNoBoosterCases': 'gray',
+                'upToDateCases': 'green',
+                'notUpToDateCases': 'gray',
                 'unvaccinatedCases': 'purple'
             },
         },
@@ -448,25 +451,25 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
             json: finalDataHospitalizations,
             keys: {
                 x: 'date',
-                xFormat: '%m/%d/%Y',
-                value: ['vaccinatedBoosterHospitalizations', 'vaccinatedNoBoosterHospitalizations', 'unvaccinatedHospitalizations']
+                // xFormat: '%m/%d/%Y',
+                value: ['upToDateHospitalizations', 'notUpToDateHospitalizations', 'unvaccinatedHospitalizations']
             },
-            xFormat: '%m/%d/%Y',
+            xFormat: '%Y/%m/%d',
             names: {
-                'vaccinatedBoosterHospitalizations': 'Vaccinated w/ booster',
-                'vaccinatedNoBoosterHospitalizations': 'Vaccinated w/o booster',
+                'upToDateHospitalizations': 'Vaccinated, up to date',
+                'notUpToDateHospitalizations': 'Vaccinated, not up to date',
                 'unvaccinatedHospitalizations': 'Unvaccinated'
             },
 
 
             types: {
-                'vaccinatedBoosterHospitalizations': 'line',
-                'vaccinatedNoBoosterHospitalizations': 'line',
+                'upToDateHospitalizations': 'line',
+                'notUpToDateHospitalizations': 'line',
                 'unvaccinatedHospitalizations': 'line'
             },
             colors: {
-                'vaccinatedBoosterHospitalizations': 'green',
-                'vaccinatedNoBoosterHospitalizations': 'gray',
+                'upToDateHospitalizations': 'green',
+                'notUpToDateHospitalizations': 'gray',
                 'unvaccinatedHospitalizations': 'purple'
             },
         },
@@ -527,25 +530,25 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_d
             json: finalDataDeaths,
             keys: {
                 x: 'date',
-                xFormat: '%m/%d/%Y',
-                value: ['vaccinatedBoosterDeaths', 'vaccinatedNoBoosterDeaths', 'unvaccinatedDeaths']
+                // xFormat: '%m/%d/%Y',
+                value: ['upToDateDeaths', 'notUpToDateDeaths', 'unvaccinatedDeaths']
             },
-            xFormat: '%m/%d/%Y',
+            xFormat: '%Y/%m/%d',
             names: {
-                'vaccinatedBoosterDeaths': 'Vaccinated w/ booster',
-                'vaccinatedNoBoosterDeaths': 'Vaccinated w/o booster',
+                'upToDateDeaths': 'Vaccinated, up to date',
+                'notUpToDateDeaths': 'Vaccinated, not up to date',
                 'unvaccinatedDeaths': 'Unvaccinated'
             },
 
 
             types: {
-                'vaccinatedBoosterDeaths': 'line',
-                'vaccinatedNoBoosterDeaths': 'line',
+                'upToDateDeaths': 'line',
+                'notUpToDateDeaths': 'line',
                 'unvaccinatedDeaths': 'line'
             },
             colors: {
-                'vaccinatedBoosterDeaths': 'green',
-                'vaccinatedNoBoosterDeaths': 'gray',
+                'upToDateDeaths': 'green',
+                'notUpToDateDeaths': 'gray',
                 'unvaccinatedDeaths': 'purple'
             },
         },
