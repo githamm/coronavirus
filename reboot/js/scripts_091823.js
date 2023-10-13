@@ -1,5 +1,6 @@
 //https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_State_Level_Expanded_Case_Data/FeatureServer/0/query?where=section%20%3D%20%27CASE%20SUMMARY%27%20AND%20category%20%3D%20%27CASES%27%20AND%20description%20%3D%20%277-DAY%20AVERAGE%20OF%20COVID-19%20CASES%20IN%20COLORADO%20BY%20DATE%20REPORTED%20TO%20THE%20STATE%27%20AND%20metric%20%3D%20%277-DAY%20MOVING%20AVERAGE%20OF%20CASES%27&outFields=*&resultType=standard&outSR=4326&f=json
-$.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/daily_cases.json", function(result) {
+//$.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/daily_cases.json", function(result) {
+$.getJSON('./js/updated_data.json', function(result) {
     var sheetJson = result.features;
 
     const dailyCaseData = sheetJson.map(({ attributes }) => ({ date: attributes.date, value: attributes.value }));
@@ -224,9 +225,9 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/daily_death
 })
 
 /////***** VAX VS UNVAX DATA *****/////
-//https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Vaccine_Breakthrough_Metrics/FeatureServer/0/query?where=description%20%3D%20%27AGES%205%2B%27%20OR%20metric%20%3D%20%27UNVACCINATED%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27%20OR%20%20(metric%20%3D%20%27VACCINATED%27%20OR%20metric%20%3D%20%27WITH%20BOOSTER%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27)%20%20OR%20%20(metric%20%3D%20%27VACCINATED%27%20OR%20metric%20%3D%20%27WITHOUT%20BOOSTER%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27)%20&outFields=*&resultType=standard&resultType=standard&outSR=4326&f=json
+//$.getJSON("https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Vaccine_Breakthrough_Metrics/FeatureServer/0/query?where=description%20%3D%20%27AGES%205%2B%27%20OR%20metric%20%3D%20%27UNVACCINATED%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27%20OR%20%20(metric%20%3D%20%27VACCINATED%27%20OR%20metric%20%3D%20%27WITH%20BOOSTER%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27)%20%20OR%20%20(metric%20%3D%20%27VACCINATED%27%20OR%20metric%20%3D%20%27WITHOUT%20BOOSTER%20RATE%20PER%20100K%20OF%20COVID-19%20CASES%27)%20&outFields=*&resultType=standard&resultType=standard&outSR=4326&f=json", function(result) {
 //$.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/vax_unvax_data.json", function(result) {
-$.getJSON("./js/updated_data.json", function(result) {
+$.getJSON("https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Vaccine_Breakthrough_Metrics/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json", function(result) {
     var sheetJson = result.features;
     //var sheetJson = result;
     var vaccinatedAndUnvaccinatedCases = [];
@@ -245,7 +246,7 @@ $.getJSON("./js/updated_data.json", function(result) {
     // GET CASES DATA
     for (let i = 0; i < sheetJson.length; i++) {
         if (sheetJson[i].attributes.category == 'Age-Adjusted Four-Week Average COVID-19 Cases per 100,000 by Week of Specimen Collection Date & Vaccination Status') {
-        //if (sheetJson[i].category == 'Age-Adjusted Four-Week Average COVID-19 Cases per 100,000 by Week of Specimen Collection Date & Vaccination Status') {
+            //if (sheetJson[i].category == 'Age-Adjusted Four-Week Average COVID-19 Cases per 100,000 by Week of Specimen Collection Date & Vaccination Status') {
             vaccinatedAndUnvaccinatedCases.push({
                 metric: sheetJson[i].attributes.metric,
                 date: sheetJson[i].attributes.date,
@@ -253,7 +254,7 @@ $.getJSON("./js/updated_data.json", function(result) {
             })
         }
     }
-    
+
     for (let i = 0; i < vaccinatedAndUnvaccinatedCases.length; i++) {
         if (vaccinatedAndUnvaccinatedCases[i].metric == 'Up to Date rate per 100k of COVID-19 Cases') {
             upToDateCases.push({
@@ -281,7 +282,7 @@ $.getJSON("./js/updated_data.json", function(result) {
 
     // GET HOSPITALIZATIONS DATA
     for (let i = 0; i < sheetJson.length; i++) {
-        if (sheetJson[i].attributes.category == 'Age-Adjusted Four-Week Average COVID-19 Hospitalizations per 100,000 by Week of Admission Date & Vaccination Status') {
+        if (sheetJson[i].attributes.category == 'Age-Adjusted Four-Week Average COVID-19 Hospitalizations per 100,000 by Month of Admission Date & Vaccination Status') {
             vaccinatedAndUnvaccinatedHospitalizations.push({
                 metric: sheetJson[i].attributes.metric,
                 date: sheetJson[i].attributes.date,
@@ -289,7 +290,6 @@ $.getJSON("./js/updated_data.json", function(result) {
             })
         }
     }
-    console.log(vaccinatedAndUnvaccinatedHospitalizations);
 
     for (let i = 0; i < vaccinatedAndUnvaccinatedHospitalizations.length; i++) {
         if (vaccinatedAndUnvaccinatedHospitalizations[i].metric == 'Up to Date rate per 100k of COVID-19 Hospitalizations') {
@@ -603,7 +603,7 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/statewide_c
     var dateUpdated;
 
     for (let i = 0; i < sheetJson.length; i++) {
-        if (sheetJson[i].attributes.metric == 'Cases') {
+        if (sheetJson[i].attributes.metric == 'Confirmed cases') {
             totalCases = sheetJson[i].attributes.value
         } else if (sheetJson[i].attributes.metric == 'Hospitalized') {
             totalHospitalized = sheetJson[i].attributes.value
@@ -786,63 +786,74 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/weekly_test
 
 /////***** COUNTY TOTALS *****/////
 //https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_State_Level_Expanded_Case_Data/FeatureServer/0/query?where=section%20%3D%20%27CASE%20SUMMARY%27%20AND%20category%20%3D%20%27MAPS%27&outFields=*&outSR=4326&f=json
-$.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/county_cumulative_totals.json", function(result) {
+// $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/county_cumulative_totals.json", function(result) {
+$.getJSON('https://services3.arcgis.com/66aUo8zsujfVXRIT/arcgis/rest/services/CDPHE_COVID19_Cases_Deaths_County/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json', function(result) {
     var sheetJson = result.features;
     var caseRates = [];
     var caseCounts = [];
     var deathRates = [];
     var deathCounts = [];
-    var countyPopulation = [{ "county_name": "Adams County", "population": 519572 }, { "county_name": "Alamosa County", "population": 16376 }, { "county_name": "Arapahoe County", "population": 655070 }, { "county_name": "Archuleta County", "population": 13359 }, { "county_name": "Baca County", "population": 3506 }, { "county_name": "Bent County", "population": 5650 }, { "county_name": "Boulder County", "population": 330758 }, { "county_name": "Broomfield County", "population": 74112 }, { "county_name": "Chaffee County", "population": 19476 }, { "county_name": "Cheyenne County", "population": 1748 }, { "county_name": "Clear Creek County", "population": 9397 }, { "county_name": "Conejos County", "population": 7461 }, { "county_name": "Costilla County", "population": 3499 }, { "county_name": "Crowley County", "population": 5922 }, { "county_name": "Custer County", "population": 4704 }, { "county_name": "Delta County", "population": 31196 }, { "county_name": "Denver County", "population": 715522 }, { "county_name": "Dolores County", "population": 2326 }, { "county_name": "Douglas County", "population": 357978 }, { "county_name": "Eagle County", "population": 55731 }, { "county_name": "Elbert County", "population": 26062 }, { "county_name": "El Paso County", "population": 730395 }, { "county_name": "Fremont County", "population": 48939 }, { "county_name": "Garfield County", "population": 61685 }, { "county_name": "Gilpin County", "population": 5808 }, { "county_name": "Grand County", "population": 15717 }, { "county_name": "Gunnison County", "population": 16918 }, { "county_name": "Hinsdale County", "population": 788 }, { "county_name": "Huerfano County", "population": 6820 }, { "county_name": "Jackson County", "population": 1379 }, { "county_name": "Jefferson County", "population": 582910 }, { "county_name": "Kiowa County", "population": 1446 }, { "county_name": "Kit Carson County", "population": 7087 }, { "county_name": "Lake County", "population": 7436 }, { "county_name": "La Plata County", "population": 55638 }, { "county_name": "Larimer County", "population": 359066 }, { "county_name": "Las Animas County", "population": 14555 }, { "county_name": "Lincoln County", "population": 5675 }, { "county_name": "Logan County", "population": 21528 }, { "county_name": "Mesa County", "population": 155703 }, { "county_name": "Mineral County", "population": 865 }, { "county_name": "Moffat County", "population": 13292 }, { "county_name": "Montezuma County", "population": 25849 }, { "county_name": "Montrose County", "population": 42679 }, { "county_name": "Morgan County", "population": 29111 }, { "county_name": "Otero County", "population": 18690 }, { "county_name": "Ouray County", "population": 4874 }, { "county_name": "Park County", "population": 17390 }, { "county_name": "Phillips County", "population": 4530 }, { "county_name": "Pitkin County", "population": 17358 }, { "county_name": "Prowers County", "population": 11999 }, { "county_name": "Pueblo County", "population": 168162 }, { "county_name": "Rio Blanco County", "population": 6529 }, { "county_name": "Rio Grande County", "population": 11539 }, { "county_name": "Routt County", "population": 24829 }, { "county_name": "Saguache County", "population": 6368 }, { "county_name": "San Juan County", "population": 705 }, { "county_name": "San Miguel County", "population": 8072 }, { "county_name": "Sedgwick County", "population": 2404 }, { "county_name": "Summit County", "population": 31055 }, { "county_name": "Teller County", "population": 24710 }, { "county_name": "Washington County", "population": 4817 }, { "county_name": "Weld County", "population": 328981 }, { "county_name": "Yuma County", "population": 9988 }];
+    var casesAndDeathsByCounty = [];
+    //var countyPopulation = [{ "county_name": "Adams County", "population": 519572 }, { "county_name": "Alamosa County", "population": 16376 }, { "county_name": "Arapahoe County", "population": 655070 }, { "county_name": "Archuleta County", "population": 13359 }, { "county_name": "Baca County", "population": 3506 }, { "county_name": "Bent County", "population": 5650 }, { "county_name": "Boulder County", "population": 330758 }, { "county_name": "Broomfield County", "population": 74112 }, { "county_name": "Chaffee County", "population": 19476 }, { "county_name": "Cheyenne County", "population": 1748 }, { "county_name": "Clear Creek County", "population": 9397 }, { "county_name": "Conejos County", "population": 7461 }, { "county_name": "Costilla County", "population": 3499 }, { "county_name": "Crowley County", "population": 5922 }, { "county_name": "Custer County", "population": 4704 }, { "county_name": "Delta County", "population": 31196 }, { "county_name": "Denver County", "population": 715522 }, { "county_name": "Dolores County", "population": 2326 }, { "county_name": "Douglas County", "population": 357978 }, { "county_name": "Eagle County", "population": 55731 }, { "county_name": "Elbert County", "population": 26062 }, { "county_name": "El Paso County", "population": 730395 }, { "county_name": "Fremont County", "population": 48939 }, { "county_name": "Garfield County", "population": 61685 }, { "county_name": "Gilpin County", "population": 5808 }, { "county_name": "Grand County", "population": 15717 }, { "county_name": "Gunnison County", "population": 16918 }, { "county_name": "Hinsdale County", "population": 788 }, { "county_name": "Huerfano County", "population": 6820 }, { "county_name": "Jackson County", "population": 1379 }, { "county_name": "Jefferson County", "population": 582910 }, { "county_name": "Kiowa County", "population": 1446 }, { "county_name": "Kit Carson County", "population": 7087 }, { "county_name": "Lake County", "population": 7436 }, { "county_name": "La Plata County", "population": 55638 }, { "county_name": "Larimer County", "population": 359066 }, { "county_name": "Las Animas County", "population": 14555 }, { "county_name": "Lincoln County", "population": 5675 }, { "county_name": "Logan County", "population": 21528 }, { "county_name": "Mesa County", "population": 155703 }, { "county_name": "Mineral County", "population": 865 }, { "county_name": "Moffat County", "population": 13292 }, { "county_name": "Montezuma County", "population": 25849 }, { "county_name": "Montrose County", "population": 42679 }, { "county_name": "Morgan County", "population": 29111 }, { "county_name": "Otero County", "population": 18690 }, { "county_name": "Ouray County", "population": 4874 }, { "county_name": "Park County", "population": 17390 }, { "county_name": "Phillips County", "population": 4530 }, { "county_name": "Pitkin County", "population": 17358 }, { "county_name": "Prowers County", "population": 11999 }, { "county_name": "Pueblo County", "population": 168162 }, { "county_name": "Rio Blanco County", "population": 6529 }, { "county_name": "Rio Grande County", "population": 11539 }, { "county_name": "Routt County", "population": 24829 }, { "county_name": "Saguache County", "population": 6368 }, { "county_name": "San Juan County", "population": 705 }, { "county_name": "San Miguel County", "population": 8072 }, { "county_name": "Sedgwick County", "population": 2404 }, { "county_name": "Summit County", "population": 31055 }, { "county_name": "Teller County", "population": 24710 }, { "county_name": "Washington County", "population": 4817 }, { "county_name": "Weld County", "population": 328981 }, { "county_name": "Yuma County", "population": 9988 }];
+    var countyPopulation = [{ "county_name": "Adams", "population": 519572 }, { "county_name": "Alamosa", "population": 16376 }, { "county_name": "Arapahoe", "population": 655070 }, { "county_name": "Archuleta", "population": 13359 }, { "county_name": "Baca", "population": 3506 }, { "county_name": "Bent", "population": 5650 }, { "county_name": "Boulder", "population": 330758 }, { "county_name": "Broomfield", "population": 74112 }, { "county_name": "Chaffee", "population": 19476 }, { "county_name": "Cheyenne", "population": 1748 }, { "county_name": "Clear Creek", "population": 9397 }, { "county_name": "Conejos", "population": 7461 }, { "county_name": "Costilla", "population": 3499 }, { "county_name": "Crowley", "population": 5922 }, { "county_name": "Custer", "population": 4704 }, { "county_name": "Delta", "population": 31196 }, { "county_name": "Denver", "population": 715522 }, { "county_name": "Dolores", "population": 2326 }, { "county_name": "Douglas", "population": 357978 }, { "county_name": "Eagle", "population": 55731 }, { "county_name": "Elbert", "population": 26062 }, { "county_name": "El Paso", "population": 730395 }, { "county_name": "Fremont", "population": 48939 }, { "county_name": "Garfield", "population": 61685 }, { "county_name": "Gilpin", "population": 5808 }, { "county_name": "Grand", "population": 15717 }, { "county_name": "Gunnison", "population": 16918 }, { "county_name": "Hinsdale", "population": 788 }, { "county_name": "Huerfano", "population": 6820 }, { "county_name": "Jackson", "population": 1379 }, { "county_name": "Jefferson", "population": 582910 }, { "county_name": "Kiowa", "population": 1446 }, { "county_name": "Kit Carson", "population": 7087 }, { "county_name": "Lake", "population": 7436 }, { "county_name": "La Plata", "population": 55638 }, { "county_name": "Larimer", "population": 359066 }, { "county_name": "Las Animas", "population": 14555 }, { "county_name": "Lincoln", "population": 5675 }, { "county_name": "Logan", "population": 21528 }, { "county_name": "Mesa", "population": 155703 }, { "county_name": "Mineral", "population": 865 }, { "county_name": "Moffat", "population": 13292 }, { "county_name": "Montezuma", "population": 25849 }, { "county_name": "Montrose", "population": 42679 }, { "county_name": "Morgan", "population": 29111 }, { "county_name": "Otero", "population": 18690 }, { "county_name": "Ouray", "population": 4874 }, { "county_name": "Park", "population": 17390 }, { "county_name": "Phillips", "population": 4530 }, { "county_name": "Pitkin", "population": 17358 }, { "county_name": "Prowers", "population": 11999 }, { "county_name": "Pueblo", "population": 168162 }, { "county_name": "Rio Blanco", "population": 6529 }, { "county_name": "Rio Grande", "population": 11539 }, { "county_name": "Routt", "population": 24829 }, { "county_name": "Saguache", "population": 6368 }, { "county_name": "San Juan", "population": 705 }, { "county_name": "San Miguel", "population": 8072 }, { "county_name": "Sedgwick", "population": 2404 }, { "county_name": "Summit", "population": 31055 }, { "county_name": "Teller", "population": 24710 }, { "county_name": "Washington", "population": 4817 }, { "county_name": "Weld", "population": 328981 }, { "county_name": "Yuma", "population": 9988 }];
 
     for (let i = 0; i < sheetJson.length; i++) {
-        if (sheetJson[i].attributes.description == 'Case Rates Per 100,000 People in Colorado by County') {
-            caseRates.push({
-                county_name: sheetJson[i].attributes.metric,
-                case_rate: sheetJson[i].attributes.value
-            })
-        } else if (sheetJson[i].attributes.description == 'Cases of COVID-19 in Colorado by County') {
-            caseCounts.push({
-                county_name: sheetJson[i].attributes.metric,
-                case_count: sheetJson[i].attributes.value
-            })
-        } else if (sheetJson[i].attributes.description == 'Deaths Among COVID-19 Cases Rates Per 100,000 People in Colorado by County') {
-            deathRates.push({
-                county_name: sheetJson[i].attributes.metric,
-                death_rate: sheetJson[i].attributes.value
-            })
-        } else if (sheetJson[i].attributes.description == 'Deaths Among COVID-19 Cases in Colorado by County') {
-            deathCounts.push({
-                county_name: sheetJson[i].attributes.metric,
-                death_count: sheetJson[i].attributes.value
+        if (sheetJson[i].attributes.County != null) {
+            casesAndDeathsByCounty.push({
+                county_name: sheetJson[i].attributes.County,
+                case_count: sheetJson[i].attributes.Cases,
+                death_count: sheetJson[i].attributes.deaths_due_to_covid19
             })
         }
     }
 
-    const mergeByCountyName = (a1, a2, a3, a4, a5) =>
+    // for (let i = 0; i < sheetJson.length; i++) {
+    //     if (sheetJson[i].attributes.description == 'Case Rates Per 100,000 People in Colorado by County') {
+    //         caseRates.push({
+    //             county_name: sheetJson[i].attributes.metric,
+    //             case_rate: sheetJson[i].attributes.value
+    //         })
+    //     } else if (sheetJson[i].attributes.description == 'Cases of COVID-19 in Colorado by County') {
+    //         caseCounts.push({
+    //             county_name: sheetJson[i].attributes.metric,
+    //             case_count: sheetJson[i].attributes.value
+    //         })
+    //     } else if (sheetJson[i].attributes.description == 'Deaths Among COVID-19 Cases Rates Per 100,000 People in Colorado by County') {
+    //         deathRates.push({
+    //             county_name: sheetJson[i].attributes.metric,
+    //             death_rate: sheetJson[i].attributes.value
+    //         })
+    //     } else if (sheetJson[i].attributes.description == 'Deaths Among COVID-19 Cases in Colorado by County') {
+    //         deathCounts.push({
+    //             county_name: sheetJson[i].attributes.metric,
+    //             death_count: sheetJson[i].attributes.value
+    //         })
+    //     }
+    // }
+
+    const mergeByCountyName = (a1, a2) =>
         a1.map(itm => ({
             ...a2.find((item) => (item['county_name'] === itm['county_name']) && item),
-            ...a3.find((item) => (item['county_name'] === itm['county_name']) && item),
-            ...a4.find((item) => (item['county_name'] === itm['county_name']) && item),
-            ...a5.find((item) => (item['county_name'] === itm['county_name']) && item),
             ...itm
         }));
 
-    let countyData = mergeByCountyName(caseRates, caseCounts, deathRates, deathCounts, countyPopulation);
+    let countyData = mergeByCountyName(casesAndDeathsByCounty, countyPopulation);
 
     countyData = countyData.filter(function(obj) {
-        return obj.county_name !== 'Colorado';
+        return obj.county_name !== 'Total';
     });
 
     countyData = countyData.filter(function(obj) {
         return obj.county_name !== 'International';
     });
 
-    // For some reason CDPHE started reporting each county's data nine separate times, which would result in nine duplicate rows for each county in the table. This de-dupes it (8/25/23)
-    countyData = countyData.filter((value, index, self) =>
-        index === self.findIndex((t) => (
-            t.county_name === value.county_name
-        ))
-    );
+    // // For some reason CDPHE started reporting each county's data nine separate times, which would result in nine duplicate rows for each county in the table. This de-dupes it (8/25/23)
+    // countyData = countyData.filter((value, index, self) =>
+    //     index === self.findIndex((t) => (
+    //         t.county_name === value.county_name
+    //     ))
+    // );
+    console.log(countyData);
 
     // TABLE
     //$(document).ready(function() {
@@ -855,9 +866,21 @@ $.getJSON("https://raw.githubusercontent.com/githamm/covid-data/main/county_cumu
         columns: [
             { data: 'county_name' },
             { data: 'case_count', render: $.fn.dataTable.render.number(',', '.', 0, '') },
-            { data: 'case_rate', render: $.fn.dataTable.render.number(',', '.', 1, '') },
+            {
+                data: 'case_rate',
+                render: function(data, type, row, meta) {
+                    return ((row.case_count / row.population) * 100000)
+                }
+            },
+            //{ data: 'case_rate', render: $.fn.dataTable.render.number(',', '.', 1, '') },
             { data: 'death_count', render: $.fn.dataTable.render.number(',', '.', 0, '') },
-            { data: 'death_rate', render: $.fn.dataTable.render.number(',', '.', 1, ''), type: 'num' },
+            //{ data: 'death_rate', render: $.fn.dataTable.render.number(',', '.', 1, ''), type: 'num' },
+            {
+                data: 'death_rate',
+                render: function(data, type, row, meta) {
+                    return ((row.death_count / row.population) * 100000).toFixed(2)
+                }
+            },
             { data: 'population', render: $.fn.dataTable.render.number(',', '.', 0, '') }
         ]
     })
